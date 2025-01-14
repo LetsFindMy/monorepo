@@ -1,5 +1,5 @@
 {
-  "name": "next-forge",
+  "name": "monorepo",
   "version": "3.1.13",
   "bin": {
     "next-forge": "scripts/init.mjs"
@@ -29,9 +29,9 @@
     "ultracite": "^4.1.14"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
-  "packageManager": "pnpm@9.15.2",
+  "packageManager": "pnpm@9.15.3",
   "dependencies": {
     "chalk": "^5.4.1",
     "commander": "^13.0.0"
