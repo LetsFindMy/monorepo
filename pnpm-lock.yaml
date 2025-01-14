@@ -982,8 +982,8 @@ importers:
         specifier: ^0.6.13
         version: 0.6.15
       '@knocklabs/react':
-        specifier: ^0.2.29
-        version: 0.2.32(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^0.3.1
+        version: 0.3.1(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -3194,20 +3194,20 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
-  '@knocklabs/client@0.10.16':
-    resolution: {integrity: sha512-cN7ksBmGbdX9pIuhg6t9D9JgXxjQ8lQLEpBXEtKFy3DTrCkVBrV+6hTqOpzGkRYCg5ESmuYej4RErJp1xlQPkg==}
+  '@knocklabs/client@0.11.1':
+    resolution: {integrity: sha512-/z8HbUs2L0S7cBx4/gCP7oQLeZpkp0fUrq9e+LB4c6Gc7BUTfzohA6b4o0ztu2te5+Bp1xKsiNwCuROy29xIgg==}
 
   '@knocklabs/node@0.6.15':
     resolution: {integrity: sha512-pKHAKNv0bHwC+T+rt4piIQHcqI2mcUf2j5YOMi7BR2rsIhZmK6kzos+ZCya4UWHgK1RSpzQJ6fVKwLLfUy4i7Q==}
     engines: {node: '>=17.5.0'}
 
-  '@knocklabs/react-core@0.2.28':
-    resolution: {integrity: sha512-8nBJxXyNGwEFvwzBt0c70MzGhjXqNAL/KLGuh3WMHj37I2HUgDyzyLrLbQ7wqfZs/ku2qs99S5QhBukJmlIq9g==}
+  '@knocklabs/react-core@0.3.1':
+    resolution: {integrity: sha512-jQ7OYzdbfJAJJr9yxWuzBR5sICpRqYClrPaxH+bzc1ctiJkw+XX24r8VCDWaIf4Awnq3McoASLdU5q/I0QjApg==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
 
-  '@knocklabs/react@0.2.32':
-    resolution: {integrity: sha512-piYBqzRgdeo8vzE9/ZsWGgMmKn8S6ppTtgoPUnGm/lVCXjqDFPpZ80sJk42ELmx5x74OHVvvdBOYO91VFZnxGA==}
+  '@knocklabs/react@0.3.1':
+    resolution: {integrity: sha512-MGgWWYgnEgTYuEGnBfPUzXFETfyT59y7/rWBQxlys1CUtu2UyYRbCGS/c2fqk3STIKJPf6xZJbxRLLk0u2i7UA==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.11.0 || ^17.0.0 || ^18.0.0
@@ -7157,6 +7157,9 @@ packages:
 
   axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
+
+  axios@1.7.9:
+    resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
 
   axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
@@ -16301,6 +16304,12 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/dom': 1.6.5
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@floating-ui/react@0.26.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -16411,18 +16420,6 @@ snapshots:
   '@formatjs/intl-localematcher@0.5.8':
     dependencies:
       tslib: 2.8.0
-
-  '@formatjs/intl@2.10.0(typescript@5.3.2)':
-    dependencies:
-      '@formatjs/ecma402-abstract': 1.18.2
-      '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.6
-      '@formatjs/intl-displaynames': 6.6.6
-      '@formatjs/intl-listformat': 7.5.5
-      intl-messageformat: 10.5.11
-      tslib: 2.8.0
-    optionalDependencies:
-      typescript: 5.3.2
 
   '@formatjs/intl@2.10.0(typescript@5.7.3)':
     dependencies:
@@ -16624,13 +16621,13 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
-  '@knocklabs/client@0.10.16(react@19.0.0)':
+  '@knocklabs/client@0.11.1(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.26.0
       '@knocklabs/types': 0.1.5
       '@types/phoenix': 1.6.6
-      axios: 1.7.7
-      axios-retry: 4.5.0(axios@1.7.7)
+      axios: 1.7.9
+      axios-retry: 4.5.0(axios@1.7.9)
       eventemitter2: 6.4.9
       jwt-decode: 4.0.0
       phoenix: 1.7.14
@@ -16643,9 +16640,9 @@ snapshots:
     dependencies:
       jose: 5.2.1
 
-  '@knocklabs/react-core@0.2.28(react@19.0.0)':
+  '@knocklabs/react-core@0.3.1(react@19.0.0)':
     dependencies:
-      '@knocklabs/client': 0.10.16(react@19.0.0)
+      '@knocklabs/client': 0.11.1(react@19.0.0)
       date-fns: 4.1.0
       react: 19.0.0
       swr: 2.2.5(react@19.0.0)
@@ -16653,10 +16650,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@knocklabs/react@0.2.32(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@knocklabs/react@0.3.1(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@knocklabs/client': 0.10.16(react@19.0.0)
-      '@knocklabs/react-core': 0.2.28(react@19.0.0)
+      '@knocklabs/client': 0.11.1(react@19.0.0)
+      '@knocklabs/react-core': 0.3.1(react@19.0.0)
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.0.7(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-visually-hidden': 1.0.3(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -18104,7 +18101,7 @@ snapshots:
   '@radix-ui/react-popper@1.1.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.26.0
-      '@floating-ui/react-dom': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-arrow': 1.0.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-context': 1.0.1(@types/react@18.3.18)(react@18.3.1)
@@ -18123,7 +18120,7 @@ snapshots:
   '@radix-ui/react-popper@1.1.3(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.26.0
-      '@floating-ui/react-dom': 2.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-arrow': 1.0.3(@types/react-dom@19.0.2(@types/react@19.0.4))(@types/react@19.0.4)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-compose-refs': 1.0.1(@types/react@19.0.4)(react@19.0.0)
       '@radix-ui/react-context': 1.0.1(@types/react@19.0.4)(react@19.0.0)
@@ -19690,7 +19687,7 @@ snapshots:
       '@strapi/design-system': 2.0.0-rc.14(@babel/runtime@7.26.0)(@codemirror/autocomplete@6.18.4)(@codemirror/language@6.10.8)(@codemirror/lint@6.8.4)(@codemirror/search@6.5.8)(@codemirror/state@6.5.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.2)(@strapi/icons@2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(codemirror@5.65.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/icons': 2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/permissions': 5.6.0
-      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.7.3)
+      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.3.2)
       '@strapi/typescript-utils': 5.6.0
       '@strapi/utils': 5.6.0
       '@testing-library/dom': 10.1.0
@@ -19981,7 +19978,7 @@ snapshots:
       '@strapi/database': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)
       '@strapi/design-system': 2.0.0-rc.14(@babel/runtime@7.26.0)(@codemirror/autocomplete@6.18.4)(@codemirror/language@6.10.8)(@codemirror/lint@6.8.4)(@codemirror/search@6.5.8)(@codemirror/state@6.5.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.2)(@strapi/icons@2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(codemirror@5.65.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@strapi/icons': 2.0.0-rc.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.7.3)
+      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.3.2)
       '@strapi/utils': 5.6.0
       date-fns: 2.30.0
       date-fns-tz: 2.0.1(date-fns@2.30.0)
@@ -20070,7 +20067,7 @@ snapshots:
       '@strapi/logger': 5.6.0
       '@strapi/pack-up': 5.0.2(@swc/helpers@0.5.15)(@types/node@20.17.13)(debug@4.3.4)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.31.0)
       '@strapi/permissions': 5.6.0
-      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.7.3)
+      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.3.2)
       '@strapi/typescript-utils': 5.6.0
       '@strapi/utils': 5.6.0
       bcryptjs: 2.4.3
@@ -20642,7 +20639,7 @@ snapshots:
       '@strapi/pack-up': 5.0.2(@swc/helpers@0.5.15)(@types/node@20.17.13)(debug@4.3.4)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.31.0)
       '@strapi/permissions': 5.6.0
       '@strapi/review-workflows': 5.6.0(3afr3yxua6dliyn7mzrdnrad2m)
-      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.7.3)
+      '@strapi/types': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.3.2)
       '@strapi/typescript-utils': 5.6.0
       '@strapi/upload': 5.6.0(fa5zd7pfz2ukhzs4x7t3wazlse)
       '@strapi/utils': 5.6.0
@@ -20744,6 +20741,34 @@ snapshots:
       - webpack-cli
       - webpack-dev-server
       - webpack-plugin-serve
+
+  '@strapi/types@5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.3.2)':
+    dependencies:
+      '@casl/ability': 6.5.0
+      '@koa/cors': 5.0.0
+      '@koa/router': 12.0.2
+      '@strapi/database': 5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)
+      '@strapi/logger': 5.6.0
+      '@strapi/permissions': 5.6.0
+      '@strapi/utils': 5.6.0
+      commander: 8.3.0
+      koa: 2.15.2
+      koa-body: 6.0.1
+      node-schedule: 2.1.1
+      typedoc: 0.25.10(typescript@5.3.2)
+      typedoc-github-wiki-theme: 1.1.0(typedoc-plugin-markdown@3.17.1(typedoc@0.25.10(typescript@5.7.3)))(typedoc@0.25.10(typescript@5.7.3))
+      typedoc-plugin-markdown: 3.17.1(typedoc@0.25.10(typescript@5.7.3))
+    transitivePeerDependencies:
+      - '@types/node'
+      - better-sqlite3
+      - mysql
+      - mysql2
+      - pg
+      - pg-native
+      - sqlite3
+      - supports-color
+      - tedious
+      - typescript
 
   '@strapi/types@5.6.0(@types/node@20.17.13)(better-sqlite3@11.3.0)(mysql2@3.9.8)(typescript@5.7.3)':
     dependencies:
@@ -22556,9 +22581,9 @@ snapshots:
 
   axe-core@4.10.2: {}
 
-  axios-retry@4.5.0(axios@1.7.7):
+  axios-retry@4.5.0(axios@1.7.9):
     dependencies:
-      axios: 1.7.7
+      axios: 1.7.9
       is-retry-allowed: 2.2.0
 
   axios@1.7.4(debug@4.3.4):
@@ -22570,6 +22595,14 @@ snapshots:
       - debug
 
   axios@1.7.7:
+    dependencies:
+      follow-redirects: 1.15.9(debug@4.3.4)
+      form-data: 4.0.1
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
+  axios@1.7.9:
     dependencies:
       follow-redirects: 1.15.9(debug@4.3.4)
       form-data: 4.0.1
@@ -24357,8 +24390,8 @@ snapshots:
       '@typescript-eslint/parser': 8.20.0(eslint@8.57.1)(typescript@5.7.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705(eslint@8.57.1)
@@ -24385,7 +24418,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.3.7(supports-color@5.5.0)
@@ -24397,7 +24430,7 @@ snapshots:
       is-glob: 4.0.3
       stable-hash: 0.0.4
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -24428,14 +24461,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       '@typescript-eslint/parser': 8.20.0(eslint@8.57.1)(typescript@5.7.3)
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.57.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -24485,7 +24518,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -24496,7 +24529,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.1
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint@8.57.1))(eslint@8.57.1))(eslint@8.57.1)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.20.0(eslint@8.57.1)(typescript@5.7.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.57.1)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -28625,7 +28658,7 @@ snapshots:
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
       '@formatjs/icu-messageformat-parser': 2.7.6
-      '@formatjs/intl': 2.10.0(typescript@5.3.2)
+      '@formatjs/intl': 2.10.0(typescript@5.7.3)
       '@formatjs/intl-displaynames': 6.6.6
       '@formatjs/intl-listformat': 7.5.5
       '@types/hoist-non-react-statics': 3.3.6
@@ -30224,7 +30257,7 @@ snapshots:
     dependencies:
       client-only: 0.0.1
       react: 19.0.0
-      use-sync-external-store: 1.2.2(react@19.0.0)
+      use-sync-external-store: 1.4.0(react@19.0.0)
 
   symbol-tree@3.2.4: {}
 
@@ -31083,6 +31116,10 @@ snapshots:
   use-sync-external-store@1.4.0(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  use-sync-external-store@1.4.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   util-deprecate@1.0.2: {}
 
