@@ -1,0 +1,73 @@
+{
+  "kind": "collectionType",
+  "collectionName": "metas",
+  "info": {
+    "singularName": "meta",
+    "pluralName": "metas",
+    "displayName": "Meta",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["attraction", "thing", "tag", "color", "material"],
+      "default": "thing",
+      "required": true
+    },
+    "reference": {
+      "type": "string"
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::story.story",
+      "mappedBy": "metas"
+    },
+    "locations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::location.location",
+      "inversedBy": "metas"
+    },
+    "collections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collection.collection",
+      "mappedBy": "metas"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "metas"
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crosscheck.crosscheck",
+      "mappedBy": "metas"
+    },
+    "copy": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.content"
+    },
+    "findReplaceReject": {
+      "type": "component",
+      "repeatable": true,
+      "component": "jolly-roger.find-replace-reject"
+    }
+  }
+}

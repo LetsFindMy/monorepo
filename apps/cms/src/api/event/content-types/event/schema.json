@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["event", "entertainment", "holiday", "festival", "other"],
+      "default": "event"
+    },
+    "collections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collection.collection",
+      "mappedBy": "events"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "events"
+    },
+    "locations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::location.location",
+      "inversedBy": "events"
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crosscheck.crosscheck",
+      "mappedBy": "event"
+    },
+    "copy": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.content"
+    },
+    "findReplaceReject": {
+      "type": "component",
+      "repeatable": true,
+      "component": "jolly-roger.find-replace-reject"
+    }
+  }
+}

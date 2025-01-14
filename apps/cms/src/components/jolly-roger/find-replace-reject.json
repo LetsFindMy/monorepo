@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_jolly_roger_find_replace_rejects",
+  "info": {
+    "displayName": "Find Replace Reject",
+    "icon": "feather",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "lookFor": {
+      "type": "string",
+      "required": true
+    },
+    "replaceWith": {
+      "type": "string"
+    },
+    "action": {
+      "type": "enumeration",
+      "enum": ["matchOn", "rejectOn", "replace"],
+      "default": "matchOn",
+      "required": true
+    }
+  }
+}

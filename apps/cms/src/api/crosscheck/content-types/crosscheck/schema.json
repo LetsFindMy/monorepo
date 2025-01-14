@@ -1,0 +1,134 @@
+{
+  "kind": "collectionType",
+  "collectionName": "crosschecks",
+  "info": {
+    "singularName": "crosscheck",
+    "pluralName": "crosschecks",
+    "displayName": "Crosscheck",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "private": true
+    },
+    "mpn": {
+      "type": "string"
+    },
+    "upc_a": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "ean_13": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "gs1_128": {
+      "type": "string",
+      "unique": true
+    },
+    "upc_e": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "ean_8": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "asin": {
+      "type": "string",
+      "unique": true
+    },
+    "tcin": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "dpci": {
+      "type": "string",
+      "unique": true
+    },
+    "themoviedb_id": {
+      "type": "biginteger"
+    },
+    "hardcoverapp_id": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand",
+      "inversedBy": "crosscheck"
+    },
+    "collection": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::collection.collection",
+      "inversedBy": "crosscheck"
+    },
+    "event": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::event.event",
+      "inversedBy": "crosscheck"
+    },
+    "fandom": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::fandom.fandom",
+      "inversedBy": "crosscheck"
+    },
+    "location": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::location.location",
+      "inversedBy": "crosscheck"
+    },
+    "metas": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::meta.meta",
+      "inversedBy": "crosscheck"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product",
+      "inversedBy": "crosscheck"
+    },
+    "product_pdps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-pdp.product-pdp",
+      "mappedBy": "crosscheck"
+    },
+    "story": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::story.story",
+      "inversedBy": "crosscheck"
+    },
+    "story_cast": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::story-cast.story-cast",
+      "inversedBy": "crosscheck"
+    },
+    "story_release": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::story-release.story-release",
+      "inversedBy": "crosscheck"
+    },
+    "product_variants": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-variant.product-variant",
+      "mappedBy": "crosscheck"
+    }
+  }
+}

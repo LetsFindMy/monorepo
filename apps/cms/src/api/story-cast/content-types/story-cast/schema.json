@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "story_casts",
+  "info": {
+    "singularName": "story-cast",
+    "pluralName": "story-casts",
+    "displayName": "Story Cast",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {}
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::story.story",
+      "mappedBy": "cast"
+    },
+    "fandom": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::fandom.fandom",
+      "inversedBy": "cast"
+    },
+    "jollyRoger": {
+      "type": "component",
+      "repeatable": false,
+      "component": "jolly-roger.jolly-roger",
+      "pluginOptions": {}
+    },
+    "collections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collection.collection",
+      "mappedBy": "cast"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "cast"
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crosscheck.crosscheck",
+      "mappedBy": "story_cast"
+    },
+    "copy": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.content"
+    },
+    "findReplaceReject": {
+      "type": "component",
+      "repeatable": true,
+      "component": "jolly-roger.find-replace-reject"
+    }
+  }
+}

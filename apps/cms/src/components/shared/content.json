@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_contents",
+  "info": {
+    "displayName": "Content",
+    "icon": "pencil"
+  },
+  "options": {},
+  "attributes": {
+    "seo_copy": {
+      "type": "text"
+    },
+    "preview_copy": {
+      "type": "text"
+    },
+    "full_markdown": {
+      "type": "richtext"
+    },
+    "seo_name": {
+      "type": "string"
+    }
+  }
+}

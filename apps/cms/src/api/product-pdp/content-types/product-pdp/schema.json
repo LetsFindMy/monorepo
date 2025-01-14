@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_pdps",
+  "info": {
+    "singularName": "product-pdp",
+    "pluralName": "product-pdps",
+    "displayName": "Product PDP",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "pdps"
+    },
+    "urls": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.managed-url"
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::crosscheck.crosscheck",
+      "inversedBy": "product_pdps"
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "default": true
+    },
+    "price_high": {
+      "type": "decimal"
+    },
+    "price_sale": {
+      "type": "decimal"
+    },
+    "sold_by": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::brand.brand",
+      "inversedBy": "product_pdps"
+    },
+    "product_variant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product-variant.product-variant",
+      "inversedBy": "product_pdps"
+    }
+  }
+}

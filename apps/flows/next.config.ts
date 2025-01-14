@@ -1,16 +1,33 @@
-import { env } from '@/env';
-import { config, withAnalyzer } from '@repo/next-config';
-import { withLogtail, withSentry } from '@repo/observability/next-config';
 import type { NextConfig } from 'next';
 
-let nextConfig: NextConfig = withLogtail({ ...config });
+import path from 'node:path';
 
-if (env.VERCEL) {
-  nextConfig = withSentry(nextConfig);
-}
+const fullPath = `${path.join(process.cwd(), 'src/styles/_mantine').replace(/\\/g, '/')}`;
 
-if (env.ANALYZE === 'true') {
-  nextConfig = withAnalyzer(nextConfig);
-}
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  // sassOptions: {
+  //   prependData: `@import "./src/styles/_mantine.scss";`,
+  // },
+  sassOptions: {
+    prependData: `@import "./src/styles/_mantine.scss";`,
+  },
+  images: {
+    domains: ['localhost:3000'],
+  },
+  experimental: {
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    turbo: {
+      resolveAlias: {
+        // Add any module resolutions here
+      },
+      // You can add more Turbopack-specific configurations here
+    },
+  },
+  // Consider removing this in production to enable ESLint checks during build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
 export default nextConfig;

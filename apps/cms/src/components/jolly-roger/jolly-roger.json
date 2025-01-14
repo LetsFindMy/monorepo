@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_jolly_roger_jolly_rogers",
+  "info": {
+    "displayName": "Jolly Roger",
+    "icon": "message",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "chart_sitemaps": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "sitemap": {
+      "type": "string"
+    }
+  }
+}

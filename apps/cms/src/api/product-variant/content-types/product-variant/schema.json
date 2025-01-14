@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "product_variants",
+  "info": {
+    "singularName": "product-variant",
+    "pluralName": "product-variants",
+    "displayName": "Product Variant",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "released_on": {
+      "type": "date"
+    },
+    "released_in": {
+      "type": "customField",
+      "customField": "plugin::country-select.country"
+    },
+    "type": {
+      "type": "string"
+    },
+    "media_type": {
+      "type": "enumeration",
+      "enum": [
+        "hardcover",
+        "softcover",
+        "otherBook",
+        "digitalBookOther",
+        "audible",
+        "kindle"
+      ]
+    },
+    "isbn_10": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "isbn_13": {
+      "type": "biginteger",
+      "unique": true
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::crosscheck.crosscheck",
+      "inversedBy": "product_variants"
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": ["english", "spanish", "french", "italian", "german"]
+    },
+    "publisher": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "product_variants"
+    },
+    "product_pdps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product-pdp.product-pdp",
+      "mappedBy": "product_variant"
+    }
+  }
+}

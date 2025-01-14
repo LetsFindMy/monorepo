@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "fandoms",
+  "info": {
+    "singularName": "fandom",
+    "pluralName": "fandoms",
+    "displayName": "Fandom",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "stories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::story.story",
+      "mappedBy": "fandom"
+    },
+    "cast": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::story-cast.story-cast",
+      "mappedBy": "fandom"
+    },
+    "singleStory": {
+      "type": "boolean",
+      "default": false
+    },
+    "crosscheck": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::crosscheck.crosscheck",
+      "mappedBy": "fandom"
+    },
+    "copy": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.content"
+    },
+    "findReplaceReject": {
+      "type": "component",
+      "repeatable": true,
+      "component": "jolly-roger.find-replace-reject"
+    }
+  }
+}

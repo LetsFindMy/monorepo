@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_managed_urls",
+  "info": {
+    "displayName": "Managed URL",
+    "icon": "attachment",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "isCanonical": {
+      "type": "boolean",
+      "default": true
+    },
+    "urlStatus": {
+      "type": "enumeration",
+      "enum": ["new", "pdp", "ignore"],
+      "default": "new"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "platform_options",
+  "info": {
+    "singularName": "platform-option",
+    "pluralName": "platform-options",
+    "displayName": "Platform Options"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "has_options": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}
