@@ -1,6 +1,6 @@
 {
   "baseBranches": [
-    "newMain"
+    "main"
   ],
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "minimumReleaseAge": "3 days",
