@@ -1,3 +1,126 @@
+# v3.2.10 (Wed Jan 15 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Move search package to addon ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.9 (Wed Jan 15 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of https://github.com/haydenbleasel/next-forge ([@haydenbleasel](https://github.com/haydenbleasel))
+- Create basic search package ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update schema.prisma ([@haydenbleasel](https://github.com/haydenbleasel))
+- Fix button hydration issue ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.8 (Wed Jan 15 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Redesign CLI with Ora, fix maxBuffer issue on diff ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.7 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Fix typo ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.6 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Resolves #394 ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.5 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Simplify run command ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.4 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Fix typo, update workspace config in root package.json ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.3 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Remove CLI defaults, update docs ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.2 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Fix exists import typo ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.1 (Tue Jan 14 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Resolves #402 ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v3.2.0 (Tue Jan 14 2025)
 
 #### 🚀 Enhancement
