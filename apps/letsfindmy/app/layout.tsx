@@ -6,13 +6,6 @@ import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
 import { Providers } from './providers';
-import { AppLayout } from '#/ui/app';
-import Header from '#/components/header';
-
-export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
-};
 
 export default function RootLayout({ children }: { children: any }) {
   return (
@@ -27,10 +20,7 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <Providers>
-          <AppLayout>
-            <Header />
-            <main>{children}</main>
-          </AppLayout>
+          <>{children}</>
         </Providers>
       </body>
     </html>

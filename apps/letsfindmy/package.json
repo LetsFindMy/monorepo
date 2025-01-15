@@ -25,6 +25,7 @@
     "@repo/database": "workspace:*",
     "@simplewebauthn/server": "^13.1.0",
     "@tabler/icons-react": "^3.28.1",
+    "@vercel/edge-config": "^1.4.0",
     "@vercel/kv": "^1.0.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",

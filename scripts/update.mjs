@@ -112,7 +112,7 @@ const getDiff = async (from, to) => {
       (
         await exec(
           `git diff ${from.version} ${to.version} -- "${cleanFileName(file)}"`,
-          { maxBuffer: 1024 * 1024 * 1024 }
+          { maxBuffer: 1024 * 1024 * 1024 },
         )
       )
         .toString()
@@ -169,7 +169,7 @@ export const update = async (options) => {
       {
         version: to,
         files: toFiles,
-      }
+      },
     );
 
     title.text = 'Moving back to original directory...';
