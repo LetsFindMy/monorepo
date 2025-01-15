@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 import type { ComponentProps } from 'react';
 
 export const AuthProvider = (
-  properties: ComponentProps<typeof ClerkProvider>
+  properties: ComponentProps<typeof ClerkProvider>,
 ) => {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';

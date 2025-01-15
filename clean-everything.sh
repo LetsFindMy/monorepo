@@ -29,5 +29,3 @@ rm -rf pnpm-lock.yaml
 # Build process
 # tee >(logger) <<< "Build Everything"
 # bash build-everything.sh
-
-pnpm self-update

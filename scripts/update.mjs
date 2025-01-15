@@ -60,7 +60,7 @@ const getFiles = (version) => {
  */
 const updateFiles = async (files) => {
   log(
-    chalk.green(`Found ${files.length} files to update, applying updates...`)
+    chalk.green(`Found ${files.length} files to update, applying updates...`),
   );
 
   const cwd = process.cwd();
@@ -125,7 +125,7 @@ const getDiff = async (from, to) => {
     const hasChanged =
       !from.files.includes(file) ||
       execSync(
-        `git diff ${from.version} ${to.version} -- "${cleanFileName(file)}"`
+        `git diff ${from.version} ${to.version} -- "${cleanFileName(file)}"`,
       )
         .toString()
         .trim() !== '';
@@ -175,7 +175,7 @@ export const update = async (options) => {
       {
         version: to,
         files: toFiles,
-      }
+      },
     );
 
     // Move back to the original directory

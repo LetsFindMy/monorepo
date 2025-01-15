@@ -18,5 +18,5 @@ type PostHogProviderProps = {
 };
 
 export const PostHogProvider = (
-  properties: Omit<PostHogProviderProps, 'client'>
+  properties: Omit<PostHogProviderProps, 'client'>,
 ) => <PostHogProviderRaw client={analytics} {...properties} />;

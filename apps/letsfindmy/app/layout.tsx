@@ -1,42 +1,38 @@
-import '@repo/design-system/styles/globals.css';
-import './styles/web.css';
-import { legal } from '@repo/cms';
-import { Feed } from '@repo/cms/components/feed';
-import { DesignSystemProvider } from '@repo/design-system';
-import { fonts } from '@repo/design-system/lib/fonts';
-import { cn } from '@repo/design-system/lib/utils';
-import { Toolbar } from '@repo/feature-flags/components/toolbar';
-import type { ReactNode } from 'react';
-import { Footer } from './components/footer';
-import { Header } from './components/header';
-import { Toolbar as CMSToolbar } from '@repo/cms/components/toolbar';
+import '@mantine/core/styles.css';
+import '#/styles/global.scss';
+import './globals.css';
 
-type RootLayoutProperties = {
-  readonly children: ReactNode;
+import React from 'react';
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
+
+import { Providers } from './providers';
+import { AppLayout } from '#/ui/app';
+import Header from '#/components/header';
+
+export const metadata = {
+  title: 'Mantine Next.js template',
+  description: 'I am using Mantine with Next.js!',
 };
 
-const RootLayout = ({ children }: RootLayoutProperties) => (
-  <html
-    lang="en"
-    className={cn(fonts, 'scroll-smooth')}
-    suppressHydrationWarning
-  >
-    <body>
-      <DesignSystemProvider>
-        <Header />
-        {children}
-        <Feed queries={[legal.postsQuery]}>
-          {/* biome-ignore lint/suspicious/useAwait: "Server Actions must be async" */}
-          {async ([data]) => {
-            'use server';
-            return <Footer legalPostsMeta={data.legalPages.items} />;
-          }}
-        </Feed>
-      </DesignSystemProvider>
-      <Toolbar />
-      <CMSToolbar />
-    </body>
-  </html>
-);
-
-export default RootLayout;
+export default function RootLayout({ children }: { children: any }) {
+  return (
+    <html lang="en" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
+      </head>
+      <body>
+        <Providers>
+          <AppLayout>
+            <Header />
+            <main>{children}</main>
+          </AppLayout>
+        </Providers>
+      </body>
+    </html>
+  );
+}

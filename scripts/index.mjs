@@ -11,7 +11,7 @@ program
   .option(
     '--package-manager <manager>',
     'Package manager to use (npm, yarn, bun, pnpm)',
-    'pnpm'
+    'pnpm',
   )
   .option('--disable-git', 'Disable git initialization')
   .action(initialize);

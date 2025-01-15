@@ -17,7 +17,7 @@ export const getFlags = async (request: NextRequest) => {
         description: flag.description,
         options: flag.options,
       },
-    ])
+    ]),
   );
 
   return NextResponse.json<ApiData>({

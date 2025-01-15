@@ -20,7 +20,7 @@ export const Status = async () => {
         headers: {
           Authorization: `Bearer ${apiKey}`,
         },
-      }
+      },
     );
 
     if (!response.ok) {

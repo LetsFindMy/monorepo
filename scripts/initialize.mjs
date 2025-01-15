@@ -131,7 +131,7 @@ const setupOrm = (packageManager) => {
  */
 const updatePackageManagerConfiguration = async (
   projectDir,
-  packageManager
+  packageManager,
 ) => {
   log(chalk.green('Updating package manager configuration...'));
 
@@ -302,8 +302,8 @@ export const initialize = async (options) => {
     log(chalk.green('Done!'));
     log(
       chalk.yellow(
-        'Please make sure you install the Mintlify CLI and Stripe CLI before starting the project.'
-      )
+        'Please make sure you install the Mintlify CLI and Stripe CLI before starting the project.',
+      ),
     );
   } catch (error) {
     log(chalk.red('Failed to initialize project:', error.message));

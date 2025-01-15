@@ -1873,18 +1873,20 @@ Thank you, null[@idkgene](https://github.com/idkgene), for all your work!
 #### Collaboration ([#249](https://github.com/haydenbleasel/next-forge/pull/249))
 
 - **New Features**
-	- Introduced `AvatarStack` and `Cursors` components for enhanced user presence and cursor tracking in collaborative environments.
-	- Added a new `CollaborationProvider` component to facilitate real-time collaboration features.
-	- Implemented user search functionality within the organization.
+
+  - Introduced `AvatarStack` and `Cursors` components for enhanced user presence and cursor tracking in collaborative environments.
+  - Added a new `CollaborationProvider` component to facilitate real-time collaboration features.
+  - Implemented user search functionality within the organization.
 
 - **Improvements**
-	- Expanded configuration options with the addition of the `LIVEBLOCKS_SECRET` environment variable across multiple applications.
+
+  - Expanded configuration options with the addition of the `LIVEBLOCKS_SECRET` environment variable across multiple applications.
 
 - **Bug Fixes**
-	- Adjusted the `UserButton` styling to ensure it occupies the full width of the sidebar.
 
-- **Chores**
-	- Added new dependencies: `@repo/collaboration` and `fuse.js` to the project.
+  - Adjusted the `UserButton` styling to ensure it occupies the full width of the sidebar.
+
+- **Chores** - Added new dependencies: `@repo/collaboration` and `fuse.js` to the project.
 <!-- end of auto-generated comment: release notes by coderabbit.ai -->
 
 ---

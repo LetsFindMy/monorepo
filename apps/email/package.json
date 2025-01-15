@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "build": "email build",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "email dev --port 3003",
     "export": "email export",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.10.5",
-    "@types/react": "^19.0.4",
-    "typescript": "^5.7.2"
+    "@types/node": "^22.10.6",
+    "@types/react": "^19.0.7",
+    "typescript": "^5.7.3"
   }
 }

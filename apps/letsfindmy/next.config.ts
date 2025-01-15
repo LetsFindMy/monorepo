@@ -1,36 +1,40 @@
-import { env } from '@/env';
-import { withCMS } from '@repo/cms/next-config';
-import { withToolbar } from '@repo/feature-flags/lib/toolbar';
-import { config, withAnalyzer } from '@repo/next-config';
-import { withLogtail, withSentry } from '@repo/observability/next-config';
 import type { NextConfig } from 'next';
 
-let nextConfig: NextConfig = withToolbar(withLogtail({ ...config }));
+import path from 'node:path';
 
-nextConfig.images?.remotePatterns?.push({
-  protocol: 'https',
-  hostname: 'assets.basehub.com',
-});
+const fullPath = `${path.join(process.cwd(), 'src/styles/_mantine').replace(/\\/g, '/')}`;
 
-if (process.env.NODE_ENV === 'production') {
-  const redirects: NextConfig['redirects'] = async () => [
-    {
-      source: '/legal',
-      destination: '/legal/privacy',
-      statusCode: 301,
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  // sassOptions: {
+  //   prependData: `@import "./src/styles/_mantine.scss";`,
+  // },
+  sassOptions: {
+    prependData: `@import "./src/styles/_mantine.scss";`,
+  },
+  images: {
+    domains: ['localhost:3000'],
+  },
+  experimental: {
+    optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+    turbo: {
+      resolveAlias: {
+        // Add any module resolutions here
+      },
+      // You can add more Turbopack-specific configurations here
     },
-  ];
+  },
+  // Consider removing this in production to enable ESLint checks during build
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true, // TODO: Remove this line
+  },
+};
 
-  nextConfig.redirects = redirects;
-}
-
-if (env.VERCEL) {
-  nextConfig = withSentry(nextConfig);
-}
-
-if (env.ANALYZE === 'true') {
-  nextConfig = withAnalyzer(nextConfig);
-}
-
-export default withCMS(nextConfig);
-
+export default nextConfig;

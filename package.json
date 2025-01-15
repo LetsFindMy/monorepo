@@ -1,39 +1,33 @@
 {
   "name": "monorepo",
-  "version": "3.1.13",
-  "bin": {
-    "next-forge": "scripts/init.mjs"
-  },
-  "files": [
-    "scripts/init.mjs"
-  ],
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "ultracite lint",
-    "format": "ultracite format",
-    "test": "turbo test",
     "analyze": "turbo analyze",
+    "build": "turbo build",
     "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
     "bump-ui": "npx shadcn@latest add --all --overwrite -c packages/design-system",
+    "dev": "turbo dev",
+    "doppler": "turbo run doppler",
+    "eslint": "turbo run lint",
+    "lint": "pnpm prettier && pnpm eslint",
     "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
-    "clean": "git clean -xdf node_modules"
+    "prettier": "prettier --write \"**/*.{ts,tsx,json,md,mdx,mjs,css,scss,yaml,yml,graphql,gql,php,sh}\"",
+    "test": "turbo test"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.0.0"
   },
   "devDependencies": {
     "@auto-it/first-time-contributor": "^11.3.0",
     "@biomejs/biome": "^1.9.4",
     "@repo/typescript-config": "workspace:*",
-    "turbo": "^2.3.3",
     "@turbo/gen": "^2.3.3",
-    "typescript": "^5.7.2",
-    "ultracite": "^4.1.14"
-  },
-  "engines": {
-    "node": ">=20"
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.3"
   },
   "packageManager": "pnpm@9.15.4",
-  "dependencies": {
-    "chalk": "^5.4.1",
-    "commander": "^13.0.0"
+  "engines": {
+    "node": ">=20"
   }
 }
