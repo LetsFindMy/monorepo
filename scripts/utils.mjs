@@ -1,4 +1,6 @@
+import { exec as execRaw } from 'node:child_process';
 import { join } from 'node:path';
+import { promisify } from 'node:util';
 
 export const { log } = console;
 
@@ -33,9 +35,4 @@ export const semver = /^\d+\.\d+\.\d+$/;
 
 export const tempDirName = 'next-forge-update';
 
-export const runCommand = {
-  pnpm: 'pnpm create next-app@latest',
-  npm: 'npx create-next-app@latest',
-  yarn: 'yarn create next-app@latest',
-  bun: 'bun create next-app@latest',
-};
+export const exec = promisify(execRaw);
