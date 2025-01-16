@@ -1,5 +1,5 @@
 {
-  "name": "@repo/cms",
+  "name": "cms",
   "private": true,
   "scripts": {
     "build": "strapi build",
