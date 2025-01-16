@@ -8,9 +8,8 @@ export class StrapiUrlBuilder {
 
   addPopulate(populate?: string | Record<string, unknown>) {
     if (!populate) return this;
-    const populateValue = typeof populate === 'string'
-      ? populate
-      : JSON.stringify(populate);
+    const populateValue =
+      typeof populate === 'string' ? populate : JSON.stringify(populate);
     this.#url.searchParams.append('populate', populateValue);
     return this;
   }
@@ -28,7 +27,11 @@ export class StrapiUrlBuilder {
 
   addPagination(page?: number, pageSize?: number) {
     page && this.#url.searchParams.append('pagination[page]', page.toString());
-    pageSize && this.#url.searchParams.append('pagination[pageSize]', pageSize.toString());
+    pageSize &&
+      this.#url.searchParams.append(
+        'pagination[pageSize]',
+        pageSize.toString(),
+      );
     return this;
   }
 
@@ -38,11 +41,10 @@ export class StrapiUrlBuilder {
 }
 
 export async function fetchFromAPI<T>(url: string, tags: string[] = []) {
-// Constants
-const STRAPI_URL = process.env.STRAPI_URL;
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
-const DEFAULT_REVALIDATE = 3600;
-
+  // Constants
+  const STRAPI_URL = process.env.STRAPI_URL;
+  const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
+  const DEFAULT_REVALIDATE = 3600;
 
   if (!STRAPI_URL) {
     throw new Error('STRAPI_URL environment variable is not configured');
@@ -68,7 +70,7 @@ const DEFAULT_REVALIDATE = 3600;
     return res.json() as Promise<T>;
   } catch (error) {
     throw new Error(
-      `API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      `API request failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
     );
   }
 }

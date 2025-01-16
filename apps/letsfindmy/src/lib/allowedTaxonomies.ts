@@ -1,57 +1,104 @@
-// Define the structure of our allowed types
-const allowedTypes = {
-  LOCATION: ['locations', 'places'] as const,
-  META: ['attractions', 'things', 'tags', 'colors', 'materials'] as const
+// Define the structure of our allowed types, grouped by Strapi model
+const taxonomyMapping = {
+  META: {
+    attractions: 'attraction',
+    things: 'thing',
+    tags: 'tag',
+    colors: 'color',
+    materials: 'material',
+  },
+  EVENT: {
+    events: 'event',
+    entertainments: 'entertainment',
+    holidays: 'holiday',
+    festivals: 'festival',
+    others: 'other',
+  },
+  LOCATION: {
+    locations: 'location',
+    places: 'place',
+    themeParks: 'themePark',
+    lodgings: 'lodging',
+    ships: 'ship',
+    restaurants: 'restaurant',
+  },
+  BRAND: {
+    retailers: 'retailer',
+    musicians: 'musician',
+    authors: 'author',
+    artists: 'artist',
+    painters: 'painter',
+    teams: 'team',
+    influencers: 'influencer',
+    studios: 'studio',
+  },
+  COLLECTION: {
+    productLines: 'productLine',
+    collaborations: 'collaboration',
+    platforms: 'platform',
+    users: 'user',
+  },
+  FANDOM: {
+    fandoms: 'fandom',
+  },
+  PRODUCT_CATEGORY: {
+    adults: 'adults',
+    kids: 'kids',
+    baby: 'baby',
+    home: 'home',
+    everyday: 'everyday',
+    toysGames: 'toys-games',
+  },
+  CAST: {
+    cast: 'story-cast',
+  },
 } as const;
 
-// Create a type for the keys of allowedTypes (i.e., 'LOCATION' | 'META')
-type ModelKey = keyof typeof allowedTypes;
+type ModelKey = keyof typeof taxonomyMapping;
+type RouteName = keyof (typeof taxonomyMapping)[ModelKey];
+type StrapiType = (typeof taxonomyMapping)[ModelKey][RouteName];
 
-// Create a type that represents all possible values across all models
-type AllowedType = typeof allowedTypes[ModelKey][number];
+const ALLOWED_TAXONOMIES = Object.values(taxonomyMapping).flatMap(
+  Object.keys,
+) as RouteName[];
 
-// Function to check if a type is allowed for a specific model
-function isAllowedTypeForModel(type: string, model: ModelKey): type is AllowedType {
-  return (allowedTypes[model] as readonly string[]).includes(type);
+function isAllowedTaxonomy(type: string): type is RouteName {
+  return ALLOWED_TAXONOMIES.includes(type as RouteName);
 }
 
-// Function to check if a type is allowed across all models
-function isAllowedType(type: string): type is AllowedType {
-  return Object.values(allowedTypes).flat().includes(type as any);
-}
-
-// Get all allowed types as a flat array
-const ALLOWED_TAXONOMIES = Object.values(allowedTypes).flat() as AllowedType[];
-
-// Function to get types for a specific model (if needed externally)
-function getTypesForModel(model: ModelKey): readonly string[] {
-  return allowedTypes[model];
-}
-
-// Function to convert taxonomy to collection
-function taxonomyToCollection(taxonomy: string): ModelKey {
-  const singularTaxonomy = taxonomy.endsWith('s') ? taxonomy.slice(0, -1) : taxonomy;
-
-  for (const [collection, taxonomies] of Object.entries(allowedTypes)) {
-    if (taxonomies.some(t => t === taxonomy || t === singularTaxonomy + 's')) {
-      return collection as ModelKey;
+function getModelKey(routeName: RouteName): ModelKey {
+  for (const [key, value] of Object.entries(taxonomyMapping)) {
+    if (routeName in value) {
+      return key as ModelKey;
     }
   }
+  throw new Error(`Invalid route name: ${routeName}`);
+}
 
-  throw new Error(`Invalid taxonomy: ${taxonomy}. Allowed taxonomies are: ${ALLOWED_TAXONOMIES.join(', ')}`);
+function routeNameToStrapiType(routeName: RouteName): StrapiType {
+  const modelKey = getModelKey(routeName);
+  return taxonomyMapping[modelKey][routeName];
+}
+
+function strapiTypeToRouteName(strapiType: StrapiType): RouteName {
+  for (const [modelKey, mappings] of Object.entries(taxonomyMapping)) {
+    const entry = Object.entries(mappings).find(
+      ([_, value]) => value === strapiType,
+    );
+    if (entry) {
+      return entry[0] as RouteName;
+    }
+  }
+  throw new Error(`Invalid Strapi type: ${strapiType}`);
 }
 
 export {
-  allowedTypes,
+  taxonomyMapping,
   ALLOWED_TAXONOMIES,
-  isAllowedType,
-  isAllowedTypeForModel,
-  getTypesForModel,
-  taxonomyToCollection
+  isAllowedTaxonomy,
+  getModelKey,
+  routeNameToStrapiType,
+  strapiTypeToRouteName,
 };
 
-export type {
-  ModelKey,
-  AllowedType
-};
-
+export type { ModelKey, RouteName, StrapiType };

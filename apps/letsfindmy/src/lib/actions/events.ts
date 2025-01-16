@@ -27,7 +27,6 @@ interface Event {
 // Constants
 const BATCH_SIZE = 100;
 
-
 // API Configuration
 const RELATIONS = {
   fields: ['name', 'slug', 'type'],
@@ -38,7 +37,6 @@ const DEFAULT_FIELDS = {
   single: ['name', 'slug', 'type'],
   list: ['name', 'slug', 'type'],
 } as const;
-
 
 // Server Actions
 export async function getEvents() {
@@ -53,7 +51,7 @@ export async function getEvents() {
       .addFields(DEFAULT_FIELDS.list)
       .addPagination(1, BATCH_SIZE)
       .toString(),
-    ['events']
+    ['events'],
   );
 
   allEvents.push(...firstPage.data);
@@ -63,7 +61,7 @@ export async function getEvents() {
   if (totalPages > 1) {
     const remainingPages = Array.from(
       { length: totalPages - 1 },
-      (_, i) => i + 2
+      (_, i) => i + 2,
     );
 
     const responses = await Promise.all(
@@ -74,9 +72,9 @@ export async function getEvents() {
             .addFields(DEFAULT_FIELDS.list)
             .addPagination(page, BATCH_SIZE)
             .toString(),
-          ['events']
-        )
-      )
+          ['events'],
+        ),
+      ),
     );
 
     responses.forEach((response) => allEvents.push(...response.data));
@@ -94,7 +92,7 @@ export async function getEvent(slug: string, fields?: string[]) {
       .addPopulate(RELATIONS.populate)
       .addFields(fields ?? DEFAULT_FIELDS.single)
       .toString(),
-    ['events', `event-${slug}`]
+    ['events', `event-${slug}`],
   );
 
   if (!response.data.length) {

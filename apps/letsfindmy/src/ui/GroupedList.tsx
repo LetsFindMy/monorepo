@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { List, Stack, Badge } from '@mantine/core';
 import { Anchor } from '@mantine/core';
@@ -36,20 +36,23 @@ export interface GroupedListProps<T extends ListItem> {
 
 export const groupItemsByType = <T extends ListItem>(
   items: T[],
-  useGroups: boolean
+  useGroups: boolean,
 ): Record<string, T[]> => {
   if (!useGroups) {
     return { all: items };
   }
 
-  return items.reduce((acc, item) => {
-    const type = item.type || 'other';
-    if (!acc[type]) {
-      acc[type] = [];
-    }
-    acc[type].push(item);
-    return acc;
-  }, {} as Record<string, T[]>);
+  return items.reduce(
+    (acc, item) => {
+      const type = item.type || 'other';
+      if (!acc[type]) {
+        acc[type] = [];
+      }
+      acc[type].push(item);
+      return acc;
+    },
+    {} as Record<string, T[]>,
+  );
 };
 
 export const sortTypes = (types: string[]): string[] => {
@@ -74,7 +77,7 @@ const TypeGroup = <T extends ListItem>({
   items,
   useGroups,
   typeConfigs,
-  basePath
+  basePath,
 }: TypeGroupProps<T>) => (
   <div key={type}>
     {useGroups && (
@@ -82,17 +85,9 @@ const TypeGroup = <T extends ListItem>({
         {typeConfigs?.[type]?.label || type}
       </Badge>
     )}
-    <List
-      spacing="sm"
-      size="lg"
-      listStyleType="none"
-    >
+    <List spacing="sm" size="lg" listStyleType="none">
       {items.map((item) => (
-        <ListItemComponent
-          key={item.id}
-          item={item}
-          basePath={basePath}
-        />
+        <ListItemComponent key={item.id} item={item} basePath={basePath} />
       ))}
     </List>
   </div>
@@ -101,7 +96,7 @@ const TypeGroup = <T extends ListItem>({
 export const GroupedList = <T extends ListItem>({
   items,
   typeConfigs,
-  basePath
+  basePath,
 }: GroupedListProps<T>) => {
   const useGroups = !!typeConfigs;
   const groupedItems = groupItemsByType(items, useGroups);

@@ -49,9 +49,9 @@ export async function getMetas(type?: MetaType) {
     .addFields(DEFAULT_FIELDS.list)
     .addPagination(1, BATCH_SIZE);
 
-if (type) {
-  urlBuilder.addFilter('type', type.replace(/s$/, ''));
-}
+  if (type) {
+    urlBuilder.addFilter('type', type.replace(/s$/, ''));
+  }
 
   const firstPage = await fetchFromAPI<{
     data: Meta[];
@@ -65,7 +65,7 @@ if (type) {
   if (totalPages > 1) {
     const remainingPages = Array.from(
       { length: totalPages - 1 },
-      (_, i) => i + 2
+      (_, i) => i + 2,
     );
 
     const responses = await Promise.all(
@@ -76,9 +76,9 @@ if (type) {
             .addFields(DEFAULT_FIELDS.list)
             .addPagination(page, BATCH_SIZE)
             .toString(),
-          ['metas']
-        )
-      )
+          ['metas'],
+        ),
+      ),
     );
 
     responses.forEach((response) => allMetas.push(...response.data));
@@ -90,7 +90,11 @@ if (type) {
   };
 }
 
-export async function getMeta(slug: string, type?: MetaType, fields?: string[]) {
+export async function getMeta(
+  slug: string,
+  type?: MetaType,
+  fields?: string[],
+) {
   const urlBuilder = new StrapiUrlBuilder('metas', slug)
     .addPopulate(RELATIONS.populate)
     .addFields(fields ?? DEFAULT_FIELDS.single);
@@ -99,14 +103,15 @@ export async function getMeta(slug: string, type?: MetaType, fields?: string[]) 
     urlBuilder.addFilter('type', type);
   }
 
-  const response = await fetchFromAPI<{ data: Meta[] }>(
-    urlBuilder.toString(),
-    ['metas', `meta-${slug}`, ...(type ? [`meta-${type}-${slug}`] : [])]
-  );
+  const response = await fetchFromAPI<{ data: Meta[] }>(urlBuilder.toString(), [
+    'metas',
+    `meta-${slug}`,
+    ...(type ? [`meta-${type}-${slug}`] : []),
+  ]);
 
   if (!response.data.length) {
     throw new Error(
-      `Meta with slug "${slug}"${type ? ` and type "${type}"` : ''} not found`
+      `Meta with slug "${slug}"${type ? ` and type "${type}"` : ''} not found`,
     );
   }
 

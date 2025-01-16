@@ -20,6 +20,11 @@
       "type": "uid",
       "targetField": "name"
     },
+    "type": {
+      "type": "enumeration",
+      "enum": ["adults", "kids", "baby", "home", "everyday", "toys-games"],
+      "required": true
+    },
     "children": {
       "type": "relation",
       "relation": "oneToMany",

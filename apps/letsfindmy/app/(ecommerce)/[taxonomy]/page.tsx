@@ -2,59 +2,69 @@ import { Suspense } from 'react';
 import { Container, Title, Text } from '@mantine/core';
 import { GroupedList } from '#/ui/GroupedList';
 import { notFound } from 'next/navigation';
-import { ALLOWED_TAXONOMIES, isAllowedType, taxonomyToCollection, ModelKey } from '#/lib/allowedTaxonomies';
-import { getMetas } from '@/src/lib/actions/metas';
+import {
+  ALLOWED_TAXONOMIES,
+  isAllowedTaxonomy,
+  RouteName,
+} from '#/lib/allowedTaxonomies';
+import { getTaxonomyData } from '#/lib/taxonomyUtils';
 
 export function generateStaticParams() {
-  return ALLOWED_TAXONOMIES.map(taxonomy => ({ taxonomy }));
+  return ALLOWED_TAXONOMIES.map((taxonomy) => ({ taxonomy }));
 }
 
-export default async function DynamicPage({ params }: { params: Promise<{ taxonomy: string }> }) {
-  const { taxonomy } = await params;
+export default async function DynamicPage({
+  params,
+}: {
+  params: { taxonomy: string };
+}) {
+  const { taxonomy } = params;
 
-  if (!isAllowedType(taxonomy)) {
+  if (!isAllowedTaxonomy(taxonomy)) {
     notFound();
   }
 
   try {
-    const collection: ModelKey = taxonomyToCollection(taxonomy);
-    let items;
-    switch (collection) {
-      case 'META':
-        items = await getMetas(taxonomy as any);
-        break;
-      case 'LOCATION':
-        // Handle LOCATION case
-        break;
-      default:
-        throw new Error(`Unhandled collection type: ${collection}`);
-    }
-
-    const title = taxonomy.charAt(0).toUpperCase() + taxonomy.slice(1);
-
-    console.log('items,', items)
+    const { data: items } = await getTaxonomyData(taxonomy as RouteName);
+    const title =
+      taxonomy === 'cast'
+        ? 'Cast'
+        : taxonomy.charAt(0).toUpperCase() + taxonomy.slice(1);
 
     return (
-      <Suspense fallback={
+      <Suspense
+        fallback={
+          <Container size="sm" py="xl">
+            <Title order={1} ta="center" mb="xl">
+              {title}
+            </Title>
+            <Text c="dimmed" ta="center">
+              Loading {taxonomy}...
+            </Text>
+          </Container>
+        }
+      >
         <Container size="sm" py="xl">
-          <Title order={1} ta="center" mb="xl">{title}</Title>
-          <Text c="dimmed" ta="center">Loading {taxonomy}s...</Text>
-        </Container>
-      }>
-        <Container size="sm" py="xl">
-          <Title order={1} ta="center" mb="xl">{title}</Title>
-          <GroupedList items={items.data} basePath={taxonomy} />
+          <Title order={1} ta="center" mb="xl">
+            {title}
+          </Title>
+          <GroupedList items={items} basePath={taxonomy} />
         </Container>
       </Suspense>
     );
   } catch (error) {
-    console.error(`Error fetching ${taxonomy}s:`, error);
+    console.error(`Error fetching ${taxonomy}:`, error);
     return (
       <Container size="sm" py="xl">
-        <Title order={1} ta="center" mb="xl">{taxonomy.charAt(0).toUpperCase() + taxonomy.slice(1)}s</Title>
-        <Text c="dimmed" ta="center">Unable to load {taxonomy}s at this time. Please try again later.</Text>
+        <Title order={1} ta="center" mb="xl">
+          {taxonomy === 'cast'
+            ? 'Cast'
+            : taxonomy.charAt(0).toUpperCase() + taxonomy.slice(1)}
+        </Title>
+        <Text c="dimmed" ta="center">
+          Unable to load {taxonomy} at this time. Please try again later.
+        </Text>
       </Container>
     );
   }
 }
-
