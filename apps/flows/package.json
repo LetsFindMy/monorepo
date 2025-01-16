@@ -5,6 +5,7 @@
     "analyze": "ANALYZE=true next build",
     "prebuild": "pnpm prisma:generate",
     "build": "next build",
+    "build:turbo": "npx turbo build",
     "dev": "next dev  -p 3003 --turbo",
     "postinstall": "prisma generate --schema=./src/lib/prisma/schema.prisma",
     "prisma:format": "prisma format",
