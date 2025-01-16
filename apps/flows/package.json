@@ -7,6 +7,7 @@
     "build": "next build",
     "build:turbo": "npx turbo build",
     "dev": "next dev  -p 3003 --turbo",
+    "doppler": "doppler secrets download --no-file --format env > .env",
     "postinstall": "prisma generate --schema=./src/lib/prisma/schema.prisma",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma format && prisma generate",
@@ -16,8 +17,7 @@
     "prisma:validate": "prisma validate",
     "start": "next start",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
-    "tsc": "npx tsc --noEmit",
-    "doppler": "doppler secrets download --no-file --format env > .env"
+    "tsc": "npx tsc --noEmit"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",

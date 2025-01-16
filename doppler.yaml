@@ -10,7 +10,6 @@ setup:
   - project: next-apps
     config: flm
     path: ./apps/letsfindmy
-
 # Global secrets that are shared across all projects
 # Uncomment and adjust if needed
 # root:
