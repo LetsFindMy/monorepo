@@ -1,5 +1,5 @@
 import { auth } from '#/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 import { get } from '@vercel/edge-config';
 
 // Or like this if you need to do something here.

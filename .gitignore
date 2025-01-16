@@ -50,3 +50,4 @@ yarn-error.log*
 
 /apps/cms/exports/
 local-only/
+/apps/cms/src/extensions/documentation
