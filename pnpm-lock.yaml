@@ -95,7 +95,7 @@ importers:
   apps/docs:
     devDependencies:
       typescript:
-        specifier: ^5.7.3
+        specifier: ^5.7.2
         version: 5.7.3
 
   apps/email:
@@ -440,12 +440,6 @@ importers:
       prisma:
         specifier: ^6.2.1
         version: 6.2.1
-
-  docs:
-    devDependencies:
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.3
 
   packages/ai:
     dependencies:

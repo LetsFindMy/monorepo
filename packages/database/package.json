@@ -1,12 +1,10 @@
 {
   "name": "@repo/database",
- 
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
     "analyze": "prisma generate --no-hints",
     "build": "prisma generate --no-hints --no-engine",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "prisma:format": "prisma format",
     "prisma:generate": "prisma format && prisma generate",
     "prisma:introspect": "prisma introspect",

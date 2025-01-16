@@ -1,9 +1,7 @@
 {
   "name": "@repo/analytics",
- 
   "private": true,
   "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {

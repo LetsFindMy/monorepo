@@ -1,10 +1,8 @@
 {
   "name": "email",
- 
   "private": true,
   "scripts": {
     "build": "email build",
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
     "dev": "email dev --port 3004",
     "export": "email export",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
