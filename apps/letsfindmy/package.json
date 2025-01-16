@@ -37,7 +37,7 @@
     "next-auth": "beta",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "resend": "^3.5.0",
+    "resend": "^4.0.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "unstorage": "^1.14.4",
