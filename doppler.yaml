@@ -1,0 +1,19 @@
+setup:
+  - project: cms
+    config: local
+    path: ./apps/cms
+
+  - project: next-apps
+    config: flows
+    path: ./apps/flows
+
+  - project: next-apps
+    config: flm
+    path: ./apps/letsfindmy
+
+# Global secrets that are shared across all projects
+# Uncomment and adjust if needed
+# root:
+#   project: monorepo-shared
+#   config: dev
+
