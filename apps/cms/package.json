@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "strapi build",
+    "build:turbo": "npx turbo build",
     "clean": "rm -rf .cache build",
     "deploy": "strapi deploy",
     "dev": "strapi develop",

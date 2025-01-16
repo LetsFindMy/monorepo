@@ -4,6 +4,7 @@
   "scripts": {
     "analyze": "ANALYZE=true next build",
     "build": "next build",
+    "build:turbo": "npx turbo build",
     "dev": "next dev -p 3002 --turbo",
     "start": "next start",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
