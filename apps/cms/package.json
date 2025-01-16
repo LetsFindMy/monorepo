@@ -17,8 +17,8 @@
     "@strapi/strapi": "^5.8.0",
     "better-sqlite3": "^11.8.0",
     "mysql2": "^3.12.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-router-dom": "^6.28.1",
     "strapi-plugin-country-select": "^2.0.0",
     "strapi-plugin-multi-select": "^2.1.1",
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.6",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "turbo": "^2.3.3",
     "typescript": "^5.7.3"
   }
