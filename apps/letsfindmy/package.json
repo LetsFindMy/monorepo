@@ -8,7 +8,8 @@
     "dev": "next dev -p 3002 --turbo",
     "start": "next start",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
-    "tsc": "npx tsc --noEmit"
+    "tsc": "npx tsc --noEmit",
+    "doppler": "doppler secrets download --no-file --format env > .env"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
