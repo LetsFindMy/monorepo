@@ -15,7 +15,8 @@
     "prisma:validate": "prisma validate",
     "start": "next start",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
-    "tsc": "npx tsc --noEmit"
+    "tsc": "npx tsc --noEmit",
+    "doppler": "doppler secrets download --no-file --format env > .env"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^17.0.0",

@@ -8,7 +8,8 @@
     "dev": "strapi develop",
     "develop": "strapi develop",
     "start": "strapi start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "doppler": "doppler secrets download --no-file --format env > .env"
   },
   "dependencies": {
     "@strapi/plugin-color-picker": "^5.8.0",
