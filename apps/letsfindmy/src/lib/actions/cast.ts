@@ -56,7 +56,7 @@ export async function getCast() {
   const allCastMembers: CastMember[] = [];
 
   const urlBuilder = new StrapiUrlBuilder('story-casts')
-    .addPopulate(RELATIONS.populate)
+    // .addPopulate(RELATIONS.populate)
     .addFields(DEFAULT_FIELDS.list)
     .addPagination(1, BATCH_SIZE);
 
@@ -79,7 +79,7 @@ export async function getCast() {
       remainingPages.map((page) =>
         fetchFromAPI<{ data: CastMember[] }>(
           new StrapiUrlBuilder('story-casts')
-            .addPopulate(RELATIONS.populate)
+            // .addPopulate(RELATIONS.populate)
             .addFields(DEFAULT_FIELDS.list)
             .addPagination(page, BATCH_SIZE)
             .toString(),
@@ -100,7 +100,7 @@ export async function getCast() {
 export async function getCastMember(slug: string) {
   const response = await fetchFromAPI<{ data: CastMember[] }>(
     new StrapiUrlBuilder('story-casts', slug)
-      .addPopulate(RELATIONS.populate)
+      // .addPopulate(RELATIONS.populate)
       .addFields(DEFAULT_FIELDS.single)
       .toString(),
     ['story-casts', `story-cast-${slug}`],

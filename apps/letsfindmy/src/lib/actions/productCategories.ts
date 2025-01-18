@@ -47,6 +47,7 @@ const DEFAULT_FIELDS = {
 
 // Server Actions
 export async function getProductCategories(type: StrapiType) {
+  console.log("INSIDE getProductCategories", type)
   const allProductCategories: ProductCategory[] = [];
 
   const urlBuilder = new StrapiUrlBuilder('product-categories')
@@ -99,6 +100,8 @@ export async function getProductCategories(type: StrapiType) {
 }
 
 export async function getProductCategory(slug: string, type: StrapiType) {
+    console.log("INSIDE getProductCategory", slug, type)
+
   const response = await fetchFromAPI<{ data: ProductCategory[] }>(
     new StrapiUrlBuilder('product-categories', slug)
       .addPopulate(RELATIONS.populate)

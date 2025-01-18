@@ -34,32 +34,37 @@ export async function getTaxonomyData(
   const strapiType = routeNameToStrapiType(taxonomy as RouteName);
 
   switch (modelKey) {
-    case 'EVENT':
-      return slug ? await getEvent(slug) : await getEvents();
-    case 'META':
-      return slug
-        ? await getMeta(slug, strapiType)
-        : await getMetas(strapiType);
-    case 'LOCATION':
-      return slug
-        ? await getLocation(slug, strapiType)
-        : await getLocations(strapiType);
     case 'BRAND':
       return slug
         ? await getBrand(slug, strapiType)
         : await getBrands(strapiType);
+    case 'CAST':
+      return slug ? await getCastMember(slug) : await getCast();
     case 'COLLECTION':
       return slug
         ? await getCollection(slug, strapiType)
         : await getCollections(strapiType);
+    case 'EVENT':
+      return slug ? await getEvent(slug) : await getEvents();
     case 'FANDOM':
       return slug ? await getFandom(slug) : await getFandoms();
+    case 'LOCATION':
+      return slug
+        ? await getLocation(slug, strapiType)
+        : await getLocations(strapiType);
+        case 'META':
+      return slug
+        ? await getMeta(slug, strapiType)
+        : await getMetas(strapiType);
     case 'PRODUCT_CATEGORY':
+      console.log('strapiType', slug, strapiType)
       return slug
         ? await getProductCategory(slug, strapiType)
         : await getProductCategories(strapiType);
-    case 'CAST':
-      return slug ? await getCastMember(slug) : await getCast();
+    case 'STORY':
+      return slug
+        ? await getStory(slug)
+        : await getStories();
     default:
       throw new Error(`Unhandled model key: ${modelKey}`);
   }

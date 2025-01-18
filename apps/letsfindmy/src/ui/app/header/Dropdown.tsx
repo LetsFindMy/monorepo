@@ -99,7 +99,7 @@ export const AppHeaderMenuBar: React.FC = () => {
   // if (isFlowPage(pathname)) return null;
 
   return (
-    <Flex gap="0">
+    <Flex gap="0" >
       <HoverCard
         width={500}
         position="bottom"
@@ -111,7 +111,7 @@ export const AppHeaderMenuBar: React.FC = () => {
           <Anchor component={Link} href="/flows" className={classes.link}>
             <Center inline>
               <Box component="span" mr={5}>
-                Flows
+                Categories
               </Box>
               <IconChevronDown
                 style={{ width: rem(16), height: rem(16) }}
@@ -158,15 +158,7 @@ export const AppHeaderMenuBar: React.FC = () => {
         </HoverCard.Dropdown>
       </HoverCard>
 
-      <Anchor component={Link} href="/tags" className={classes.link}>
-        Tags
-      </Anchor>
-      <Anchor component={Link} href="/monitoring" className={classes.link}>
-        Monitoring
-      </Anchor>
-      <Anchor component={Link} href="/auditing" className={classes.link}>
-        Auditing
-      </Anchor>
+
     </Flex>
   );
 };

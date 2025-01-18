@@ -19,6 +19,7 @@ import { getTaxonomyData } from '#/lib/taxonomyUtils';
 export async function generateStaticParams() {
   const params = [];
   for (const taxonomy of ALLOWED_TAXONOMIES) {
+    console.log('taxonomy', taxonomy)
     if (isAllowedTaxonomy(taxonomy)) {
       try {
         const { data: items } = await getTaxonomyData(taxonomy as RouteName);
@@ -50,6 +51,9 @@ export default async function TaxonomyItemPage({
       notFound();
     }
 
+    const modelKey = getModelKey(taxonomy as RouteName);
+    const isProductCategory = modelKey === 'PRODUCT_CATEGORY';
+
     return (
       <Container size="lg" py="xl">
         <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -61,6 +65,20 @@ export default async function TaxonomyItemPage({
                 <IconMapPin size={16} />
                 <Text>{item.locations.map((loc) => loc.name).join(', ')}</Text>
               </Group>
+            )}
+            {isProductCategory && item.children && item.children.length > 0 && (
+              <Stack gap="md">
+                <Title order={2}>Child Categories</Title>
+                <GroupedList
+                  items={item.children.map((child) => ({
+                    id: child.id,
+                    name: child.name,
+                    slug: child.slug,
+                    type: item.type, // Assuming all children have the same type as the parent
+                  }))}
+                  basePath={taxonomy}
+                />
+              </Stack>
             )}
           </Stack>
         </Card>

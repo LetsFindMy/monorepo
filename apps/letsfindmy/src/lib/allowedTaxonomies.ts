@@ -1,56 +1,59 @@
 // Define the structure of our allowed types, grouped by Strapi model
 const taxonomyMapping = {
-  META: {
-    attractions: 'attraction',
-    things: 'thing',
-    tags: 'tag',
-    colors: 'color',
-    materials: 'material',
-  },
-  EVENT: {
-    events: 'event',
-    entertainments: 'entertainment',
-    holidays: 'holiday',
-    festivals: 'festival',
-    others: 'other',
-  },
-  LOCATION: {
-    locations: 'location',
-    places: 'place',
-    themeParks: 'themePark',
-    lodgings: 'lodging',
-    ships: 'ship',
-    restaurants: 'restaurant',
-  },
   BRAND: {
-    retailers: 'retailer',
-    musicians: 'musician',
-    authors: 'author',
     artists: 'artist',
-    painters: 'painter',
-    teams: 'team',
+    authors: 'author',
     influencers: 'influencer',
+    musicians: 'musician',
+    painters: 'painter',
+    retailers: 'retailer',
     studios: 'studio',
+    teams: 'team',
+  },
+  CAST: {
+    cast: 'story-cast',
   },
   COLLECTION: {
-    productLines: 'productLine',
     collaborations: 'collaboration',
     platforms: 'platform',
+    productLines: 'productLine',
     users: 'user',
+  },
+  EVENT: {
+    entertainments: 'entertainment',
+    events: 'event',
+    festivals: 'festival',
+    holidays: 'holiday',
+    others: 'other',
   },
   FANDOM: {
     fandoms: 'fandom',
   },
+  LOCATION: {
+    locations: 'location',
+    lodgings: 'lodging',
+    places: 'place',
+    restaurants: 'restaurant',
+    ships: 'ship',
+    themeParks: 'themePark',
+  },
+  META: {
+    attractions: 'attraction',
+    colors: 'color',
+    materials: 'material',
+    tags: 'tag',
+    things: 'thing',
+  },
   PRODUCT_CATEGORY: {
     adults: 'adults',
-    kids: 'kids',
     baby: 'baby',
-    home: 'home',
     everyday: 'everyday',
-    toysGames: 'toys-games',
+    home: 'home',
+    kids: 'kids',
+    'toys-games': 'toys-games',
   },
-  CAST: {
-    cast: 'story-cast',
+  STORY: {
+    stories: 'story',
   },
 } as const;
 

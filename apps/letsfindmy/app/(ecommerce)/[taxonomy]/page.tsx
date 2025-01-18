@@ -16,9 +16,9 @@ export function generateStaticParams() {
 export default async function DynamicPage({
   params,
 }: {
-  params: { taxonomy: string };
+  params: Promise<{ taxonomy: string; }>;
 }) {
-  const { taxonomy } = params;
+  const { taxonomy } = await params;
 
   if (!isAllowedTaxonomy(taxonomy)) {
     notFound();
@@ -26,6 +26,9 @@ export default async function DynamicPage({
 
   try {
     const { data: items } = await getTaxonomyData(taxonomy as RouteName);
+
+    console.log('TAXONOMY DATA:', taxonomy, items);
+
     const title =
       taxonomy === 'cast'
         ? 'Cast'

@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchFromAPI, StrapiUrlBuilder } from '#/lib/cmsUtils';
+import { fetchAllPages, fetchSingleItem } from "#/lib/cmsUtils";
 
 // Types
 export interface StoryRelease {
@@ -26,69 +26,74 @@ const BATCH_SIZE = 100;
 
 // API Configuration
 const RELATIONS = {
-  fields: ['name', 'slug', 'type', 'releaseDate'],
+  fields: ['name', 'slug', 'type', 'releaseDate'] as const,
   populate: {
     story: {
-      fields: ['name', 'slug'],
+      fields: ['name', 'slug'] as const,
     },
     products: {
-      fields: ['name'],
+      fields: ['name'] as const,
     },
     crosscheck: {
-      fields: ['id'],
+      fields: ['id'] as const,
     },
   },
 } as const;
 
 const DEFAULT_FIELDS = {
-  single: ['name', 'slug', 'type', 'releaseDate'],
-  list: ['name', 'slug', 'type', 'releaseDate'],
+  single: ['name', 'slug', 'type', 'releaseDate'] as const,
+  list: ['name', 'slug', 'type', 'releaseDate'] as const,
 } as const;
 
 // Server Actions
-export async function getStoryReleases(storySlug: string) {
-  const urlBuilder = new StrapiUrlBuilder('story-releases')
-    .addPopulate(RELATIONS.populate)
-    .addFields(DEFAULT_FIELDS.list)
-    .addFilter('story.slug', storySlug)
-    .addPagination(1, BATCH_SIZE);
-
-  const response = await fetchFromAPI<{
-    data: StoryRelease[];
-    meta: { pagination: { total: number } };
-  }>(urlBuilder.toString(), ['story-releases', `story-releases-${storySlug}`]);
-
-  return {
-    data: response.data,
-    meta: { total: response.meta.pagination.total },
-  };
-}
-
-export async function getStoryRelease(storySlug: string, releaseSlug: string) {
-  const urlBuilder = new StrapiUrlBuilder('story-releases')
-    .addPopulate(RELATIONS.populate)
-    .addFields(DEFAULT_FIELDS.single)
-    .addFilter('story.slug', storySlug)
-    .addFilter('slug', releaseSlug);
-
-  const response = await fetchFromAPI<{ data: StoryRelease[] }>(
-    urlBuilder.toString(),
-    ['story-releases', `story-release-${storySlug}-${releaseSlug}`],
+export const getStoryReleases = async (storySlug: string) => {
+  const releases = await fetchAllPages<StoryRelease>(
+    'story-releases',
+    DEFAULT_FIELDS.list,
+    BATCH_SIZE,
+    (builder) => builder
+      .addPopulate(RELATIONS.populate)
+      .addComplexFilter({
+        story: {
+          slug: {
+            $eq: storySlug
+          }
+        }
+      })
   );
 
-  if (!response.data.length) {
-    throw new Error(
-      `Release with slug "${releaseSlug}" not found for story "${storySlug}"`,
-    );
-  }
-
   return {
-    data: response.data[0],
-    meta: {},
+    data: releases,
+    meta: { total: releases.length },
   };
-}
+};
+
+export const getStoryRelease = async (storySlug: string, releaseSlug: string) => {
+    const release = await fetchSingleItem<StoryRelease>(
+      'story-releases',
+      releaseSlug,
+      DEFAULT_FIELDS.single
+    );
+
+    return {
+      data: release,
+      meta: {},
+    };
+};
 
 export async function getStoryReleaseSlugs(storySlug: string) {
-  const { data: releases } = await getStoryReleases(storySlug);
+  const releases = await fetchAllPages<StoryRelease>(
+    'story-releases',
+    ['slug'] as const,
+    BATCH_SIZE,
+    (builder) => builder.addComplexFilter({
+      story: {
+        slug: {
+          $eq: storySlug
+        }
+      }
+    })
+  );
   return releases.map((release) => release.slug);
 }
+

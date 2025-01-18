@@ -1,6 +1,8 @@
 'use server';
 
-import { fetchFromAPI, StrapiUrlBuilder } from '#/lib/cmsUtils';
+import { fetchAllPages, fetchSingleItem } from "#/lib/cmsUtils";
+
+
 
 // Types
 interface Story {
@@ -29,85 +31,30 @@ interface Story {
 // Constants
 const BATCH_SIZE = 100;
 
-// API Configuration
-const RELATIONS = {
-  fields: ['name', 'slug', 'studio', 'shortDescription'],
-  populate: 'deep',
-} as const;
-
 const DEFAULT_FIELDS = {
-  single: ['name', 'slug', 'studio', 'shortDescription', 'fullDescription'],
-  list: ['name', 'slug', 'studio', 'shortDescription'],
-} as const;
+  single: ['name', 'slug', 'studio', 'shortDescription', 'fullDescription'] as const,
+  list: ['name', 'slug', 'studio', 'shortDescription'] as const,
+};
 
 // Server Actions
 export async function getStories() {
-  const allStories: Story[] = [];
-
-  const urlBuilder = new StrapiUrlBuilder('stories')
-    // .addPopulate(RELATIONS.populate)
-    .addFields(DEFAULT_FIELDS.list)
-    .addPagination(1, BATCH_SIZE);
-
-  const firstPage = await fetchFromAPI<{
-    data: Story[];
-    meta: { pagination: { pageCount: number; total: number } };
-  }>(urlBuilder.toString(), ['stories']);
-
-  allStories.push(...firstPage.data);
-
-  const totalPages = firstPage.meta.pagination.pageCount;
-
-  if (totalPages > 1) {
-    const remainingPages = Array.from(
-      { length: totalPages - 1 },
-      (_, i) => i + 2,
-    );
-
-    const responses = await Promise.all(
-      remainingPages.map((page) =>
-        fetchFromAPI<{ data: Story[] }>(
-          new StrapiUrlBuilder('stories')
-            // .addPopulate(RELATIONS.populate)
-            .addFields(DEFAULT_FIELDS.list)
-            .addPagination(page, BATCH_SIZE)
-            .toString(),
-          ['stories'],
-        ),
-      ),
-    );
-
-    responses.forEach((response) => allStories.push(...response.data));
-  }
-
+  const stories = await fetchAllPages<Story>('stories', DEFAULT_FIELDS.list, BATCH_SIZE);
   return {
-    data: allStories,
-    meta: { total: firstPage.meta.pagination.total },
+    data: stories,
+    meta: { total: stories.length },
   };
 }
 
 export async function getStory(slug: string) {
-  const urlBuilder = new StrapiUrlBuilder('stories')
-    // .addPopulate(RELATIONS.populate)
-    .addFields(DEFAULT_FIELDS.single)
-    .addFilter('slug', slug);
-
-  const response = await fetchFromAPI<{ data: Story[] }>(
-    urlBuilder.toString(),
-    ['stories', `story-${slug}`],
-  );
-
-  if (!response.data.length) {
-    throw new Error(`Story with slug "${slug}" not found`);
-  }
-
-  return {
-    data: response.data[0],
-    meta: {},
-  };
+    const story = await fetchSingleItem<Story>('stories', slug, DEFAULT_FIELDS.single);
+    return {
+      data: story,
+      meta: {},
+    };
 }
 
 export async function getStorySlugs() {
-  const response = await getStories();
-  return response.data.map((story) => story.slug);
+  const stories = await fetchAllPages<Story>('stories', ['slug'] as const, BATCH_SIZE);
+  return stories.map((story: { slug: string; }) => story.slug);
 }
+
