@@ -11,15 +11,17 @@ import { IconMapPin } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
 import {
   ALLOWED_TAXONOMIES,
+  getModelKey,
   isAllowedTaxonomy,
   RouteName,
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
+import { ParamsDebug } from '#/ui/shared';
 
 export async function generateStaticParams() {
   const params = [];
   for (const taxonomy of ALLOWED_TAXONOMIES) {
-    console.log('taxonomy', taxonomy)
+    console.log('taxonomy', taxonomy);
     if (isAllowedTaxonomy(taxonomy)) {
       try {
         const { data: items } = await getTaxonomyData(taxonomy as RouteName);
@@ -82,6 +84,8 @@ export default async function TaxonomyItemPage({
             )}
           </Stack>
         </Card>
+
+        <ParamsDebug params={{ taxonomy, slug, item }} />
       </Container>
     );
   } catch (error) {

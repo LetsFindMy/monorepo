@@ -8,6 +8,7 @@ import {
   RouteName,
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
+import { ParamsDebug } from '#/ui/shared';
 
 export function generateStaticParams() {
   return ALLOWED_TAXONOMIES.map((taxonomy) => ({ taxonomy }));
@@ -16,7 +17,7 @@ export function generateStaticParams() {
 export default async function DynamicPage({
   params,
 }: {
-  params: Promise<{ taxonomy: string; }>;
+  params: Promise<{ taxonomy: string }>;
 }) {
   const { taxonomy } = await params;
 
@@ -53,6 +54,8 @@ export default async function DynamicPage({
           </Title>
           <GroupedList items={items} basePath={taxonomy} />
         </Container>
+
+        <ParamsDebug params={{ taxonomy, items }} />
       </Suspense>
     );
   } catch (error) {
