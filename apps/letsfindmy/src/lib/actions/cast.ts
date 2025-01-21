@@ -99,16 +99,12 @@ export async function getCast() {
 
 export async function getCastMember(slug: string) {
   const response = await fetchFromAPI<{ data: CastMember[] }>(
-    new StrapiUrlBuilder('story-casts', slug)
-      // .addPopulate(RELATIONS.populate)
+    new StrapiUrlBuilder('story-casts')
+      .addFilter('slug', slug)
       .addFields(DEFAULT_FIELDS.single)
       .toString(),
     ['story-casts', `story-cast-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(`Cast member with slug "${slug}" not found`);
-  }
 
   return {
     data: response.data[0],

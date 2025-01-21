@@ -89,19 +89,16 @@ export async function getCollections(type: StrapiType) {
 
 export async function getCollection(slug: string, type: StrapiType) {
   const response = await fetchFromAPI<{ data: Collection[] }>(
-    new StrapiUrlBuilder('collections', slug)
+    new StrapiUrlBuilder('collections')
+      .addComplexFilter({
+        slug: { $eq: slug },
+        type: { $eq: type },
+      })
       .addPopulate(RELATIONS.populate)
       .addFields(DEFAULT_FIELDS.single)
-      .addFilter('type', type)
       .toString(),
     ['collections', `collection-${slug}`, `collection-${type}-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(
-      `Collection with slug "${slug}" and type "${type}" not found`,
-    );
-  }
 
   return {
     data: response.data[0],

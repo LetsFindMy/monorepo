@@ -88,19 +88,16 @@ export async function getLocations(type: StrapiType) {
 
 export async function getLocation(slug: string, type: StrapiType) {
   const response = await fetchFromAPI<{ data: Location[] }>(
-    new StrapiUrlBuilder('locations', slug)
+    new StrapiUrlBuilder('locations')
+      .addComplexFilter({
+        slug: { $eq: slug },
+        type: { $eq: type },
+      })
       .addPopulate(RELATIONS.populate)
       .addFields(DEFAULT_FIELDS.single)
-      .addFilter('type', type)
       .toString(),
     ['locations', `location-${slug}`, `location-${type}-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(
-      `Location with slug "${slug}" and type "${type}" not found`,
-    );
-  }
 
   return {
     data: response.data[0],

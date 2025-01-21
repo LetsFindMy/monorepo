@@ -100,10 +100,13 @@ export async function getProductCategories(type: StrapiType) {
 
 export async function getProductCategory(slug: string, type: StrapiType) {
   const response = await fetchFromAPI<{ data: ProductCategory[] }>(
-    new StrapiUrlBuilder('product-categories', slug)
+    new StrapiUrlBuilder('product-categories')
+      .addComplexFilter({
+        slug: { $eq: slug },
+        type: { $eq: type },
+      })
       .addPopulate(RELATIONS.populate)
       .addFields(DEFAULT_FIELDS.single)
-      .addFilter('type', type)
       .toString(),
     [
       'product-categories',
@@ -111,12 +114,6 @@ export async function getProductCategory(slug: string, type: StrapiType) {
       `product-category-${type}-${slug}`,
     ],
   );
-
-  if (!response.data.length) {
-    throw new Error(
-      `Product Category with slug "${slug}" and type "${type}" not found`,
-    );
-  }
 
   return {
     data: response.data[0],

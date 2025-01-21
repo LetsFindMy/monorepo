@@ -133,9 +133,12 @@ export async function getBrands(type: StrapiType) {
 
 export async function getBrand(slug: string, type: StrapiType) {
   const urlBuilder = new StrapiUrlBuilder('brands')
+    .addComplexFilter({
+      slug: { $eq: slug },
+      type: { $eq: type },
+    })
     .addPopulate(RELATIONS.populate)
-    .addFields(DEFAULT_FIELDS.single)
-    .addFilter('slug', slug);
+    .addFields(DEFAULT_FIELDS.single);
 
   // Handle null type filtering
   if (type) {

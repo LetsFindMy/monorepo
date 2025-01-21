@@ -88,16 +88,13 @@ export async function getEvents() {
 
 export async function getEvent(slug: string, fields?: string[]) {
   const response = await fetchFromAPI<{ data: Event[] }>(
-    new StrapiUrlBuilder('events', slug)
+    new StrapiUrlBuilder('events')
+      .addFilter('slug', slug)
       .addPopulate(RELATIONS.populate)
       .addFields(fields ?? DEFAULT_FIELDS.single)
       .toString(),
     ['events', `event-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(`Event with slug "${slug}" not found`);
-  }
 
   return {
     data: response.data[0],

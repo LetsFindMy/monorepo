@@ -164,10 +164,6 @@ export const getProduct = async (slug: string) => {
     ['products', `product-${slug}`],
   );
 
-  if (!response.data?.[0]) {
-    throw new Error(`Product with slug "${slug}" not found`);
-  }
-
   return { data: response.data[0], meta: {} };
 };
 

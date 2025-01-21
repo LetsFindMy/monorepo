@@ -82,16 +82,13 @@ export async function getFandoms() {
 
 export async function getFandom(slug: string) {
   const response = await fetchFromAPI<{ data: Fandom[] }>(
-    new StrapiUrlBuilder('fandoms', slug)
+    new StrapiUrlBuilder('fandoms')
+      .addFilter('slug', slug)
       .addPopulate(RELATIONS.populate)
       .addFields(DEFAULT_FIELDS.single)
       .toString(),
     ['fandoms', `fandom-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(`Fandom with slug "${slug}" not found`);
-  }
 
   return {
     data: response.data[0],

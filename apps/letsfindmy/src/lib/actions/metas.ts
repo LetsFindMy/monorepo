@@ -95,7 +95,11 @@ export async function getMeta(
   type?: MetaType,
   fields?: string[],
 ) {
-  const urlBuilder = new StrapiUrlBuilder('metas', slug)
+  const urlBuilder = new StrapiUrlBuilder('metas')
+    .addComplexFilter({
+      slug: { $eq: slug },
+      type: { $eq: type },
+    })
     .addPopulate(RELATIONS.populate)
     .addFields(fields ?? DEFAULT_FIELDS.single);
 
@@ -108,12 +112,6 @@ export async function getMeta(
     `meta-${slug}`,
     ...(type ? [`meta-${type}-${slug}`] : []),
   ]);
-
-  if (!response.data.length) {
-    throw new Error(
-      `Meta with slug "${slug}"${type ? ` and type "${type}"` : ''} not found`,
-    );
-  }
 
   return {
     data: response.data[0],
