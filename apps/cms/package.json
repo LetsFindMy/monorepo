@@ -24,7 +24,8 @@
     "react-router-dom": "^6.28.2",
     "strapi-plugin-country-select": "^2.0.0",
     "strapi-plugin-multi-select": "^2.1.1",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "tree-menus": "^1.0.4"
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
