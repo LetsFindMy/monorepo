@@ -57,7 +57,6 @@ export async function getTaxonomyData(
         ? await getMeta(slug, strapiType)
         : await getMetas(strapiType);
     case 'PRODUCT_CATEGORY':
-      console.log('strapiType', slug, strapiType);
       return slug
         ? await getProductCategory(slug, strapiType)
         : await getProductCategories(strapiType);

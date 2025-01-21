@@ -28,8 +28,6 @@ export default async function DynamicPage({
   try {
     const { data: items } = await getTaxonomyData(taxonomy as RouteName);
 
-    console.log('TAXONOMY DATA:', taxonomy, items);
-
     const title =
       taxonomy === 'cast'
         ? 'Cast'

@@ -21,7 +21,6 @@ import { ParamsDebug } from '#/ui/shared';
 export async function generateStaticParams() {
   const params = [];
   for (const taxonomy of ALLOWED_TAXONOMIES) {
-    console.log('taxonomy', taxonomy);
     if (isAllowedTaxonomy(taxonomy)) {
       try {
         const { data: items } = await getTaxonomyData(taxonomy as RouteName);
