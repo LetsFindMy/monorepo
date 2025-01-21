@@ -52,19 +52,17 @@ export async function getTaxonomyData(
       return slug
         ? await getLocation(slug, strapiType)
         : await getLocations(strapiType);
-        case 'META':
+    case 'META':
       return slug
         ? await getMeta(slug, strapiType)
         : await getMetas(strapiType);
     case 'PRODUCT_CATEGORY':
-      console.log('strapiType', slug, strapiType)
+      console.log('strapiType', slug, strapiType);
       return slug
         ? await getProductCategory(slug, strapiType)
         : await getProductCategories(strapiType);
     case 'STORY':
-      return slug
-        ? await getStory(slug)
-        : await getStories();
+      return slug ? await getStory(slug) : await getStories();
     default:
       throw new Error(`Unhandled model key: ${modelKey}`);
   }

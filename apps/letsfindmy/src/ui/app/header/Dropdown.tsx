@@ -99,7 +99,7 @@ export const AppHeaderMenuBar: React.FC = () => {
   // if (isFlowPage(pathname)) return null;
 
   return (
-    <Flex gap="0" >
+    <Flex gap="0">
       <HoverCard
         width={500}
         position="bottom"
@@ -157,8 +157,6 @@ export const AppHeaderMenuBar: React.FC = () => {
           </div>
         </HoverCard.Dropdown>
       </HoverCard>
-
-
     </Flex>
   );
 };

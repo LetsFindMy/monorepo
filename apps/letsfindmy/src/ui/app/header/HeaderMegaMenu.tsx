@@ -63,7 +63,8 @@ const mockdata = [
 ];
 
 export function HeaderMegaMenu() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
+    useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
 
@@ -89,13 +90,18 @@ export function HeaderMegaMenu() {
     <Box pb={120}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-         MantineLogo
-
+          MantineLogo
           <Group h="100%" gap={0} visibleFrom="sm">
             <a href="#" className={classes.link}>
               Home
             </a>
-            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+            <HoverCard
+              width={600}
+              position="bottom"
+              radius="md"
+              shadow="md"
+              withinPortal
+            >
               <HoverCard.Target>
                 <a href="#" className={classes.link}>
                   <Center inline>
@@ -143,13 +149,15 @@ export function HeaderMegaMenu() {
               Academy
             </a>
           </Group>
-
           <Group visibleFrom="sm">
             <Button variant="default">Log in</Button>
             <Button>Sign up</Button>
           </Group>
-
-          <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            hiddenFrom="sm"
+          />
         </Group>
       </header>
 

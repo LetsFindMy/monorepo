@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchAllPages, fetchSingleItem } from "#/lib/cmsUtils";
+import { fetchAllPages, fetchSingleItem } from '#/lib/cmsUtils';
 
 // Types
 export interface StoryRelease {
@@ -51,15 +51,14 @@ export const getStoryReleases = async (storySlug: string) => {
     'story-releases',
     DEFAULT_FIELDS.list,
     BATCH_SIZE,
-    (builder) => builder
-      .addPopulate(RELATIONS.populate)
-      .addComplexFilter({
+    (builder) =>
+      builder.addPopulate(RELATIONS.populate).addComplexFilter({
         story: {
           slug: {
-            $eq: storySlug
-          }
-        }
-      })
+            $eq: storySlug,
+          },
+        },
+      }),
   );
 
   return {
@@ -68,17 +67,20 @@ export const getStoryReleases = async (storySlug: string) => {
   };
 };
 
-export const getStoryRelease = async (storySlug: string, releaseSlug: string) => {
-    const release = await fetchSingleItem<StoryRelease>(
-      'story-releases',
-      releaseSlug,
-      DEFAULT_FIELDS.single
-    );
+export const getStoryRelease = async (
+  storySlug: string,
+  releaseSlug: string,
+) => {
+  const release = await fetchSingleItem<StoryRelease>(
+    'story-releases',
+    releaseSlug,
+    DEFAULT_FIELDS.single,
+  );
 
-    return {
-      data: release,
-      meta: {},
-    };
+  return {
+    data: release,
+    meta: {},
+  };
 };
 
 export async function getStoryReleaseSlugs(storySlug: string) {
@@ -86,14 +88,14 @@ export async function getStoryReleaseSlugs(storySlug: string) {
     'story-releases',
     ['slug'] as const,
     BATCH_SIZE,
-    (builder) => builder.addComplexFilter({
-      story: {
-        slug: {
-          $eq: storySlug
-        }
-      }
-    })
+    (builder) =>
+      builder.addComplexFilter({
+        story: {
+          slug: {
+            $eq: storySlug,
+          },
+        },
+      }),
   );
   return releases.map((release) => release.slug);
 }
-

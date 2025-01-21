@@ -38,7 +38,7 @@ export class StrapiUrlBuilder {
   addFilter(field: string, value: string | number | boolean) {
     this.#query.filters = {
       ...this.#query.filters,
-      [field]: { $eq: value }
+      [field]: { $eq: value },
     };
     return this;
   }
@@ -46,7 +46,7 @@ export class StrapiUrlBuilder {
   addComplexFilter(filters: Record<string, unknown>) {
     this.#query.filters = {
       ...this.#query.filters,
-      ...filters
+      ...filters,
     };
     return this;
   }
@@ -56,7 +56,7 @@ export class StrapiUrlBuilder {
       this.#query.pagination = {
         ...(page && { page }),
         ...(pageSize && { pageSize }),
-        withCount
+        withCount,
       };
     }
     return this;
@@ -77,11 +77,11 @@ export class StrapiUrlBuilder {
     return this;
   }
 
-    getDebugQuery() {
+  getDebugQuery() {
     return {
       baseUrl: this.#baseUrl,
       query: this.#query,
-      fullUrl: this.toString()
+      fullUrl: this.toString(),
     };
   }
 
@@ -92,7 +92,6 @@ export class StrapiUrlBuilder {
     return `${this.#baseUrl}${queryString ? `?${queryString}` : ''}`;
   }
 }
-
 
 export async function fetchFromAPI<T>(url: string, tags: string[] = []) {
   // Constants
@@ -129,7 +128,6 @@ export async function fetchFromAPI<T>(url: string, tags: string[] = []) {
   }
 }
 
-
 export interface PaginatedResponse<T> {
   data: T[];
   meta: { pagination: { total: number; pageCount: number } };
@@ -139,7 +137,7 @@ export async function fetchAllPages<T>(
   modelName: string,
   fields: readonly string[],
   batchSize: number = 100,
-  additionalConfig: (builder: StrapiUrlBuilder) => StrapiUrlBuilder = (b) => b
+  additionalConfig: (builder: StrapiUrlBuilder) => StrapiUrlBuilder = (b) => b,
 ): Promise<T[]> {
   const allItems: T[] = [];
 
@@ -151,7 +149,7 @@ export async function fetchAllPages<T>(
 
   const firstPage = await fetchFromAPI<PaginatedResponse<T>>(
     urlBuilder.toString(),
-    [modelName]
+    [modelName],
   );
 
   allItems.push(...firstPage.data);
@@ -161,19 +159,20 @@ export async function fetchAllPages<T>(
   if (totalPages > 1) {
     const remainingPages = Array.from(
       { length: totalPages - 1 },
-      (_, i) => i + 2
+      (_, i) => i + 2,
     );
 
     const responses = await Promise.all(
       remainingPages.map((page) =>
         fetchFromAPI<PaginatedResponse<T>>(
-          additionalConfig(new StrapiUrlBuilder(modelName)
-            .addFields(fields)
-            .addPagination(page, batchSize))
-            .toString(),
-          [modelName]
-        )
-      )
+          additionalConfig(
+            new StrapiUrlBuilder(modelName)
+              .addFields(fields)
+              .addPagination(page, batchSize),
+          ).toString(),
+          [modelName],
+        ),
+      ),
     );
 
     responses.forEach((response) => allItems.push(...response.data));
@@ -185,16 +184,16 @@ export async function fetchAllPages<T>(
 export async function fetchSingleItem<T>(
   modelName: string,
   slug: string,
-  fields: readonly string[]
+  fields: readonly string[],
 ): Promise<T> {
   const urlBuilder = new StrapiUrlBuilder(modelName)
     .addFields(fields)
     .addFilter('slug', slug);
 
-  const response = await fetchFromAPI<{ data: T[] }>(
-    urlBuilder.toString(),
-    [modelName, `${modelName}-${slug}`]
-  );
+  const response = await fetchFromAPI<{ data: T[] }>(urlBuilder.toString(), [
+    modelName,
+    `${modelName}-${slug}`,
+  ]);
 
   if (!response.data || response.data.length === 0) {
     throw new Error(`${modelName} with slug "${slug}" not found`);
@@ -202,4 +201,3 @@ export async function fetchSingleItem<T>(
 
   return response.data[0];
 }
-

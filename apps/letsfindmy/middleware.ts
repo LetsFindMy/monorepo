@@ -18,7 +18,6 @@ export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
 
   const isInMaintenanceMode = await get('isInMaintenanceMode');
   if (isInMaintenanceMode && process.env.NODE_ENV !== 'development') {
-
     req.nextUrl.pathname = `/maintenance`;
     return NextResponse.rewrite(req.nextUrl);
   }

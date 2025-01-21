@@ -20,7 +20,21 @@ import {
   Collapse,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBabyCarriage, IconCategory, IconHome, IconShirt, IconShoppingCart, IconTower, IconBook, IconChartPie3, IconChevronDown, IconCode, IconCoin, IconFingerprint, IconNotification } from '@tabler/icons-react';
+import {
+  IconBabyCarriage,
+  IconCategory,
+  IconHome,
+  IconShirt,
+  IconShoppingCart,
+  IconTower,
+  IconBook,
+  IconChartPie3,
+  IconChevronDown,
+  IconCode,
+  IconCoin,
+  IconFingerprint,
+  IconNotification,
+} from '@tabler/icons-react';
 import classes from './AppHeader.module.scss';
 import { AppHeaderUserMenu } from './AppHeaderUserMenu';
 import { AnimatedAnchorMemo } from '../Logo';
@@ -34,17 +48,16 @@ interface MenuItem {
   subItems?: MenuItem[];
 }
 
-
 const mockdata = [
   {
     icon: IconCode,
     title: 'Open source',
-    description: 'This Pokémon\'s cry is very loud and distracting',
+    description: "This Pokémon's cry is very loud and distracting",
   },
   {
     icon: IconCoin,
     title: 'Free for everyone',
-    description: 'The fluid of Smeargle\'s tail secretions changes',
+    description: "The fluid of Smeargle's tail secretions changes",
   },
   {
     icon: IconBook,
@@ -54,7 +67,7 @@ const mockdata = [
   {
     icon: IconFingerprint,
     title: 'Security',
-    description: 'The shell\'s rounded shape and the grooves on its.',
+    description: "The shell's rounded shape and the grooves on its.",
   },
   {
     icon: IconChartPie3,
@@ -68,7 +81,6 @@ const mockdata = [
   },
 ];
 
-
 // Array of menu items
 const menuItems: MenuItem[] = [
   {
@@ -81,57 +93,112 @@ const menuItems: MenuItem[] = [
     href: '/clothing',
     subItems: [
       { label: 'Men', href: '/clothing/men', icon: <IconShirt size={16} /> },
-      { label: 'Women', href: '/clothing/women', icon: <IconShirt size={16} /> },
+      {
+        label: 'Women',
+        href: '/clothing/women',
+        icon: <IconShirt size={16} />,
+      },
       { label: 'Kids', href: '/clothing/kids', icon: <IconShirt size={16} /> },
-    ]
+    ],
   },
   {
     label: 'Home',
     href: '/home',
     subItems: [
-      { label: 'Living Room', href: '/home/living-room', icon: <IconHome size={16} /> },
+      {
+        label: 'Living Room',
+        href: '/home/living-room',
+        icon: <IconHome size={16} />,
+      },
       { label: 'Bedroom', href: '/home/bedroom', icon: <IconHome size={16} /> },
       { label: 'Kitchen', href: '/home/kitchen', icon: <IconHome size={16} /> },
-    ]
+    ],
   },
   {
     label: 'Toys & Games',
     href: '/toy-games',
     subItems: [
-      { label: 'Board Games', href: '/toy-games/board-games', icon: <IconTower size={16} /> },
-      { label: 'Outdoor Toys', href: '/toy-games/outdoor-toys', icon: <IconTower size={16} /> },
-      { label: 'Educational Toys', href: '/toy-games/educational-toys', icon: <IconTower size={16} /> },
-    ]
+      {
+        label: 'Board Games',
+        href: '/toy-games/board-games',
+        icon: <IconTower size={16} />,
+      },
+      {
+        label: 'Outdoor Toys',
+        href: '/toy-games/outdoor-toys',
+        icon: <IconTower size={16} />,
+      },
+      {
+        label: 'Educational Toys',
+        href: '/toy-games/educational-toys',
+        icon: <IconTower size={16} />,
+      },
+    ],
   },
   {
     label: 'Everyday',
     href: '/everyday',
     subItems: [
-      { label: 'Electronics', href: '/everyday/electronics', icon: <IconShoppingCart size={16} /> },
-      { label: 'Groceries', href: '/everyday/groceries', icon: <IconShoppingCart size={16} /> },
-      { label: 'Personal Care', href: '/everyday/personal-care', icon: <IconShoppingCart size={16} /> },
-    ]
+      {
+        label: 'Electronics',
+        href: '/everyday/electronics',
+        icon: <IconShoppingCart size={16} />,
+      },
+      {
+        label: 'Groceries',
+        href: '/everyday/groceries',
+        icon: <IconShoppingCart size={16} />,
+      },
+      {
+        label: 'Personal Care',
+        href: '/everyday/personal-care',
+        icon: <IconShoppingCart size={16} />,
+      },
+    ],
   },
   {
     label: 'Kids',
     href: '/kids',
     subItems: [
-      { label: 'Clothing', href: '/kids/clothing', icon: <IconBabyCarriage size={16} /> },
-      { label: 'Toys', href: '/kids/toys', icon: <IconBabyCarriage size={16} /> },
-      { label: 'School Supplies', href: '/kids/school-supplies', icon: <IconBabyCarriage size={16} /> },
-    ]
+      {
+        label: 'Clothing',
+        href: '/kids/clothing',
+        icon: <IconBabyCarriage size={16} />,
+      },
+      {
+        label: 'Toys',
+        href: '/kids/toys',
+        icon: <IconBabyCarriage size={16} />,
+      },
+      {
+        label: 'School Supplies',
+        href: '/kids/school-supplies',
+        icon: <IconBabyCarriage size={16} />,
+      },
+    ],
   },
   {
     label: 'Baby',
     href: '/baby',
     subItems: [
-      { label: 'Diapers', href: '/baby/diapers', icon: <IconBabyCarriage size={16} /> },
-      { label: 'Feeding', href: '/baby/feeding', icon: <IconBabyCarriage size={16} /> },
-      { label: 'Nursery', href: '/baby/nursery', icon: <IconBabyCarriage size={16} /> },
-    ]
+      {
+        label: 'Diapers',
+        href: '/baby/diapers',
+        icon: <IconBabyCarriage size={16} />,
+      },
+      {
+        label: 'Feeding',
+        href: '/baby/feeding',
+        icon: <IconBabyCarriage size={16} />,
+      },
+      {
+        label: 'Nursery',
+        href: '/baby/nursery',
+        icon: <IconBabyCarriage size={16} />,
+      },
+    ],
   },
 ];
-
 
 export const AppLayoutHeader = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -169,10 +236,7 @@ export const AppLayoutHeader = () => {
           withinPortal
         >
           <HoverCard.Target>
-            <Button
-              variant="subtle"
-              className={classes.hoverCardTarget}
-            >
+            <Button variant="subtle" className={classes.hoverCardTarget}>
               <Center inline>
                 <Box component="span" mr={5}>
                   <IconCategory size={20} />
@@ -224,26 +288,26 @@ export const AppLayoutHeader = () => {
         arrowSize={14}
       >
         <HoverCard.Target>
-          <Button
-            variant="subtle"
-            className={classes.hoverCardTarget}
-          >
+          <Button variant="subtle" className={classes.hoverCardTarget}>
             {item.label ? item.label : item.icon}
           </Button>
         </HoverCard.Target>
         <HoverCard.Dropdown p="0">
           <div className={classes.dropdownContent}>
-            {item.subItems && item.subItems.map((subItem) => (
-              <Anchor
-                key={subItem.label}
-                component={Link}
-                href={subItem.href}
-                className={classes.dropdownLink}
-              >
-                {subItem.icon && <span className={classes.dropdownIcon}>{subItem.icon}</span>}
-                {subItem.label}
-              </Anchor>
-            ))}
+            {item.subItems &&
+              item.subItems.map((subItem) => (
+                <Anchor
+                  key={subItem.label}
+                  component={Link}
+                  href={subItem.href}
+                  className={classes.dropdownLink}
+                >
+                  {subItem.icon && (
+                    <span className={classes.dropdownIcon}>{subItem.icon}</span>
+                  )}
+                  {subItem.label}
+                </Anchor>
+              ))}
             {!item.subItems && (
               <Text size="sm">No additional options available.</Text>
             )}
@@ -257,7 +321,11 @@ export const AppLayoutHeader = () => {
     const theme = useMantineTheme();
     if (item.icon && item.icon.type === IconCategory) {
       return (
-        <Box key={item.href} className={classes.mobileMenuItem} style={{ paddingLeft: `${depth * 16}px` }}>
+        <Box
+          key={item.href}
+          className={classes.mobileMenuItem}
+          style={{ paddingLeft: `${depth * 16}px` }}
+        >
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
               <Box component="span" mr={5}>
@@ -290,7 +358,11 @@ export const AppLayoutHeader = () => {
     }
 
     return (
-      <Box key={item.label || item.href} className={classes.mobileMenuItem} style={{ paddingLeft: `${depth * 16}px` }}>
+      <Box
+        key={item.label || item.href}
+        className={classes.mobileMenuItem}
+        style={{ paddingLeft: `${depth * 16}px` }}
+      >
         <Group spacing="xs" className={classes.mobileMenuItemLabel}>
           {item.icon}
           {item.label && <Text>{item.label}</Text>}
@@ -325,8 +397,8 @@ export const AppLayoutHeader = () => {
             <AnimatedAnchorMemo href="/" text="LetsFindMy" />
             <Divider size="xs" orientation="vertical" ml="sm" />
 
-            <Center style={{ flexGrow: 1 }} visibleFrom="sm" >
-           <Group gap="xs">   {menuItems.map(renderDesktopMenuItem)}</Group>
+            <Center style={{ flexGrow: 1 }} visibleFrom="sm">
+              <Group gap="xs"> {menuItems.map(renderDesktopMenuItem)}</Group>
             </Center>
 
             {/* <Box style={{ flexGrow: 1 }} visibleFrom="sm" /> */}
@@ -363,4 +435,3 @@ export const AppLayoutHeader = () => {
     </Box>
   );
 };
-
