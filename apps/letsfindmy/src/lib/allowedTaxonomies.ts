@@ -1,6 +1,7 @@
 // Define the structure of our allowed types, grouped by Strapi model
 const taxonomyMapping = {
   BRAND: {
+    brands: '',
     artists: 'artist',
     authors: 'author',
     influencers: 'influencer',

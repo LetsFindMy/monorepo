@@ -9,6 +9,7 @@ import {
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
 import { ParamsDebug } from '#/ui/shared';
+import { CustomIcon } from '@/src/ui/icons';
 
 export function generateStaticParams() {
   return ALLOWED_TAXONOMIES.map((taxonomy) => ({ taxonomy }));

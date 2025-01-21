@@ -63,15 +63,29 @@ const DEFAULT_FIELDS = {
 } as const;
 
 // Server Actions
+/**
+ * Fetches all brands from the API with optional type filtering
+ * @param type - The StrapiType to filter brands by. If not provided, returns brands with null type
+ * @returns Promise containing array of Brand objects and total count metadata
+ * @throws Error if API request fails
+ */
 export async function getBrands(type: StrapiType) {
   const allBrands: Brand[] = [];
 
+  // Initialize URL builder with common parameters
   const urlBuilder = new StrapiUrlBuilder('brands')
     .addPopulate(RELATIONS.populate)
     .addFields(DEFAULT_FIELDS.list)
-    .addPagination(1, BATCH_SIZE)
-    .addFilter('type', type);
+    .addPagination(1, BATCH_SIZE);
 
+  // Conditional filtering
+  if (type) {
+    urlBuilder.addFilter('type', type);
+  } else {
+    urlBuilder.addComplexFilter({ type: { $null: true } });
+  }
+
+  // Fetch first page
   const firstPage = await fetchFromAPI<{
     data: Brand[];
     meta: { pagination: { pageCount: number; total: number } };
@@ -79,8 +93,8 @@ export async function getBrands(type: StrapiType) {
 
   allBrands.push(...firstPage.data);
 
+  // Handle pagination
   const totalPages = firstPage.meta.pagination.pageCount;
-
   if (totalPages > 1) {
     const remainingPages = Array.from(
       { length: totalPages - 1 },
@@ -88,17 +102,24 @@ export async function getBrands(type: StrapiType) {
     );
 
     const responses = await Promise.all(
-      remainingPages.map((page) =>
-        fetchFromAPI<{ data: Brand[] }>(
-          new StrapiUrlBuilder('brands')
-            .addPopulate(RELATIONS.populate)
-            .addFields(DEFAULT_FIELDS.list)
-            .addPagination(page, BATCH_SIZE)
-            .addFilter('type', type)
-            .toString(),
-          ['brands', `brands-${type}`],
-        ),
-      ),
+      remainingPages.map((page) => {
+        const pageBuilder = new StrapiUrlBuilder('brands')
+          .addPopulate(RELATIONS.populate)
+          .addFields(DEFAULT_FIELDS.list)
+          .addPagination(page, BATCH_SIZE);
+
+        // Replicate filtering logic for subsequent pages
+        if (type) {
+          pageBuilder.addFilter('type', type);
+        } else {
+          pageBuilder.addComplexFilter({ type: { $null: true } });
+        }
+
+        return fetchFromAPI<{ data: Brand[] }>(pageBuilder.toString(), [
+          'brands',
+          `brands-${type}`,
+        ]);
+      }),
     );
 
     responses.forEach((response) => allBrands.push(...response.data));
@@ -111,18 +132,22 @@ export async function getBrands(type: StrapiType) {
 }
 
 export async function getBrand(slug: string, type: StrapiType) {
+  const urlBuilder = new StrapiUrlBuilder('brands')
+    .addPopulate(RELATIONS.populate)
+    .addFields(DEFAULT_FIELDS.single)
+    .addFilter('slug', slug);
+
+  // Handle null type filtering
+  if (type) {
+    urlBuilder.addFilter('type', type);
+  } else {
+    urlBuilder.addComplexFilter({ type: { $null: true } });
+  }
+
   const response = await fetchFromAPI<{ data: Brand[] }>(
-    new StrapiUrlBuilder('brands', slug)
-      .addPopulate(RELATIONS.populate)
-      .addFields(DEFAULT_FIELDS.single)
-      .addFilter('type', type)
-      .toString(),
+    urlBuilder.toString(),
     ['brands', `brand-${slug}`, `brand-${type}-${slug}`],
   );
-
-  if (!response.data.length) {
-    throw new Error(`Brand with slug "${slug}" and type "${type}" not found`);
-  }
 
   return {
     data: response.data[0],

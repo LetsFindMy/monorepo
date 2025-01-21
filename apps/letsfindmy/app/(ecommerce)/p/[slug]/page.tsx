@@ -10,9 +10,11 @@ import {
   Badge,
   Table,
   Code,
+  Anchor,
 } from '@mantine/core';
 import { getProduct, getProductSlugs } from '#/lib/actions/products';
 import { ParamsDebug } from '#/ui/shared';
+import Link from 'next/link';
 
 export async function generateStaticParams() {
   try {
@@ -70,9 +72,11 @@ export default async function ProductPage({
               </Text>
               <Group>
                 {product.brands.map((brand) => (
-                  <Badge key={brand.id} variant="outline">
-                    {brand.name}
-                  </Badge>
+                  <Anchor component={Link} href={`/brands/${brand.slug}`}>
+                    <Badge key={brand.id} variant="outline">
+                      {brand.name}
+                    </Badge>
+                  </Anchor>
                 ))}
               </Group>
             </Stack>

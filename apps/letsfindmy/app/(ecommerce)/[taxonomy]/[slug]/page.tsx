@@ -17,6 +17,7 @@ import {
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
 import { ParamsDebug } from '#/ui/shared';
+import { GroupedList } from '#/ui/GroupedList';
 
 export async function generateStaticParams() {
   const params = [];
@@ -64,19 +65,25 @@ export default async function TaxonomyItemPage({
             {item.locations && item.locations.length > 0 && (
               <Group>
                 <IconMapPin size={16} />
-                <Text>{item.locations.map((loc) => loc.name).join(', ')}</Text>
+                <Text>
+                  {item.locations
+                    .map((loc: { name: any }) => loc.name)
+                    .join(', ')}
+                </Text>
               </Group>
             )}
             {isProductCategory && item.children && item.children.length > 0 && (
               <Stack gap="md">
                 <Title order={2}>Child Categories</Title>
                 <GroupedList
-                  items={item.children.map((child) => ({
-                    id: child.id,
-                    name: child.name,
-                    slug: child.slug,
-                    type: item.type, // Assuming all children have the same type as the parent
-                  }))}
+                  items={item.children.map(
+                    (child: { id: any; name: any; slug: any }) => ({
+                      id: child.id,
+                      name: child.name,
+                      slug: child.slug,
+                      type: item.type, // Assuming all children have the same type as the parent
+                    }),
+                  )}
                   basePath={taxonomy}
                 />
               </Stack>
