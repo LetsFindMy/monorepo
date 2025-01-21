@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Container, Title, Text } from '@mantine/core';
+import { Container, Title, Text, Box } from '@mantine/core';
 import { GroupedList } from '#/ui/GroupedList';
 import { notFound } from 'next/navigation';
 import {
@@ -47,11 +47,11 @@ export default async function DynamicPage({
           </Container>
         }
       >
-        <Container size="sm" py="xl">
+        <Container size="md" py="xl">
           <Title order={1} ta="center" mb="xl">
             {title}
           </Title>
-          <GroupedList items={items} basePath={taxonomy} />
+          <GroupedList items={items} basePath={taxonomy} groupBy="alpha" />
         </Container>
 
         <ParamsDebug params={{ taxonomy, items }} />

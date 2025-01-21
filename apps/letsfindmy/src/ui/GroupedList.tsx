@@ -1,115 +1,108 @@
 'use client';
 
-import { List, Stack, Badge } from '@mantine/core';
-import { Anchor } from '@mantine/core';
+import { Anchor, Badge, SimpleGrid, Stack } from '@mantine/core';
 import Link from 'next/link';
+import { memo, useMemo } from 'react';
 
-interface TypeGroupProps<T extends ListItem> {
-  type: string;
-  items: T[];
-  useGroups: boolean;
-  typeConfigs?: Record<string, TypeConfig>;
-  basePath: string;
-}
-
-interface ListItemProps {
-  item: ListItem;
-  basePath: string;
-}
-
-export interface TypeConfig {
-  label: string;
-}
-
-export interface ListItem {
-  id: string | number;
-  type?: string;
-  name: string;
-  slug: string;
-}
-
-export interface GroupedListProps<T extends ListItem> {
-  items: T[];
-  typeConfigs?: Record<string, TypeConfig>;
-  basePath: string;
-}
-
-export const groupItemsByType = <T extends ListItem>(
-  items: T[],
-  useGroups: boolean,
-): Record<string, T[]> => {
-  if (!useGroups) {
-    return { all: items };
-  }
-
-  return items.reduce(
-    (acc, item) => {
-      const type = item.type || 'other';
-      if (!acc[type]) {
-        acc[type] = [];
-      }
-      acc[type].push(item);
-      return acc;
-    },
-    {} as Record<string, T[]>,
-  );
+type Item = {
+  readonly id: string | number;
+  readonly type?: string;
+  readonly name: string;
+  readonly slug: string;
 };
 
-export const sortTypes = (types: string[]): string[] => {
-  return types.sort((a, b) => a.localeCompare(b));
+type GroupStrategy = 'type' | 'alpha';
+
+type Props<T extends Item> = {
+  readonly items: readonly T[];
+  readonly typeConfigs?: Readonly<Record<string, { label: string }>>;
+  readonly basePath: string;
+  readonly groupBy?: GroupStrategy;
 };
 
-const ListItemComponent = ({ item, basePath }: ListItemProps) => (
-  <List.Item key={item.id}>
-    <Anchor
-      component={Link}
-      href={`/${basePath}/${item.slug}`}
-      underline="hover"
-      fw={500}
-    >
-      {item.name}
-    </Anchor>
-  </List.Item>
-);
+const useGroupedItems = <T extends Item>(
+  items: readonly T[],
+  strategy: GroupStrategy,
+) => {
+  return useMemo(() => {
+    const groups = items.reduce(
+      (acc, item) => {
+        const key =
+          strategy === 'alpha'
+            ? (item.name[0]?.toUpperCase() ?? 'Other')
+            : (item.type ?? 'Other');
 
-const TypeGroup = <T extends ListItem>({
-  type,
-  items,
-  useGroups,
-  typeConfigs,
-  basePath,
-}: TypeGroupProps<T>) => (
-  <div key={type}>
-    {useGroups && (
+        return { ...acc, [key]: [...(acc[key] ?? []), item] };
+      },
+      {} as Record<string, T[]>,
+    );
+
+    if (strategy === 'alpha') {
+      Object.keys(groups).forEach((key) => {
+        groups[key].sort((a, b) => a.name.localeCompare(b.name));
+      });
+    }
+
+    return groups;
+  }, [items, strategy]);
+};
+
+const GroupSection = memo(
+  <T extends Item>({
+    type,
+    items,
+    typeConfigs,
+    basePath,
+  }: {
+    type: string;
+    items: T[];
+    typeConfigs?: Props<T>['typeConfigs'];
+    basePath: string;
+  }) => (
+    <section data-group={type}>
       <Badge size="lg" radius="sm" mb="md">
-        {typeConfigs?.[type]?.label || type}
+        {typeConfigs?.[type]?.label ?? type}
       </Badge>
-    )}
-    <List spacing="sm" size="lg" listStyleType="none">
-      {items.map((item) => (
-        <ListItemComponent key={item.id} item={item} basePath={basePath} />
-      ))}
-    </List>
-  </div>
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }}>
+        {items.map((item) => (
+          <Anchor
+            key={item.id}
+            component={Link}
+            href={`/${basePath}/${item.slug}`}
+            underline="hover"
+            fw={500}
+            prefetch={false}
+          >
+            {item.name}
+          </Anchor>
+        ))}
+      </SimpleGrid>
+    </section>
+  ),
 );
 
-export const GroupedList = <T extends ListItem>({
+GroupSection.displayName = 'GroupSection';
+
+export const GroupedList = <T extends Item>({
   items,
   typeConfigs,
   basePath,
-}: GroupedListProps<T>) => {
-  const useGroups = !!typeConfigs;
-  const groupedItems = groupItemsByType(items, useGroups);
-  const types = sortTypes(Object.keys(groupedItems));
+  groupBy = 'type',
+}: Props<T>) => {
+  const strategy = typeConfigs ? 'type' : groupBy;
+  const groupedItems = useGroupedItems(items, strategy);
+  const sortedGroups = useMemo(
+    () => Object.keys(groupedItems).sort(),
+    [groupedItems],
+  );
 
   return (
-    <Stack gap="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
-      {types.map((type) => (
-        <TypeGroup
+    <Stack gap="xl" maw={600} mx="auto">
+      {sortedGroups.map((type) => (
+        <GroupSection
           key={type}
           type={type}
           items={groupedItems[type]}
-          useGroups={useGroups}
           typeConfigs={typeConfigs}
           basePath={basePath}
         />
