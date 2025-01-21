@@ -20,185 +20,12 @@ import {
   Collapse,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  IconBabyCarriage,
-  IconCategory,
-  IconHome,
-  IconShirt,
-  IconShoppingCart,
-  IconTower,
-  IconBook,
-  IconChartPie3,
-  IconChevronDown,
-  IconCode,
-  IconCoin,
-  IconFingerprint,
-  IconNotification,
-} from '@tabler/icons-react';
+import { IconCategory, IconChevronDown } from '@tabler/icons-react';
 import classes from './AppHeader.module.scss';
 import { AppHeaderUserMenu } from './AppHeaderUserMenu';
 import { AnimatedAnchorMemo } from '../Logo';
 import Link from 'next/link';
-
-// Define the structure for menu items
-interface MenuItem {
-  label?: string;
-  href: string;
-  icon?: React.ReactNode;
-  subItems?: MenuItem[];
-}
-
-const mockdata = [
-  {
-    icon: IconCode,
-    title: 'Open source',
-    description: "This Pokémon's cry is very loud and distracting",
-  },
-  {
-    icon: IconCoin,
-    title: 'Free for everyone',
-    description: "The fluid of Smeargle's tail secretions changes",
-  },
-  {
-    icon: IconBook,
-    title: 'Documentation',
-    description: 'Yanma is capable of seeing 360 degrees without',
-  },
-  {
-    icon: IconFingerprint,
-    title: 'Security',
-    description: "The shell's rounded shape and the grooves on its.",
-  },
-  {
-    icon: IconChartPie3,
-    title: 'Analytics',
-    description: 'This Pokémon uses its flying ability to quickly chase',
-  },
-  {
-    icon: IconNotification,
-    title: 'Notifications',
-    description: 'Combusken battles with the intensely hot flames it spews',
-  },
-];
-
-// Array of menu items
-const menuItems: MenuItem[] = [
-  {
-    href: '#',
-    icon: <IconCategory size={20} />,
-    subItems: mockdata,
-  },
-  {
-    label: 'Clothing',
-    href: '/clothing',
-    subItems: [
-      { label: 'Men', href: '/clothing/men', icon: <IconShirt size={16} /> },
-      {
-        label: 'Women',
-        href: '/clothing/women',
-        icon: <IconShirt size={16} />,
-      },
-      { label: 'Kids', href: '/clothing/kids', icon: <IconShirt size={16} /> },
-    ],
-  },
-  {
-    label: 'Home',
-    href: '/home',
-    subItems: [
-      {
-        label: 'Living Room',
-        href: '/home/living-room',
-        icon: <IconHome size={16} />,
-      },
-      { label: 'Bedroom', href: '/home/bedroom', icon: <IconHome size={16} /> },
-      { label: 'Kitchen', href: '/home/kitchen', icon: <IconHome size={16} /> },
-    ],
-  },
-  {
-    label: 'Toys & Games',
-    href: '/toy-games',
-    subItems: [
-      {
-        label: 'Board Games',
-        href: '/toy-games/board-games',
-        icon: <IconTower size={16} />,
-      },
-      {
-        label: 'Outdoor Toys',
-        href: '/toy-games/outdoor-toys',
-        icon: <IconTower size={16} />,
-      },
-      {
-        label: 'Educational Toys',
-        href: '/toy-games/educational-toys',
-        icon: <IconTower size={16} />,
-      },
-    ],
-  },
-  {
-    label: 'Everyday',
-    href: '/everyday',
-    subItems: [
-      {
-        label: 'Electronics',
-        href: '/everyday/electronics',
-        icon: <IconShoppingCart size={16} />,
-      },
-      {
-        label: 'Groceries',
-        href: '/everyday/groceries',
-        icon: <IconShoppingCart size={16} />,
-      },
-      {
-        label: 'Personal Care',
-        href: '/everyday/personal-care',
-        icon: <IconShoppingCart size={16} />,
-      },
-    ],
-  },
-  {
-    label: 'Kids',
-    href: '/kids',
-    subItems: [
-      {
-        label: 'Clothing',
-        href: '/kids/clothing',
-        icon: <IconBabyCarriage size={16} />,
-      },
-      {
-        label: 'Toys',
-        href: '/kids/toys',
-        icon: <IconBabyCarriage size={16} />,
-      },
-      {
-        label: 'School Supplies',
-        href: '/kids/school-supplies',
-        icon: <IconBabyCarriage size={16} />,
-      },
-    ],
-  },
-  {
-    label: 'Baby',
-    href: '/baby',
-    subItems: [
-      {
-        label: 'Diapers',
-        href: '/baby/diapers',
-        icon: <IconBabyCarriage size={16} />,
-      },
-      {
-        label: 'Feeding',
-        href: '/baby/feeding',
-        icon: <IconBabyCarriage size={16} />,
-      },
-      {
-        label: 'Nursery',
-        href: '/baby/nursery',
-        icon: <IconBabyCarriage size={16} />,
-      },
-    ],
-  },
-];
+import { MenuItem, menuItems } from './navData';
 
 export const AppLayoutHeader = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -209,18 +36,18 @@ export const AppLayoutHeader = () => {
     const theme = useMantineTheme();
 
     if (item.icon && item.icon.type === IconCategory) {
-      const links = mockdata.map((item) => (
-        <UnstyledButton className={classes.subLink} key={item.title}>
+      const links = item.subItems?.map((subItem) => (
+        <UnstyledButton className={classes.subLink} key={subItem.title}>
           <Group wrap="nowrap" align="flex-start">
             <ThemeIcon size={34} variant="default" radius="md">
-              <item.icon size={22} color={theme.colors.blue[6]} />
+              {subItem.icon}
             </ThemeIcon>
             <div>
               <Text size="sm" fw={500}>
-                {item.title}
+                {subItem.title}
               </Text>
               <Text size="xs" c="dimmed">
-                {item.description}
+                {subItem.description}
               </Text>
             </div>
           </Group>
@@ -294,20 +121,19 @@ export const AppLayoutHeader = () => {
         </HoverCard.Target>
         <HoverCard.Dropdown p="0">
           <div className={classes.dropdownContent}>
-            {item.subItems &&
-              item.subItems.map((subItem) => (
-                <Anchor
-                  key={subItem.label}
-                  component={Link}
-                  href={subItem.href}
-                  className={classes.dropdownLink}
-                >
-                  {subItem.icon && (
-                    <span className={classes.dropdownIcon}>{subItem.icon}</span>
-                  )}
-                  {subItem.label}
-                </Anchor>
-              ))}
+            {item.subItems?.map((subItem) => (
+              <Anchor
+                key={subItem.label}
+                component={Link}
+                href={subItem.href}
+                className={classes.dropdownLink}
+              >
+                {subItem.icon && (
+                  <span className={classes.dropdownIcon}>{subItem.icon}</span>
+                )}
+                {subItem.label}
+              </Anchor>
+            ))}
             {!item.subItems && (
               <Text size="sm">No additional options available.</Text>
             )}
@@ -335,11 +161,11 @@ export const AppLayoutHeader = () => {
             </Center>
           </UnstyledButton>
           <Collapse in={linksOpened}>
-            {mockdata.map((subItem) => (
+            {item.subItems?.map((subItem) => (
               <UnstyledButton className={classes.subLink} key={subItem.title}>
                 <Group wrap="nowrap" align="flex-start">
                   <ThemeIcon size={34} variant="default" radius="md">
-                    <subItem.icon size={22} color={theme.colors.blue[6]} />
+                    {subItem.icon}
                   </ThemeIcon>
                   <div>
                     <Text size="sm" fw={500}>
@@ -357,6 +183,7 @@ export const AppLayoutHeader = () => {
       );
     }
 
+    // Rest of the renderMobileMenuItem implementation remains the same
     return (
       <Box
         key={item.label || item.href}
@@ -389,6 +216,7 @@ export const AppLayoutHeader = () => {
     );
   };
 
+  // The rest of the component remains the same
   return (
     <Box>
       <AppShell.Header className={classes.header}>
@@ -401,7 +229,6 @@ export const AppLayoutHeader = () => {
               <Group gap="xs"> {menuItems.map(renderDesktopMenuItem)}</Group>
             </Center>
 
-            {/* <Box style={{ flexGrow: 1 }} visibleFrom="sm" /> */}
             <Divider size="xs" orientation="vertical" />
             <Burger
               opened={drawerOpened}
