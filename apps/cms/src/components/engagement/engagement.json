@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_engagement_engagements",
+  "info": {
+    "displayName": "Engagement",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "fandom_urls": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.urls"
+    }
+  }
+}
