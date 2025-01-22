@@ -96,6 +96,10 @@
       "type": "component",
       "repeatable": false,
       "component": "jolly-roger.jolly-roger"
+    },
+    "amzMarketplaceId": {
+      "type": "string",
+      "unique": true
     }
   }
 }
