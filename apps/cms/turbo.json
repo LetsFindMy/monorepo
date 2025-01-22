@@ -3,12 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "outputs": [
-        ".cache/**",
-        "build/**",
-        "dist/**",
-        ".strapi-files/**"
-      ]
+      "outputs": [".cache/**", "build/**", "dist/**", ".strapi-files/**"]
     },
     "dev": {
       "persistent": true,

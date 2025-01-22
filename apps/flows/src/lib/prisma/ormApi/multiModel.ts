@@ -11,7 +11,6 @@ export type TagWithGroup = Tag & { tagGroup: TagGroup | null };
  * @returns An array of tags with their associated tag groups.
  */
 export const getTagsWithTagGroups = async (): Promise<TagWithGroup[]> => {
-  console.log('Inside getTagsWithTagGroupsAction');
   try {
     const tags = await prisma.tag.findMany({
       where: { deleted: false },

@@ -3,9 +3,7 @@
   "extends": ["//"],
   "tasks": {
     "build": {
-      "outputs": [
-        "storybook-static/**"
-      ]
+      "outputs": ["storybook-static/**"]
     },
     "dev": {
       "persistent": true

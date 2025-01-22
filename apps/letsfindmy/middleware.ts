@@ -1,5 +1,5 @@
 import { auth } from '#/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 import { get } from '@vercel/edge-config';
 
 // Or like this if you need to do something here.
@@ -15,8 +15,9 @@ export const config = {
 export const middleware = async (req: NextRequest, ev: NextFetchEvent) => {
   // Check Edge Config to see if the maintenance page should be shown
   // If in maintenance mode, point the url pathname to the maintenance page
+
   const isInMaintenanceMode = await get('isInMaintenanceMode');
-  if (isInMaintenanceMode) {
+  if (isInMaintenanceMode && process.env.NODE_ENV !== 'development') {
     req.nextUrl.pathname = `/maintenance`;
     return NextResponse.rewrite(req.nextUrl);
   }

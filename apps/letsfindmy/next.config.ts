@@ -1,19 +1,30 @@
 import type { NextConfig } from 'next';
-
 import path from 'node:path';
 
 const fullPath = `${path.join(process.cwd(), 'src/styles/_mantine').replace(/\\/g, '/')}`;
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // sassOptions: {
-  //   prependData: `@import "./src/styles/_mantine.scss";`,
-  // },
   sassOptions: {
     prependData: `@import "./src/styles/_mantine.scss";`,
   },
   images: {
-    domains: ['localhost:3000'],
+    remotePatterns: [
+      // Local development
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/**',
+      },
+      // Media domain
+      {
+        protocol: 'https',
+        hostname: 'media.letsfindmy.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],

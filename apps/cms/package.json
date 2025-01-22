@@ -8,9 +8,9 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "doppler": "doppler secrets download --no-file --format env > .env",
     "start": "strapi start",
-    "strapi": "strapi",
-    "doppler": "doppler secrets download --no-file --format env > .env"
+    "strapi": "strapi"
   },
   "dependencies": {
     "@strapi/plugin-color-picker": "^5.8.0",

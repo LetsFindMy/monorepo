@@ -130,6 +130,7 @@ export function AppNav() {
           >
             Monitoring
           </Button>
+
           <Button
             variant="subtle"
             component={Link}
@@ -138,6 +139,7 @@ export function AppNav() {
           >
             Auditing
           </Button>
+
           <Button variant="subtle" component={Link} color="cyan" href="#">
             Academy
           </Button>

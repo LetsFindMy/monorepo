@@ -76,6 +76,11 @@
       "type": "component",
       "repeatable": true,
       "component": "jolly-roger.find-replace-reject"
+    },
+    "engagement": {
+      "type": "component",
+      "repeatable": false,
+      "component": "engagement.engagement"
     }
   }
 }

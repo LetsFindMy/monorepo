@@ -6,7 +6,6 @@ import { TagWithGroup, getTagsWithTagGroups } from '#/lib/prisma/ormApi';
  * @returns An array of tags with their associated tag groups.
  */
 export const getTagsWithTagGroupsAction = async (): Promise<TagWithGroup[]> => {
-  console.log('Inside getTagsWithTagGroupsAction');
   try {
     const tags = await getTagsWithTagGroups();
     console.log('getTagsWithTagGroups', tags);

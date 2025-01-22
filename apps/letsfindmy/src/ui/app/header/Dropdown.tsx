@@ -111,7 +111,7 @@ export const AppHeaderMenuBar: React.FC = () => {
           <Anchor component={Link} href="/flows" className={classes.link}>
             <Center inline>
               <Box component="span" mr={5}>
-                Flows
+                Categories
               </Box>
               <IconChevronDown
                 style={{ width: rem(16), height: rem(16) }}
@@ -157,16 +157,6 @@ export const AppHeaderMenuBar: React.FC = () => {
           </div>
         </HoverCard.Dropdown>
       </HoverCard>
-
-      <Anchor component={Link} href="/tags" className={classes.link}>
-        Tags
-      </Anchor>
-      <Anchor component={Link} href="/monitoring" className={classes.link}>
-        Monitoring
-      </Anchor>
-      <Anchor component={Link} href="/auditing" className={classes.link}>
-        Auditing
-      </Anchor>
     </Flex>
   );
 };

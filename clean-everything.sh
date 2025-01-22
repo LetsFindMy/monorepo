@@ -9,24 +9,24 @@ NC='\033[0m' # No Color
 
 # Function to print section headers
 print_header() {
-    echo -e "\n${BLUE}════════════════════════════════════════════${NC}"
-    echo -e "${BLUE}   $1${NC}"
-    echo -e "${BLUE}════════════════════════════════════════════${NC}\n"
+  echo -e "\n${BLUE}════════════════════════════════════════════${NC}"
+  echo -e "${BLUE}   $1${NC}"
+  echo -e "${BLUE}════════════════════════════════════════════${NC}\n"
 }
 
 # Function to print success messages
 print_success() {
-    echo -e "${GREEN}✓ $1${NC}"
+  echo -e "${GREEN}✓ $1${NC}"
 }
 
 # Function to print progress messages
 print_progress() {
-    echo -e "${YELLOW}⟳ $1${NC}"
+  echo -e "${YELLOW}⟳ $1${NC}"
 }
 
 # Function to count directories
 count_dirs() {
-    find . -type d -name "$1" | wc -l
+  find . -type d -name "$1" | wc -l
 }
 
 # Start cleaning process
