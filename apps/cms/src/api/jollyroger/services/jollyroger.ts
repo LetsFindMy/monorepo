@@ -1,0 +1,5 @@
+/**
+ * jollyroger service
+ */
+
+export default () => ({});
