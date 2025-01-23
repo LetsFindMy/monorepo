@@ -49,13 +49,7 @@
     },
     "language": {
       "type": "enumeration",
-      "enum": [
-        "english",
-        "spanish",
-        "french",
-        "italian",
-        "german"
-      ]
+      "enum": ["english", "spanish", "french", "italian", "german"]
     },
     "publisher": {
       "type": "relation",

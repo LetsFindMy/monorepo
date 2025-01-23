@@ -13,10 +13,14 @@ export default {
   //   }
   // }
 
-   async brightDataAmazon(ctx) {
+  async brightDataAmazon(ctx) {
     const { data } = ctx.request.body;
 
-    processBrightDataAmazon(data, 'st-2ac8');
+    try {
+      processBrightDataAmazon(data, 'st-2ac8');
+    } catch (error) {
+      console.log(error);
+    }
     // Process the data here
     // For now, we'll just return the data
     return { receivedData: data };

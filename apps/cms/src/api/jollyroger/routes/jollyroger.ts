@@ -10,16 +10,15 @@ export default {
     //  },
     // },
 
-
     {
       method: 'POST',
       path: '/jollyroger/brightdata/amazon',
-      handler: 'jollyroger.processBrightDataAmazon',
+      handler: 'jollyroger.brightDataAmazon',
+
       config: {
         policies: [],
         middlewares: [],
       },
     },
-
   ],
 };
