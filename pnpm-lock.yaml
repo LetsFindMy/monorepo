@@ -1003,8 +1003,8 @@ importers:
         specifier: ^0.6.16
         version: 0.6.16
       '@knocklabs/react':
-        specifier: ^0.2.33
-        version: 0.2.33(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^0.3.0
+        version: 0.3.1(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.7.3)(zod@3.24.1)
@@ -3442,20 +3442,20 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
-  '@knocklabs/client@0.10.17':
-    resolution: {integrity: sha512-E8zJG+ZN9ySFIUQlqH/1LNdiXNzhBbOEMv8YgNsD7GUmRt1ga4urSqBYeUuCr5Qk5GyHSvNuS+Tp/XqBo0n4+Q==}
+  '@knocklabs/client@0.11.2':
+    resolution: {integrity: sha512-QPEtzbr4SrCndnuHZldRZhguLkntB6KDDH4JqRsolNv0xKR15AyLzsB6gppXDXEYhW86ZThohXgMDWArNiGWyQ==}
 
   '@knocklabs/node@0.6.16':
     resolution: {integrity: sha512-8fgsfzcvDrjphJ3WD3EwHbIOibD5hf7gYJpTNLTwq5ZL9YTuKqhyyKDwsbvwd4BBdO5vMFHh4r8Jsw2SPwM2uw==}
     engines: {node: '>=17.5.0'}
 
-  '@knocklabs/react-core@0.2.29':
-    resolution: {integrity: sha512-jsBPjrWBhbIp5XDJUH46Nk6+vbjF9Jrdx7t95DF0jTJFpyND7xSYxoh7uxAM2qai8Ga6eWlj46OsH6hAJiQUJA==}
+  '@knocklabs/react-core@0.3.2':
+    resolution: {integrity: sha512-5Xq3WyDKTP3zBfNrMgbK5eT2G6oeFJpd753Jk4MvRWWfJdh9xTPlk+dAbRgylnvTTbLHB+0Y06F5ygU6GILZQg==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
 
-  '@knocklabs/react@0.2.33':
-    resolution: {integrity: sha512-YiJ84/96mvV9QQ1Syk0J0S8JQ6JPcN2PI0K5DyT6r5QWhCysJ9K47PBk7gMvkiOgPdNov0PJBPFprmRlRqm9WQ==}
+  '@knocklabs/react@0.3.1':
+    resolution: {integrity: sha512-MGgWWYgnEgTYuEGnBfPUzXFETfyT59y7/rWBQxlys1CUtu2UyYRbCGS/c2fqk3STIKJPf6xZJbxRLLk0u2i7UA==}
     peerDependencies:
       react: ^16.11.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.11.0 || ^17.0.0 || ^18.0.0
@@ -16919,7 +16919,7 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
-  '@knocklabs/client@0.10.17(react@19.0.0)':
+  '@knocklabs/client@0.11.2(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.26.0
       '@knocklabs/types': 0.1.5
@@ -16938,9 +16938,9 @@ snapshots:
     dependencies:
       jose: 5.9.6
 
-  '@knocklabs/react-core@0.2.29(react@19.0.0)':
+  '@knocklabs/react-core@0.3.2(react@19.0.0)':
     dependencies:
-      '@knocklabs/client': 0.10.17(react@19.0.0)
+      '@knocklabs/client': 0.11.2(react@19.0.0)
       date-fns: 4.1.0
       react: 19.0.0
       swr: 2.3.0(react@19.0.0)
@@ -16948,10 +16948,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@knocklabs/react@0.2.33(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@knocklabs/react@0.3.1(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@knocklabs/client': 0.10.17(react@19.0.0)
-      '@knocklabs/react-core': 0.2.29(react@19.0.0)
+      '@knocklabs/client': 0.11.2(react@19.0.0)
+      '@knocklabs/react-core': 0.3.2(react@19.0.0)
       '@popperjs/core': 2.11.8
       '@radix-ui/react-popover': 1.0.7(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-visually-hidden': 1.0.3(@types/react-dom@19.0.3(@types/react@19.0.7))(@types/react@19.0.7)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
