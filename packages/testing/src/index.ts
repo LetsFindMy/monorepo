@@ -1,23 +1,5 @@
-import path from 'node:path';
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
-import userEvent from '@testing-library/user-event';
+export { expect, describe, it, beforeEach, afterEach, vi } from 'vitest';
+export { screen, within } from '@testing-library/react';
 
-export * from '@testing-library/react';
-export { render } from './render';
-export { userEvent };
-
-const config = defineConfig({
-  plugins: [react()],
-  test: {
-    environment: 'jsdom',
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(import.meta.dirname, './'),
-      '@repo': path.resolve(import.meta.dirname, '../../packages'),
-    },
-  },
-});
-
-export default config;
+export { render } from './utils/render';
+export { createMantineTest } from './mantine/test-utils';
