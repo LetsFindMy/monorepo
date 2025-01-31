@@ -92,7 +92,6 @@ export const ReactFlow12: React.FC = () => {
     try {
       const flowId = prismaData.flow.id;
 
-
       // Get the current flow state
       const currentFlow = reactFlowInstance.toObject();
 

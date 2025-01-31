@@ -147,7 +147,12 @@ export const upsertFlowAction = async (
   flowData: FlowCreateUpdateData,
 ): Promise<TransactionResult> => {
   try {
-    const { id: flowId, nodes: nodesData, edges: edgesData, ...flowUpdate } = flowData;
+    const {
+      id: flowId,
+      nodes: nodesData,
+      edges: edgesData,
+      ...flowUpdate
+    } = flowData;
 
     if (!flowId) {
       throw new Error('Flow ID is required');

@@ -1,91 +1,109 @@
-"use client"
+'use client';
 
-import { useMemo } from "react"
-import { useForm, type UseFormReturnType } from "@mantine/form"
-import { Button, Paper, Stack, Text, TextInput, Container } from "@mantine/core"
-import { IconArrowRight, IconNumber123, IconTelescope } from "@tabler/icons-react"
-import { useRouter } from "next/navigation"
-import { FlowMethod, createFlowAction } from "#/lib/prisma"
-import { motion } from "framer-motion"
-import { PageFrame } from "#/ui/shared"
-import { isolateSubdomain } from "#/lib/utils"
-import { ImageRadios } from "#/ui/formFields"
-import { useDisclosure } from "@mantine/hooks"
+import { useMemo } from 'react';
+import { useForm, type UseFormReturnType } from '@mantine/form';
+import {
+  Button,
+  Paper,
+  Stack,
+  Text,
+  TextInput,
+  Container,
+} from '@mantine/core';
+import {
+  IconArrowRight,
+  IconNumber123,
+  IconTelescope,
+} from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
+import { FlowMethod, createFlowAction } from '#/lib/prisma';
+import { motion } from 'framer-motion';
+import { PageFrame } from '@repo/uix';
+import { isolateSubdomain } from '#/lib/utils';
+import { ImageRadios } from '#/ui/formFields';
+import { useDisclosure } from '@mantine/hooks';
 
 interface NewFlowFormProps {
   params: {
-    domain: string
-  }
+    domain: string;
+  };
 }
 
 interface FlowFormValues {
-  flowName: string
-  flowMethod: FlowMethod
-  authorId: string
-  flowData: string
+  flowName: string;
+  flowMethod: FlowMethod;
+  authorId: string;
+  flowData: string;
 }
 
 export const NewFlowForm: React.FC<NewFlowFormProps> = ({ params }) => {
-  const router = useRouter()
+  const router = useRouter();
 
-  const subdomain = useMemo(() => isolateSubdomain(params?.domain), [params?.domain])
+  const subdomain = useMemo(
+    () => isolateSubdomain(params?.domain),
+    [params?.domain],
+  );
 
-  const [loading, { open: startLoading, close: stopLoading }] = useDisclosure(false)
+  const [loading, { open: startLoading, close: stopLoading }] =
+    useDisclosure(false);
 
   // @ts-ignore TODO: Fix this
   const form: UseFormReturnType<FlowFormValues> = useForm({
-    mode: "uncontrolled",
+    mode: 'uncontrolled',
     initialValues: {
-      flowName: "",
+      flowName: '',
       flowMethod: FlowMethod.observable,
-      authorId: "1",
-      flowData: "",
+      authorId: '1',
+      flowData: '',
     },
     validate: {
-      flowName: (value) => (value.trim().length < 2 ? "Flow name must have at least 2 characters" : null),
+      flowName: (value) =>
+        value.trim().length < 2
+          ? 'Flow name must have at least 2 characters'
+          : null,
     },
     validateInputOnChange: true,
     validateInputOnBlur: true,
-  })
+  });
 
   const flowMethods = useMemo(
     () => [
       {
         value: FlowMethod.observable,
-        label: "Observable",
+        label: 'Observable',
         icon: IconTelescope,
-        helperText: "Dynamic: Responds to events.",
+        helperText: 'Dynamic: Responds to events.',
       },
       {
         value: FlowMethod.sequential,
-        label: "Sequential",
+        label: 'Sequential',
         icon: IconNumber123,
-        helperText: "Fixed: Runs steps in order.",
+        helperText: 'Fixed: Runs steps in order.',
       },
     ],
     [],
-  )
+  );
 
   const handleSubmit = async (values: FlowFormValues) => {
-    if (!form.isValid()) return
+    if (!form.isValid()) return;
 
-    startLoading()
+    startLoading();
 
     try {
-      const payload = { ...values, subdomain }
-      const newFlow = await createFlowAction(payload)
+      const payload = { ...values, subdomain };
+      const newFlow = await createFlowAction(payload);
       if (newFlow) {
-        form.reset()
-        router.push(`/flow/${newFlow.id}`)
+        form.reset();
+        router.push(`/flow/${newFlow.id}`);
       } else {
-        form.setErrors({ flowName: "Failed to create flow" })
+        form.setErrors({ flowName: 'Failed to create flow' });
       }
     } catch {
-      form.setErrors({ flowName: "Error creating flow, try again later" })
+      form.setErrors({ flowName: 'Error creating flow, try again later' });
     } finally {
-      stopLoading()
+      stopLoading();
     }
-  }
+  };
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -97,22 +115,33 @@ export const NewFlowForm: React.FC<NewFlowFormProps> = ({ params }) => {
       },
     },
     exit: { opacity: 0, y: -20 },
-  }
+  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0 },
-  }
+  };
 
-  const [opened, { toggle }] = useDisclosure(false)
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <motion.div initial="hidden" animate="visible" exit="exit" variants={containerVariants}>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={containerVariants}
+    >
       <PageFrame
         title={
           <>
-            Create your new{" "}
-            <Text component="span" fw={600} variant="gradient" gradient={{ from: "cyan", to: "indigo.3" }} inherit>
+            Create your new{' '}
+            <Text
+              component="span"
+              fw={600}
+              variant="gradient"
+              gradient={{ from: 'cyan', to: 'indigo.3' }}
+              inherit
+            >
               flow
             </Text>
           </>
@@ -126,7 +155,7 @@ export const NewFlowForm: React.FC<NewFlowFormProps> = ({ params }) => {
                   <TextInput
                     label="Flow Name"
                     placeholder="Enter flow name"
-                    {...form.getInputProps("flowName")}
+                    {...form.getInputProps('flowName')}
                     error={form.errors.flowName}
                   />
                 </motion.div>
@@ -138,23 +167,30 @@ export const NewFlowForm: React.FC<NewFlowFormProps> = ({ params }) => {
                 <motion.div variants={itemVariants}>
                   <Button
                     type="submit"
-                    rightSection={!loading ? <IconArrowRight size={16} /> : null}
-                    disabled={!form.isTouched("flowName") || form.errors.flowName !== undefined || loading}
+                    rightSection={
+                      !loading ? <IconArrowRight size={16} /> : null
+                    }
+                    disabled={
+                      !form.isTouched('flowName') ||
+                      form.errors.flowName !== undefined ||
+                      loading
+                    }
                     loading={loading}
                     variant="gradient"
-                    gradient={{ from: "teal", to: "blue" }}
+                    gradient={{ from: 'teal', to: 'blue' }}
                     size="md"
                     radius="md"
                     w="100%"
                     styles={{
                       root: {
-                        transition: "transform 0.2s ease, background-color 0.2s ease",
-                        "&:hover": {
-                          transform: "scale(1.05)",
-                          backgroundImage: "linear-gradient(90deg, teal, blue)",
+                        transition:
+                          'transform 0.2s ease, background-color 0.2s ease',
+                        '&:hover': {
+                          transform: 'scale(1.05)',
+                          backgroundImage: 'linear-gradient(90deg, teal, blue)',
                         },
-                        "&:active": {
-                          transform: "scale(0.95)",
+                        '&:active': {
+                          transform: 'scale(0.95)',
                         },
                       },
                     }}
@@ -168,6 +204,5 @@ export const NewFlowForm: React.FC<NewFlowFormProps> = ({ params }) => {
         </Container>
       </PageFrame>
     </motion.div>
-  )
-}
-
+  );
+};

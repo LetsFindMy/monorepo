@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { PageFrame } from '#/ui/shared';
+import { PageFrame } from '@repo/uix';
 import { FlowValidation } from './UI';
 import { Container } from '@mantine/core';
 

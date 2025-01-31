@@ -56,7 +56,7 @@ export const FlowProvider: FC<FlowProviderProps> = ({
       dndType,
       setDnDType,
     }),
-    [nextParams.domain, nextParams.cuid, prismaData, error, dndType]
+    [nextParams.domain, nextParams.cuid, prismaData, error, dndType],
   );
 
   return (

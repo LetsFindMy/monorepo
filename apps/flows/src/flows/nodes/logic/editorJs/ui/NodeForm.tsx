@@ -45,9 +45,9 @@ export const NodeForm: FC = memo(() => {
       </Flex>
 
       <CodeEditor
-        key={form.key("metadata.code")}
-        {...form.getInputProps("metadata.code")}
-        language={form.values.metadata?.language || "javascript"}
+        key={form.key('metadata.code')}
+        {...form.getInputProps('metadata.code')}
+        language={form.values.metadata?.language || 'javascript'}
         height={500}
       />
     </Stack>

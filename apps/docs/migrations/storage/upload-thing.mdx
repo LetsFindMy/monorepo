@@ -117,9 +117,9 @@ export const { GET, POST } = createRouteHandler({ router });
 Update your root layout to include the `StorageSSRPlugin`. This will add SSR hydration and avoid a loading state on your upload button.
 
 ```tsx apps/app/app/layout.tsx {4,5,7,16}
-import '@repo/design-system/styles/globals.css';
-import { DesignSystemProvider } from '@repo/design-system';
-import { fonts } from '@repo/design-system/lib/fonts';
+import '@repo/uix/styles/globals.css';
+import { DesignSystemProvider } from '@repo/uix';
+import { fonts } from '@repo/uix/lib/fonts';
 import { extractRouterConfig } from '@repo/storage';
 import { StorageSSRPlugin } from '@repo/storage/ssr';
 import type { ReactNode } from 'react';

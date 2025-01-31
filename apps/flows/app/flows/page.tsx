@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
-import { PageFrame } from '#/ui/shared';
+import { PageFrame } from '@repo/uix';
 import { Button, Paper, rem } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
@@ -12,8 +12,6 @@ import { getFlowsAction } from '#/lib/prisma';
 export const metadata: Metadata = {
   title: 'All Flows | Flowbuilder',
 };
-
-
 
 export default async function FlowsPage() {
   const userFlows = await getFlowsAction();

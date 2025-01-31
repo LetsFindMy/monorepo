@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import { PageFrame } from '#/ui/shared';
 import { FlowSettings } from './UI';
 import { Container } from '@mantine/core';
+import { PageFrame } from '@repo/uix';
 
 interface NewFlowPageProps {
   params: Promise<{

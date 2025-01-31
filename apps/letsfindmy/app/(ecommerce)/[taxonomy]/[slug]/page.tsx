@@ -16,7 +16,7 @@ import {
   RouteName,
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
-import { ParamsDebug } from '#/ui/shared';
+import { ParamsDebug } from '@repo/uix';
 import { GroupedList } from '#/ui/GroupedList';
 
 export async function generateStaticParams() {

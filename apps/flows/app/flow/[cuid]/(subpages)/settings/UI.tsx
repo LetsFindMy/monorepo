@@ -10,7 +10,6 @@ import {
   Code,
   Select,
 } from '@mantine/core';
-import { TagsInput } from '@mantine/core';
 import { useFlowFormContext } from '#/app/flow/[cuid]/FlowProvider';
 import { FlowProviderFormValues } from '../../types';
 

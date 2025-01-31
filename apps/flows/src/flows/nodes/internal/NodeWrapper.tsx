@@ -130,8 +130,7 @@ export const NodeWrapper = memo((props: NodeWrapperProps) => {
   );
 
   return (
-    <
-    >
+    <>
       <>
         {renderPopover()}
 

@@ -1,6 +1,5 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { prisma } from '#/lib/prisma';
 import {
@@ -8,9 +7,6 @@ import {
   FlowMethod,
   NodeType as PrismaNodeType,
   EdgeType,
-  type Flow,
-  type Node as PrismaNode,
-  type Edge as PrismaEdge,
 } from '@prisma/client';
 import { NodeTypesEnum } from './nodes';
 
@@ -648,7 +644,6 @@ export async function saveFlowAction(input: SaveFlowInput) {
         edges: [...createdEdges, ...upsertedEdges],
       };
     });
-
 
     logger.success('saveFlowAction completed successfully', {
       flowId,

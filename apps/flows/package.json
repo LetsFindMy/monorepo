@@ -27,6 +27,7 @@
     "@mantine/modals": "^7.16.0",
     "@mantine/notifications": "^7.16.0",
     "@prisma/client": "^6.2.1",
+    "@repo/uix": "workspace:*",
     "@tabler/icons-react": "^3.28.1",
     "@xyflow/react": "^12.4.0",
     "clsx": "^2.1.1",
@@ -42,6 +43,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.10.6",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

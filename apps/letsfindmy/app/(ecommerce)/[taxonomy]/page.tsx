@@ -8,7 +8,7 @@ import {
   RouteName,
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
-import { ParamsDebug } from '#/ui/shared';
+import { ParamsDebug } from '@repo/uix';
 import { CustomIcon } from '@/src/ui/icons';
 
 export function generateStaticParams() {

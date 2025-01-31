@@ -64,7 +64,8 @@ export function TableBooksSelection({ data }: TableBooksSelectionProps) {
   const activeFlows = data.filter((flow) => flow.isEnabled).length;
   const inactiveFlows = data.length - activeFlows;
   const totalRuns = data.reduce(
-    (sum, flow) => sum + (flow.runs?.positive || 0) + (flow.runs?.negative || 0),
+    (sum, flow) =>
+      sum + (flow.runs?.positive || 0) + (flow.runs?.negative || 0),
     0,
   );
 
@@ -72,7 +73,7 @@ export function TableBooksSelection({ data }: TableBooksSelectionProps) {
     const totalRuns = (row.runs?.negative || 0) + (row.runs?.positive || 0);
     const positiveRuns =
       totalRuns > 0 ? ((row.runs?.positive || 0) / totalRuns) * 100 : 0;
-    const negativeRuns = 
+    const negativeRuns =
       totalRuns > 0 ? ((row.runs?.negative || 0) / totalRuns) * 100 : 0;
     const selected = selection.includes(row.id);
 
