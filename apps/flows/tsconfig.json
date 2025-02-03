@@ -1,12 +1,16 @@
 {
-  "extends": ["@repo/typescript-config/nextjs.json"],
+  "extends": [
+    "@repo/typescript-config/nextjs.json"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@repo/uix/*": ["../uix/*"],
-      "@repo/*": ["../../packages/*"],
-      "#/app/*": ["./app/*"],
-      "#/*": ["./src/*"]
+      "#/app/*": [
+        "./app/*"
+      ],
+      "#/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -16,5 +20,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/lib/prisma/generated/zod/index.ts"]
+  "exclude": [
+    "node_modules",
+    "src/lib/prisma/generated/zod/index.ts"
+  ]
 }
