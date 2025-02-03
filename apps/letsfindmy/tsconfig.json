@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@repo/uix/*": ["../uix/*"],
       "@repo/*": ["../../packages/*"],
       "#/app/*": ["./app/*"],
       "#/*": ["./src/*"]
@@ -15,5 +16,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "@repo/uix"]
+  "exclude": ["node_modules"]
 }
