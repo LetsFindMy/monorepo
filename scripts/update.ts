@@ -79,7 +79,7 @@ const getCurrentVersion = async (): Promise<string | undefined> => {
 const selectVersion = async (
   label: string,
   availableVersions: string[],
-  initialValue: string | undefined
+  initialValue: string | undefined,
 ) => {
   const version = await select({
     message: `Select a version to update ${label}:`,
@@ -98,7 +98,7 @@ const selectVersion = async (
 
 const getDiff = async (
   from: { version: string; files: string[] },
-  to: { version: string; files: string[] }
+  to: { version: string; files: string[] },
 ) => {
   const filesToUpdate: string[] = [];
 
@@ -113,7 +113,7 @@ const getDiff = async (
       (
         await exec(
           `git diff ${from.version} ${to.version} -- "${cleanFileName(file)}"`,
-          { maxBuffer: 1024 * 1024 * 1024 }
+          { maxBuffer: 1024 * 1024 * 1024 },
         )
       )
         .toString()
@@ -150,7 +150,7 @@ export const update = async (options: { from?: string; to?: string }) => {
     }
 
     const upgradeableVersions = availableVersions.filter(
-      (v) => compareVersions(v, fromVersion) > 0
+      (v) => compareVersions(v, fromVersion) > 0,
     );
 
     const [nextVersion] = upgradeableVersions;
@@ -190,7 +190,7 @@ export const update = async (options: { from?: string; to?: string }) => {
       {
         version: to,
         files: toFiles,
-      }
+      },
     );
 
     s.message('Moving back to original directory...');

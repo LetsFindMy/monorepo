@@ -1,21 +1,21 @@
-import type { Metadata } from "next"
-import { FlowSettings } from "./UI"
-import { Container } from "@mantine/core"
-import { PageFrame } from "@repo/uix"
+import type { Metadata } from 'next';
+import { FlowSettings } from './UI';
+import { Container } from '@mantine/core';
+import { PageFrame } from '@repo/uix';
 
 interface PageProps {
   params: Promise<{
-    cuid: string
-    domain: string
-  }>
+    cuid: string;
+    domain: string;
+  }>;
 }
 
 export const metadata: Metadata = {
-  title: "Flow Settings | Flowbuilder",
-}
+  title: 'Flow Settings | Flowbuilder',
+};
 
 const SettingsPage = async ({ params }: PageProps): Promise<JSX.Element> => {
-  const { cuid, domain } = await params
+  const { cuid, domain } = await params;
 
   return (
     <Container size="lg">
@@ -23,8 +23,7 @@ const SettingsPage = async ({ params }: PageProps): Promise<JSX.Element> => {
         <FlowSettings cuid={cuid} domain={domain} />
       </PageFrame>
     </Container>
-  )
-}
+  );
+};
 
-export default SettingsPage
-
+export default SettingsPage;

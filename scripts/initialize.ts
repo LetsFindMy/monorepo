@@ -85,7 +85,7 @@ const setupOrm = async (packageManager: string) => {
 
 const updatePackageManagerConfiguration = async (
   projectDir: string,
-  packageManager: string
+  packageManager: string,
 ) => {
   const packageJsonPath = join(projectDir, 'package.json');
   const packageJsonFile = await readFile(packageJsonPath, 'utf8');
@@ -261,7 +261,7 @@ export const initialize = async (options: {
     s.stop('Project initialized successfully!');
 
     outro(
-      'Please make sure you install the Mintlify CLI and Stripe CLI before starting the project.'
+      'Please make sure you install the Mintlify CLI and Stripe CLI before starting the project.',
     );
   } catch (error) {
     const message =
