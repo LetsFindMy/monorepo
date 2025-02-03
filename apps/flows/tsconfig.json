@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@repo/*": ["../../packages/*"],
       "#/app/*": ["./app/*"],
       "#/*": ["./src/*"]
     }
@@ -14,5 +15,5 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "src/lib/prisma/generated/zod/index.ts"]
+  "exclude": ["node_modules", "@repo/uix", "src/lib/prisma/generated/zod/index.ts"]
 }

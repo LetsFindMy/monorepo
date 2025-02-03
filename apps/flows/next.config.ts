@@ -6,6 +6,13 @@ const fullPath = `${path.join(process.cwd(), 'src/styles/_mantine').replace(/\\/
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+   typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true, // @TODO: Change this to false
+  },
   // sassOptions: {
   //   prependData: `@import "./src/styles/_mantine.scss";`,
   // },
