@@ -1,30 +1,30 @@
-import { Metadata } from 'next';
-import { FlowSettings } from './UI';
-import { Container } from '@mantine/core';
-import { PageFrame } from '@repo/uix';
+import type { Metadata } from "next"
+import { FlowSettings } from "./UI"
+import { Container } from "@mantine/core"
+import { PageFrame } from "@repo/uix"
 
-interface NewFlowPageProps {
+interface PageProps {
   params: Promise<{
-    domain: string;
-    cuid: string; // Added since it's in the URL path
-  }>;
+    cuid: string
+    domain: string
+  }>
 }
 
 export const metadata: Metadata = {
-  title: 'Create a new Flow | Flowbuilder',
-};
+  title: "Flow Settings | Flowbuilder",
+}
 
-const NewFlowPage = async ({ params }: NewFlowPageProps) => {
-  // Await the params since they're now a Promise
-  const { domain, cuid } = await params;
+const SettingsPage = async ({ params }: PageProps): Promise<JSX.Element> => {
+  const { cuid, domain } = await params
 
   return (
     <Container size="lg">
       <PageFrame title="Flow Settings">
-        <FlowSettings />
+        <FlowSettings cuid={cuid} domain={domain} />
       </PageFrame>
     </Container>
-  );
-};
+  )
+}
 
-export default NewFlowPage;
+export default SettingsPage
+
