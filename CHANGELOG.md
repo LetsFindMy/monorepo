@@ -1,3 +1,147 @@
+# v3.2.20 (Mon Feb 03 2025)
+
+#### ⚠️ Pushed to `main`
+
+- For #367 ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### 🔩 Dependency Updates
+
+- Bump the npm_and_yarn group with 2 updates [#423](https://github.com/haydenbleasel/next-forge/pull/423) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.19 (Tue Jan 28 2025)
+
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Michal Bock ([@SpeedyCoder](https://github.com/SpeedyCoder))
+
+:heart: Miraan Tabrez ([@miraan](https://github.com/miraan))
+
+#### 🐛 Bug Fix
+
+- Add 'Switch to Hypertune' migration guide [#422](https://github.com/haydenbleasel/next-forge/pull/422) ([@SpeedyCoder](https://github.com/SpeedyCoder) [@miraan](https://github.com/miraan))
+
+#### ⚠️ Pushed to `main`
+
+- Compress images ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update hypertune.mdx ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 3
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+- Michal Bock ([@SpeedyCoder](https://github.com/SpeedyCoder))
+- Miraan Tabrez ([@miraan](https://github.com/miraan))
+
+---
+
+# v3.2.18 (Tue Jan 21 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Bump deps, fix lockfiles ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.17 (Tue Jan 21 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Resolves #411 ([@haydenbleasel](https://github.com/haydenbleasel))
+- Bump deps ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.16 (Fri Jan 17 2025)
+
+#### 🐛 Bug Fix
+
+- Enhance CLI command - Update [#406](https://github.com/haydenbleasel/next-forge/pull/406) ([@carvillanueva](https://github.com/carvillanueva) [@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 2
+
+- Carlos Villanueva ([@carvillanueva](https://github.com/carvillanueva))
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.15 (Thu Jan 16 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Create supportedPackageManagers const ([@haydenbleasel](https://github.com/haydenbleasel))
+- Update initialize.ts ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.14 (Thu Jan 16 2025)
+
+#### ⚠️ Pushed to `main`
+
+- For #394 ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.13 (Thu Jan 16 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Update website ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.12 (Thu Jan 16 2025)
+
+#### ⚠️ Pushed to `main`
+
+- Misc CLI fixes and improvements ([@haydenbleasel](https://github.com/haydenbleasel))
+- Bump deps ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
+# v3.2.11 (Thu Jan 16 2025)
+
+#### 🐛 Bug Fix
+
+- Upgrade cli [#404](https://github.com/haydenbleasel/next-forge/pull/404) ([@haydenbleasel](https://github.com/haydenbleasel))
+
+#### Authors: 1
+
+- Hayden Bleasel ([@haydenbleasel](https://github.com/haydenbleasel))
+
+---
+
 # v3.2.10 (Wed Jan 15 2025)
 
 #### ⚠️ Pushed to `main`
