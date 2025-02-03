@@ -1,11 +1,4 @@
-import {
-  Card,
-  Text,
-  Group,
-  Stack,
-  Title,
-  Container,
-} from '@mantine/core';
+import { Card, Text, Group, Stack, Title, Container } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
 import {
@@ -23,16 +16,18 @@ export const generateStaticParams = async () => {
     const params = await Promise.all(
       ALLOWED_TAXONOMIES.filter(isAllowedTaxonomy).map(async (taxonomy) => {
         try {
-          const { data: items = [] } = (await getTaxonomyData(taxonomy as RouteName)) ?? { data: [] };
+          const { data: items = [] } = (await getTaxonomyData(
+            taxonomy as RouteName,
+          )) ?? { data: [] };
 
-          return items.map((item: { slug: string; }) => ({
+          return items.map((item: { slug: string }) => ({
             taxonomy: String(taxonomy),
-            slug: String(item?.slug || '')
+            slug: String(item?.slug || ''),
           }));
         } catch {
           return [];
         }
-      })
+      }),
     );
 
     // Filter out any items with empty slugs and flatten the array
@@ -41,7 +36,6 @@ export const generateStaticParams = async () => {
     return [];
   }
 };
-
 
 export default async function TaxonomyItemPage({
   params,

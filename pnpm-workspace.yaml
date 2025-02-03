@@ -1,6 +1,4 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "docs"
-  - "design-system"
   # - "local-only/*"
