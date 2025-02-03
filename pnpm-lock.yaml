@@ -414,6 +414,12 @@ importers:
       '@mdx-js/react':
         specifier: ^3.1.0
         version: 3.1.0(@types/react@19.0.8)(react@19.0.0)
+      '@repo/testing':
+        specifier: workspace:*
+        version: link:../../packages/testing
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       '@storybook/addon-docs':
         specifier: ^8.5.2
         version: 8.5.2(@types/react@19.0.8)(storybook@8.5.2(prettier@3.4.2))
@@ -441,6 +447,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      css-loader:
+        specifier: ^7.1.2
+        version: 7.1.2(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2))
       framer-motion:
         specifier: ^11.18.2
         version: 11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -450,6 +459,9 @@ importers:
       postcss:
         specifier: ^8.5.1
         version: 8.5.1
+      postcss-loader:
+        specifier: ^8.1.1
+        version: 8.1.1(postcss@8.5.1)(typescript@5.7.3)(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2))
       postcss-preset-mantine:
         specifier: ^1.17.0
         version: 1.17.0(postcss@8.5.1)
@@ -465,12 +477,18 @@ importers:
       sass-embedded:
         specifier: ^1.83.4
         version: 1.83.4
+      sass-loader:
+        specifier: ^16.0.4
+        version: 16.0.4(sass-embedded@1.83.4)(sass@1.68.0)(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2))
       storybook:
         specifier: ^8.5.2
         version: 8.5.2(prettier@3.4.2)
       storybook-dark-mode:
         specifier: ^4.0.2
         version: 4.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(storybook@8.5.2(prettier@3.4.2))
+      style-loader:
+        specifier: ^4.0.0
+        version: 4.0.0(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2))
       stylelint:
         specifier: ^16.14.1
         version: 16.14.1(typescript@5.7.3)
@@ -480,6 +498,9 @@ importers:
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
+      vitest:
+        specifier: ^3.0.4
+        version: 3.0.4(@types/debug@4.1.12)(@types/node@22.12.0)(jiti@2.4.2)(jsdom@26.0.0)(sass-embedded@1.83.4)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.37.0)(yaml@2.7.0)
 
   packages/ai:
     dependencies:
@@ -1077,9 +1098,6 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@repo/uix':
-        specifier: workspace:*
-        version: link:../../apps/uix
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -7965,6 +7983,18 @@ packages:
       webpack:
         optional: true
 
+  css-loader@7.1.2:
+    resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      '@rspack/core': 0.x || 1.x
+      webpack: ^5.27.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      webpack:
+        optional: true
+
   css-select@4.3.0:
     resolution: {integrity: sha512-wPpOYtnsVontu2mODhA19JrqWxNsfdatRKd64kmpRbQgh1KtItko5sTnEpPdpSaJszTOhEMlF/RPz28qj4HqhQ==}
 
@@ -13214,6 +13244,27 @@ packages:
       webpack:
         optional: true
 
+  sass-loader@16.0.4:
+    resolution: {integrity: sha512-LavLbgbBGUt3wCiYzhuLLu65+fWXaXLmq7YxivLhEqmiupCFZ5sKUAipK3do6V80YSU0jvSxNhEdT13IXNr3rg==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      '@rspack/core': 0.x || 1.x
+      node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
+      sass: 1.68.0
+      sass-embedded: '*'
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+      sass-embedded:
+        optional: true
+      webpack:
+        optional: true
+
   sass@1.68.0:
     resolution: {integrity: sha512-Lmj9lM/fef0nQswm1J2HJcEsBUba4wgNx2fea6yJHODREoMFnwRpZydBnX/RjyXw2REIwdkbqE4hrTo4qfDBUA==}
     engines: {node: '>=14.0.0'}
@@ -13751,6 +13802,12 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
+
+  style-loader@4.0.0:
+    resolution: {integrity: sha512-1V4WqhhZZgjVAVJyt7TdDPZoPBPNHbekX4fWnCJL1yQukhCeZhJySUL+gL9y6sNdN95uEOS83Y55SqHcP7MzLA==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      webpack: ^5.27.0
 
   style-mod@4.1.2:
     resolution: {integrity: sha512-wnD1HyVqpJUI2+eKZ+eo1UwghftP6yuFheBqqe+bWCotBjC2K1YnteJILRMs3SM4V/0dLEW1SC27MWP5y+mwmw==}
@@ -22596,7 +22653,6 @@ snapshots:
       '@vitest/utils': 3.0.4
       chai: 5.1.2
       tinyrainbow: 2.0.0
-    optional: true
 
   '@vitest/mocker@2.1.8(vite@5.4.14(@types/node@22.12.0)(sass-embedded@1.83.4)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.37.0))':
     dependencies:
@@ -22613,7 +22669,6 @@ snapshots:
       magic-string: 0.30.17
     optionalDependencies:
       vite: 6.0.11(@types/node@22.12.0)(jiti@2.4.2)(sass-embedded@1.83.4)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.37.0)(yaml@2.7.0)
-    optional: true
 
   '@vitest/pretty-format@2.0.5':
     dependencies:
@@ -22626,7 +22681,6 @@ snapshots:
   '@vitest/pretty-format@3.0.4':
     dependencies:
       tinyrainbow: 2.0.0
-    optional: true
 
   '@vitest/runner@1.6.0':
     dependencies:
@@ -22643,7 +22697,6 @@ snapshots:
     dependencies:
       '@vitest/utils': 3.0.4
       pathe: 2.0.2
-    optional: true
 
   '@vitest/snapshot@1.6.0':
     dependencies:
@@ -22662,7 +22715,6 @@ snapshots:
       '@vitest/pretty-format': 3.0.4
       magic-string: 0.30.17
       pathe: 2.0.2
-    optional: true
 
   '@vitest/spy@1.6.0':
     dependencies:
@@ -22679,7 +22731,6 @@ snapshots:
   '@vitest/spy@3.0.4':
     dependencies:
       tinyspy: 3.0.2
-    optional: true
 
   '@vitest/utils@1.6.0':
     dependencies:
@@ -22706,7 +22757,6 @@ snapshots:
       '@vitest/pretty-format': 3.0.4
       loupe: 3.1.3
       tinyrainbow: 2.0.0
-    optional: true
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -24128,6 +24178,19 @@ snapshots:
       webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.21.3)
 
   css-loader@6.11.0(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.1)
+      postcss: 8.5.1
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.1)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.1)
+      postcss-modules-scope: 3.2.1(postcss@8.5.1)
+      postcss-modules-values: 4.0.0(postcss@8.5.1)
+      postcss-value-parser: 4.2.0
+      semver: 7.7.0
+    optionalDependencies:
+      webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)
+
+  css-loader@7.1.2(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.1)
       postcss: 8.5.1
@@ -30674,6 +30737,14 @@ snapshots:
       sass-embedded: 1.83.4
       webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)
 
+  sass-loader@16.0.4(sass-embedded@1.83.4)(sass@1.68.0)(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)):
+    dependencies:
+      neo-async: 2.6.2
+    optionalDependencies:
+      sass: 1.68.0
+      sass-embedded: 1.83.4
+      webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)
+
   sass@1.68.0:
     dependencies:
       chokidar: 3.6.0
@@ -31369,6 +31440,10 @@ snapshots:
     dependencies:
       webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)
 
+  style-loader@4.0.0(webpack@5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)):
+    dependencies:
+      webpack: 5.97.1(@swc/core@1.10.12(@swc/helpers@0.5.15))(esbuild@0.24.2)
+
   style-mod@4.1.2: {}
 
   style-to-object@1.0.8:
@@ -31780,8 +31855,7 @@ snapshots:
 
   tinyrainbow@1.2.0: {}
 
-  tinyrainbow@2.0.0:
-    optional: true
+  tinyrainbow@2.0.0: {}
 
   tinyspy@2.2.1: {}
 
@@ -32534,7 +32608,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-    optional: true
 
   vite@5.2.14(@types/node@22.12.0)(sass@1.68.0)(sugarss@4.0.1(postcss@8.5.1))(terser@5.37.0):
     dependencies:
@@ -32699,7 +32772,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-    optional: true
 
   vm-browserify@1.1.2: {}
 

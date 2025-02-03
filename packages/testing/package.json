@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./mantine": "./src/mantine/index.ts"
+    "./mantine": "./src/mantine/index.ts",
+    "./vite.config": "./vite.config.ts"
   },
   "scripts": {
     "test": "vitest"
@@ -22,7 +23,6 @@
     "@mantine/core": "^7.0.0",
     "@mantine/hooks": "^7.0.0",
     "@repo/typescript-config": "workspace:*",
-    "@repo/uix": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
