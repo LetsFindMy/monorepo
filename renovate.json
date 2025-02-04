@@ -8,16 +8,13 @@
   "packageRules": [
     {
       "description": "PNPM Catalog Control",
-      "matchPaths": [
-        "pnpm-workspace.yaml"
-      ],
       "matchFileNames": [
         "pnpm-workspace.yaml"
       ],
       "rangeStrategy": "replace"
     },
     {
-      "matchPaths": [
+      "matchFileNames": [
         "apps/cms/**"
       ],
       "matchUpdateTypes": [
@@ -48,7 +45,7 @@
         "/^@types/react$/",
         "/^@types/react-dom$/"
       ],
-      "matchPaths": [
+      "matchFileNames": [
         "pnpm-workspace.yaml",
         "!apps/cms/**"
       ]
@@ -63,7 +60,7 @@
         "/^@types/react$/",
         "/^@types/react-dom$/"
       ],
-      "matchPaths": [
+      "matchFileNames": [
         "apps/cms/**",
         "**/catalog.strapi"
       ],
