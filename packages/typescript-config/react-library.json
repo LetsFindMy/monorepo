@@ -3,12 +3,8 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "types": ["react/jsx-runtime"],
-    "moduleResolution": "Bundler",
-    "allowJs": true,
-    "noEmit": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"]
-  }
+    "declaration": true,
+    "declarationMap": true
+  },
+  "exclude": ["node_modules"]
 }

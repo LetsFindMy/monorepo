@@ -19,18 +19,18 @@
     "@strapi/strapi": "^5.9.0",
     "better-sqlite3": "^11.8.1",
     "mysql2": "^3.12.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.29.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5",
     "strapi-plugin-country-select": "^2.1.0",
     "strapi-plugin-multi-select": "^2.1.1",
     "styled-components": "^6.1.14",
     "tree-menus": "^1.0.4"
   },
   "devDependencies": {
-    "@types/node": "^22.13.0",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/node": "^22.13.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
     "turbo": "^2.4.0",
     "typescript": "^5.7.3"
   }

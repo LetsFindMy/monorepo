@@ -3,9 +3,5 @@
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
-  "devDependencies": {
-    "@types/node": "^22.13.0",
-    "@types/react": "^19.0.8"
   }
 }
