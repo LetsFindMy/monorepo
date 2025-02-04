@@ -1,10 +1,12 @@
 // .storybook/main.ts
 
+import path from 'node:path';
+
 export const logLevel = 'debug';
 
 export const stories = [
-  '../src/**/*.mdx',
-  '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  '../../../packages/uix/src/**/*.mdx',
+  '../../../packages/uix/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 ];
 
 export const staticDirs = ['../public'];
@@ -31,6 +33,11 @@ export const typescript = {
 } as const;
 
 export const webpackFinal = async (config: any) => {
+  config.resolve.alias = {
+    ...(config.resolve.alias || {}),
+    '@repo/uix': path.resolve(__dirname, '../../../packages/uix/src'),
+  };
+
   // Find the sass-loader rule
   const sassRule = config.module.rules.find(
     (rule: any) => rule.test && rule.test.test('.scss'),
@@ -45,9 +52,11 @@ export const webpackFinal = async (config: any) => {
           options: {
             implementation: require('sass-embedded'),
             sassOptions: {
-              includePaths: ['./src/styles'],
+              includePaths: [
+                path.resolve(__dirname, '../../../packages/uix/src/styles'),
+              ],
             },
-            additionalData: `@import "./src/styles/_mantine.scss";`,
+            additionalData: `@import "${path.resolve(__dirname, '../../../packages/uix/src/styles/_mantine.scss')}";`,
           },
         };
       }

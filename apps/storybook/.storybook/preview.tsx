@@ -8,7 +8,7 @@ import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import { MantineProvider, useMantineColorScheme } from '@mantine/core';
 
 // theme.ts file from previous step
-import { theme } from '#/styles/theme';
+import { theme } from '@repo/uix';
 import React from 'react';
 
 const channel = addons.getChannel();
