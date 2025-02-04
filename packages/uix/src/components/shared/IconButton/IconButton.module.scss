@@ -1,0 +1,11 @@
+.iconButton {
+  height: auto;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+}

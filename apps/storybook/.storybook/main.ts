@@ -1,30 +1,72 @@
-import { dirname, join } from 'node:path';
-import type { StorybookConfig } from '@storybook/nextjs';
+// .storybook/main.ts
 
-/**
- * This function is used to resolve the absolute path of a package.
- * It is needed in projects that use Yarn PnP or are set up within a monorepo.
- */
-const getAbsolutePath = (value: string) =>
-  dirname(require.resolve(join(value, 'package.json')));
+import path from 'node:path';
 
-const config: StorybookConfig = {
-  stories: [
-    '../stories/**/*.mdx',
-    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-  ],
-  addons: [
-    getAbsolutePath('@storybook/addon-onboarding'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@chromatic-com/storybook'),
-    getAbsolutePath('@storybook/addon-interactions'),
-    getAbsolutePath('@storybook/addon-themes'),
-  ],
-  framework: {
-    name: getAbsolutePath('@storybook/nextjs'),
-    options: {},
-  },
-  staticDirs: ['../public'],
+export const logLevel = 'debug';
+
+export const stories = [
+  '../../../packages/uix/src/**/*.mdx',
+  '../../../packages/uix/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+];
+
+export const staticDirs = ['../public'];
+
+export const framework = {
+  name: '@storybook/nextjs',
+  options: {},
+} as const;
+
+export const docs = {
+  autodocs: true,
+  defaultName: 'Documentation',
+} as const;
+
+export const addons = [
+  '@storybook/addon-docs',
+  '@storybook/addon-essentials',
+  'storybook-dark-mode',
+] as const;
+
+export const typescript = {
+  reactDocgen: 'react-docgen',
+  check: false,
+} as const;
+
+export const webpackFinal = async (config: any) => {
+  config.resolve.alias = {
+    ...(config.resolve.alias || {}),
+    '@repo/uix': path.resolve(__dirname, '../../../packages/uix/src'),
+  };
+
+  // Find the sass-loader rule
+  const sassRule = config.module.rules.find(
+    (rule: any) => rule.test && rule.test.test('.scss'),
+  );
+
+  // Update or add the sass-loader configuration
+  if (sassRule) {
+    sassRule.use = sassRule.use.map((loader: any) => {
+      if (loader.loader && loader.loader.includes('sass-loader')) {
+        return {
+          loader: loader.loader,
+          options: {
+            implementation: require('sass-embedded'),
+            sassOptions: {
+              includePaths: [
+                path.resolve(__dirname, '../../../packages/uix/src/styles'),
+              ],
+            },
+            additionalData: `@import "${path.resolve(__dirname, '../../../packages/uix/src/styles/_mantine.scss')}";`,
+          },
+        };
+      }
+      return loader;
+    });
+  }
+
+  return config;
 };
 
-export default config;
+export const core = {
+  disableTelemetry: true,
+} as const;

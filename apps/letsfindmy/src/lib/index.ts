@@ -1,7 +1,5 @@
 // index.ts
 
-export * from '../../../nextauth/src/lib/pathContext';
-
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

@@ -48,7 +48,7 @@ export const serverAction = createSafeActionClient()
 
 import { serverAction } from './action';
 import { useAction } from 'next-safe-action/hooks';
-import { toast } from '@repo/design-system/components/ui/sonner';
+import { toast } from '@repo/uix/components/ui/sonner';
 
 function MyComponent() {
   const { execute, isPending } = useAction(serverAction, {

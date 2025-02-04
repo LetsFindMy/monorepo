@@ -1,12 +1,4 @@
-import {
-  Card,
-  Image,
-  Text,
-  Group,
-  Stack,
-  Title,
-  Container,
-} from '@mantine/core';
+import { Card, Text, Group, Stack, Title, Container } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
 import {
@@ -16,24 +8,34 @@ import {
   RouteName,
 } from '#/lib/allowedTaxonomies';
 import { getTaxonomyData } from '#/lib/taxonomyUtils';
-import { ParamsDebug } from '#/ui/shared';
+import { ParamsDebug } from '@repo/uix';
 import { GroupedList } from '#/ui/GroupedList';
 
-export async function generateStaticParams() {
-  const params = [];
-  for (const taxonomy of ALLOWED_TAXONOMIES) {
-    if (isAllowedTaxonomy(taxonomy)) {
-      try {
-        const { data: items } = await getTaxonomyData(taxonomy as RouteName);
-        const slugs = items.map((item: any) => item.slug);
-        params.push(...slugs.map((slug: string) => ({ taxonomy, slug })));
-      } catch (error) {
-        console.error(`Error generating params for ${taxonomy}:`, error);
-      }
-    }
+export const generateStaticParams = async () => {
+  try {
+    const params = await Promise.all(
+      ALLOWED_TAXONOMIES.filter(isAllowedTaxonomy).map(async (taxonomy) => {
+        try {
+          const { data: items = [] } = (await getTaxonomyData(
+            taxonomy as RouteName,
+          )) ?? { data: [] };
+
+          return items.map((item: { slug: string }) => ({
+            taxonomy: String(taxonomy),
+            slug: String(item?.slug || ''),
+          }));
+        } catch {
+          return [];
+        }
+      }),
+    );
+
+    // Filter out any items with empty slugs and flatten the array
+    return params.flat().filter(({ slug }) => slug && slug !== 'undefined');
+  } catch {
+    return [];
   }
-  return params;
-}
+};
 
 export default async function TaxonomyItemPage({
   params,

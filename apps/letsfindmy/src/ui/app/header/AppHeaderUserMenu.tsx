@@ -21,7 +21,7 @@ import {
   IconMoon,
   TablerIcon,
 } from '@tabler/icons-react';
-import { Avatar } from '#/ui/shared';
+import { Avatar } from '@repo/uix';
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<'div'> {
   image: string;

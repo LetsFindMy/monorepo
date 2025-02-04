@@ -1,53 +1,36 @@
-import { Toaster } from '@repo/design-system/components/ui/sonner';
-import { TooltipProvider } from '@repo/design-system/components/ui/tooltip';
-import { ThemeProvider } from '@repo/design-system/providers/theme';
-import { withThemeByClassName } from '@storybook/addon-themes';
-import type { Preview } from '@storybook/react';
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
-import '@repo/design-system/styles/globals.css';
+import { useEffect } from 'react';
+import { addons } from '@storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { MantineProvider, useMantineColorScheme } from '@mantine/core';
 
-const preview: Preview = {
-  parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-    chromatic: {
-      modes: {
-        light: {
-          theme: 'light',
-          className: 'light',
-        },
-        dark: {
-          theme: 'dark',
-          className: 'dark',
-        },
-      },
-    },
-  },
-  decorators: [
-    withThemeByClassName({
-      themes: {
-        light: 'light',
-        dark: 'dark',
-      },
-      defaultTheme: 'light',
-    }),
-    (Story) => {
-      return (
-        <div className="bg-background">
-          <ThemeProvider>
-            <TooltipProvider>
-              <Story />
-            </TooltipProvider>
-            <Toaster />
-          </ThemeProvider>
-        </div>
-      );
-    },
-  ],
-};
+// theme.ts file from previous step
+import { theme } from '@repo/uix';
+import React from 'react';
 
-export default preview;
+const channel = addons.getChannel();
+
+function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
+  const { setColorScheme } = useMantineColorScheme();
+  const handleColorScheme = (value: boolean) =>
+    setColorScheme(value ? 'dark' : 'light');
+
+  useEffect(() => {
+    channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
+    return () => channel.off(DARK_MODE_EVENT_NAME, handleColorScheme);
+  }, [channel]);
+
+  return <>{children}</>;
+}
+
+export const decorators = [
+  (renderStory: any) => (
+    <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
+  ),
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+  ),
+];
