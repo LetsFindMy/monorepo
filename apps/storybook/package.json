@@ -48,7 +48,7 @@
     "@mantine/core": "catalog:",
     "@tabler/icons-react": "^3.28.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.18.2",
+    "framer-motion": "^12.0.0",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
