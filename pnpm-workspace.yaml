@@ -1,4 +1,15 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  # - "local-only/*"
+  - apps/*
+  - packages/*
+
+catalog:
+  # Default catalog for React 19 (used by Next.js app)
+  react: ^19.0.0
+  react-dom: ^19.0.0
+  "@types/react": ^19.0.7
+  "@types/react-dom": ^19.0.3
+  "@mantine/core": ^7.16.2
+  "@mantine/form": ^7.16.2
+  "@mantine/hooks": ^7.16.2
+  "@mantine/modals": ^7.16.2
+  "@mantine/notifications": ^7.16.2

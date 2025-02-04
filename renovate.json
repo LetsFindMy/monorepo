@@ -1,14 +1,32 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "baseBranches": [
     "main"
   ],
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "minimumReleaseAge": "3 days",
   "rangeStrategy": "pin",
+  "enableGlobalCache": true,
+  "pnpmOptions": {
+    "upgradeModifier": "replace"
+  },
   "packageRules": [
     {
-      "matchPaths": ["apps/cms/**"],
-      "matchUpdateTypes": ["major"],
+      "description": "PNPM Catalog Control",
+      "matchPaths": [
+        "pnpm-workspace.yaml"
+      ],
+      "matchFileNames": [
+        "pnpm-workspace.yaml"
+      ],
+      "rangeStrategy": "replace"
+    },
+    {
+      "matchPaths": [
+        "apps/cms/**"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "enabled": false
     },
     {
@@ -19,6 +37,42 @@
       "postUpdateOptions": [
         "pnpmDedupe"
       ]
+    },
+    {
+      "description": "Group Next.js and React-related updates",
+      "groupName": "React & Next.js Ecosystem",
+      "prPriority": 7,
+      "matchPackageNames": [
+        "/^next$/",
+        "/^@types/next$/",
+        "/^next-auth$/",
+        "/^@types/next-auth$/",
+        "/^react$/",
+        "/^react-dom$/",
+        "/^@types/react$/",
+        "/^@types/react-dom$/"
+      ],
+      "matchPaths": [
+        "pnpm-workspace.yaml",
+        "!apps/cms/**"
+      ]
+    },
+    {
+      "description": "Strapi React Version Control",
+      "groupName": "Strapi React Ecosystem",
+      "prPriority": 7,
+      "matchPackageNames": [
+        "/^react$/",
+        "/^react-dom$/",
+        "/^@types/react$/",
+        "/^@types/react-dom$/"
+      ],
+      "matchPaths": [
+        "apps/cms/**",
+        "**/catalog.strapi"
+      ],
+      "allowedVersions": "18.x",
+      "rangeStrategy": "replace"
     },
     {
       "description": "Group Sentry-related updates",
@@ -65,21 +119,6 @@
         "/^@storybook/.*/",
         "/^storybook.*/",
         "/^chroma-js$/"
-      ]
-    },
-    {
-      "description": "Group Next.js and React-related updates",
-      "groupName": "React & Next.js Ecosystem",
-      "prPriority": 7,
-      "matchPackageNames": [
-        "/^next$/",
-        "/^@types/next$/",
-        "/^next-auth$/",
-        "/^@types/next-auth$/",
-        "/^react$/",
-        "/^react-dom$/",
-        "/^@types/react$/",
-        "/^@types/react-dom$/"
       ]
     },
     {

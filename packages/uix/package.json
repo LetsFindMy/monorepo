@@ -13,8 +13,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "devDependencies": {
-    "@mantine/core": "^7.16.2",
-    "@mantine/hooks": "^7.16.2",
+    "@mantine/core": "catalog:",
+    "@mantine/hooks": "catalog:",
     "@repo/testing": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@tabler/icons-react": "^3.29.0",
@@ -27,8 +27,8 @@
     "postcss-loader": "^8.1.1",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "sass-embedded": "^1.83.4",
     "style-loader": "^4.0.0",
     "stylelint": "^16.14.1",
@@ -37,8 +37,8 @@
     "vitest": "^3.0.5"
   },
   "peerDependencies": {
-    "@mantine/core": "^7.16.2",
-    "@mantine/hooks": "^7.16.2",
+    "@mantine/core": "catalog:",
+    "@mantine/hooks": "catalog:",
     "@tabler/icons-react": "^3.28.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
