@@ -8,7 +8,7 @@
     "lint": "next lint",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
-"typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "next": "^15.1.6",

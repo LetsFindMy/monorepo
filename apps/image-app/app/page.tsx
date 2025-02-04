@@ -4,9 +4,7 @@ import Link from 'next/link';
 import ViewSource from '../components/view-source';
 import vercel from '../public/vercel.png';
 
-const Code = (props: any) => (
-  <code className={styles.inlineCode} {...props} />
-);
+const Code = (props: any) => <code className={styles.inlineCode} {...props} />;
 
 const Index = () => (
   <div className={styles.container}>
