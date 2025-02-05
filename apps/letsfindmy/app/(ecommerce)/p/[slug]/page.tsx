@@ -13,7 +13,7 @@ import {
   Anchor,
 } from '@mantine/core';
 import { getProduct, getProductSlugs } from '#/lib/actions/products';
-import { ParamsDebug } from '#/ui/shared';
+import { ParamsDebug } from '@repo/uix';
 import Link from 'next/link';
 
 export async function generateStaticParams() {

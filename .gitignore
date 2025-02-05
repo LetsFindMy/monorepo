@@ -28,6 +28,7 @@ build
 dist
 generated/
 **/generated/
+storybook-static
 
 # Debug
 npm-debug.log*

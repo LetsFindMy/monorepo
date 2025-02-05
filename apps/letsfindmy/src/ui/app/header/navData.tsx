@@ -1,4 +1,4 @@
-import { ModelKey, taxonomyMapping } from '@/src/lib/allowedTaxonomies';
+import { ModelKey, taxonomyMapping } from '#/lib/allowedTaxonomies';
 import { Anchor } from '@mantine/core';
 import {
   IconBabyCarriage,

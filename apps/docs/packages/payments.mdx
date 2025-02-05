@@ -36,9 +36,9 @@ Stripe Radar supports more [advanced anti-fraud features](https://docs.stripe.co
     Edit `apps/app/app/layout.tsx` and add `<Script src="https://js.stripe.com/v3/" />` after the opening `<html>` tag and before the opening `<body>` tag. You will also need to add `import Script from 'next/script'`
 
     ```tsx {5, 13}
-    import '@repo/design-system/styles/globals.css';
-    import { DesignSystemProvider } from '@repo/design-system';
-    import { fonts } from '@repo/design-system/lib/fonts';
+    import '@repo/uix/styles/globals.css';
+    import { DesignSystemProvider } from '@repo/uix';
+    import { fonts } from '@repo/uix/lib/fonts';
     import type { ReactNode } from 'react';
     import Script from 'next/script';
 

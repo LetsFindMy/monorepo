@@ -7,10 +7,10 @@
     "format": "prettier --write \"../../**/*.{ts,tsx,json,md,mdx,mjs,css,scss,yaml,yml,graphql,gql,php,sh}\" "
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.22.2",
+    "@prettier/plugin-php": "^0.22.4",
     "@vercel/style-guide": "^6.0.0",
     "prettier": "^3.4.2",
-    "prettier-plugin-packagejson": "^2.5.7",
+    "prettier-plugin-packagejson": "^2.5.8",
     "prettier-plugin-sh": "^0.14.0"
   }
 }

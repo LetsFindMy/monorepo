@@ -15,7 +15,7 @@ import {
   getStoryReleaseSlugs,
 } from '#/lib/actions/storyReleases';
 import dayjs from 'dayjs';
-import { ParamsDebug } from '#/ui/shared';
+import { ParamsDebug } from '@repo/uix';
 
 export async function generateStaticParams() {
   const params = [];
