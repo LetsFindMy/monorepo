@@ -1,6 +1,6 @@
-import { Data, Schema } from '@strapi/strapi';
+import type { Data } from '@strapi/strapi';
 import ISBN from 'isbn3';
-import { Product } from './schemas';
+import type { Product } from './schemas';
 import slugify from 'slugify';
 
 const buildPdpData = (parsedAmzData: Product, brandId: string) => ({
@@ -29,17 +29,23 @@ export const validateISBN = (isbn: string | null): string | null =>
 
 export const productIdentifiers = (
   asin: string,
+  parentAsin: string | undefined,
   product_details: any[],
 ): string[] => {
   const isbn10 = validateISBN(extractIdentifier(product_details, 'ISBN-10'));
   const isbn13 = validateISBN(extractIdentifier(product_details, 'ISBN-13'));
+  const identifiers = [parentAsin, asin, isbn10, isbn13].filter(
+    (id): id is string => id !== null && id !== undefined,
+  );
+
   if (isbn10 && asin !== isbn10) {
     console.warn('ASIN and ISBN-10 are both present but do not match', {
       asin,
       isbn10,
     });
   }
-  return [asin, isbn10, isbn13].filter((id): id is string => id !== null);
+
+  return identifiers;
 };
 
 const createIdentifierFilter = (identifiers: string[]) => ({
@@ -74,7 +80,7 @@ export const createCrosscheck = async (
 };
 
 /**
- *  Brands
+ * Brands
  */
 export const findBrand = async (
   sellerId: string,
@@ -107,50 +113,33 @@ export const findProduct = async (
   });
 };
 
-const createNewProduct = async (
-    parsedAmzData: Product,
-): Promise<Data.ContentType<'api::product.product'>> => {
-    if (!parsedAmzData.title) {
-        return Promise.reject(new Error('No title found for product'));
-    }
-    const maxLength = 40;
-    let slug = slugify(parsedAmzData.title, {
-        lower: true,
-        trim: true,
-        strict: true,      // Only alphanumeric characters and dashes will remain
-        replacement: '-',  // Spaces are replaced with dashes
-    });
-    // If the slug exceeds maxLength, trim it without cutting words in half.
-    if (slug.length > maxLength) {
-        const lastDashIndex = slug.lastIndexOf('-', maxLength);
-        slug = lastDashIndex > 0 ? slug.slice(0, lastDashIndex) : slug.slice(0, maxLength);
-    }
-    return await strapi.documents('api::product.product').create({
-        data: {
-            name: parsedAmzData.title,
-            slug,
-        },
-    });
-};
-
-/**
- *  Product PDPs
- */
-const createNewPdp = async (
-  productId: string,
-  crosscheckId: string,
+const createNewProduct2 = async (
   parsedAmzData: Product,
-  brandId: string,
-): Promise<Data.ContentType<'api::product-pdp.product-pdp'>> => {
-  const newPdp = await strapi.documents('api::product-pdp.product-pdp').create({
-    data: {
-      ...buildPdpData(parsedAmzData, brandId),
-      product: productId,
-      crosscheck: crosscheckId,
-    } as any,
+): Promise<Data.ContentType<'api::product.product'>> => {
+  if (!parsedAmzData.title) {
+    return Promise.reject(new Error('No title found for product'));
+  }
+  const maxLength = 40;
+  let slug = slugify(parsedAmzData.title, {
+    lower: true,
+    trim: true,
+    strict: true, // Only alphanumeric characters and dashes will remain
+    replacement: '-', // Spaces are replaced with dashes
   });
-  console.log(`Created new PDP for existing product and brand ${brandId}`);
-  return newPdp;
+  // If the slug exceeds maxLength, trim it without cutting words in half.
+  if (slug.length > maxLength) {
+    const lastDashIndex = slug.lastIndexOf('-', maxLength);
+    slug =
+      lastDashIndex > 0
+        ? slug.slice(0, lastDashIndex)
+        : slug.slice(0, maxLength);
+  }
+  return await strapi.documents('api::product.product').create({
+    data: {
+      name: parsedAmzData.title,
+      slug,
+    },
+  });
 };
 
 /**
@@ -168,37 +157,144 @@ export const linkProductCrosscheck = async (
   });
 };
 
-export const createNewProductWithPdp = async (
+export const createNewProduct = async (
   parsedAmzData: Product,
   identifiers: string[],
   brand: Data.ContentType<'api::brand.brand'> | null,
 ) => {
   console.log(
-    `No existing product found. Creating new product, crosscheck, and PDP.`,
+    `No existing product found. Creating new product and crosscheck.`,
   );
 
-  const newProduct = await createNewProduct(parsedAmzData);
+  const newProduct = await createNewProduct2(parsedAmzData);
   const newCrosscheck = await createCrosscheck(parsedAmzData, identifiers);
 
   // Crosscheck
   await linkProductCrosscheck(newProduct.documentId, newCrosscheck.documentId);
 
-  // Create PDP is sold_by known
-  if (brand) {
-    const newPdp = await createNewPdp(
-      newProduct.documentId,
-      newCrosscheck.documentId,
-      parsedAmzData,
-      brand.documentId,
+  console.log(`Created new product and crosscheck for ${parsedAmzData.title}`);
+  return { newProduct, newCrosscheck };
+};
+
+/**
+ * Extracts the ASIN from a given Amazon URL or plain ASIN string.
+ *
+ * @param input - A URL or plain ASIN string.
+ * @returns The extracted ASIN if found; otherwise, undefined.
+ */
+export const parseAsin = (input: string): string | undefined => {
+  if (!input) return undefined;
+
+  const trimmed = input.trim();
+
+  // If the input is a valid ASIN (10 alphanumeric characters), return it
+  if (/^[A-Z0-9]{10}$/i.test(trimmed)) return trimmed;
+
+  try {
+    const url = new URL(trimmed);
+    // Match ASIN after either /dp/ or /gp/product/ followed by either ? or / or end of string
+    const match = url.pathname.match(
+      /\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:[/?]|$)/i,
     );
-    console.log(
-      `Created new product, crosscheck, and PDP for ${parsedAmzData.title}`,
+    return match?.[1];
+  } catch {
+    // If the input isn't a valid URL, try matching it directly
+    const match = trimmed.match(
+      /\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:[/?]|$)/i,
     );
-    return { newProduct, newCrosscheck, newPdp };
+    return match?.[1];
+  }
+};
+
+export const findOrCreateProductVariant = async (
+  productId: string,
+  variantData: any,
+  crosscheckId: string,
+  isFormat = false,
+): Promise<Data.ContentType<'api::product-variant.product-variant'>> => {
+  const variantAsin = variantData.asin || parseAsin(variantData.url);
+  if (!variantAsin) {
+    console.warn('Unable to extract ASIN for variant', variantData);
+    throw new Error('Unable to extract ASIN for variant');
   }
 
-  console.log(
-    `Created new product and crosscheck for ${parsedAmzData.title}. No matching brand found, skipping PDP creation.`,
-  );
-  return { newProduct, newCrosscheck };
+  const existingVariant = await strapi
+    .documents('api::product-variant.product-variant')
+    .findFirst({
+      filters: {
+        product: { documentId: productId },
+        crosscheck: { documentId: crosscheckId },
+      },
+    });
+
+  if (existingVariant) {
+    return existingVariant;
+  }
+
+  return await strapi.documents('api::product-variant.product-variant').create({
+    data: {
+      type: variantData.name,
+      product: productId,
+      crosscheck: crosscheckId,
+      media_type: isFormat ? variantData.name.toLowerCase() : undefined,
+      asin: variantAsin,
+      // Add other relevant fields from variantData
+    },
+  });
+};
+
+export const createOrUpdatePdpForVariant = async (
+  variantId: string,
+  crosscheckId: string,
+  parsedAmzData: Product,
+  variantData: any,
+  brandId: string,
+): Promise<Data.ContentType<'api::product-pdp.product-pdp'>> => {
+  const variantAsin = variantData.asin || parseAsin(variantData.url);
+  if (!variantAsin) {
+    console.warn('Unable to extract ASIN for variant', variantData);
+    throw new Error('Unable to extract ASIN for variant');
+  }
+
+  const existingPdp = await strapi
+    .documents('api::product-pdp.product-pdp')
+    .findFirst({
+      filters: {
+        product_variant: { documentId: variantId },
+        sku: variantAsin,
+      },
+    });
+
+  const pdpData = {
+    ...buildPdpData(parsedAmzData, brandId),
+    name: variantData.name,
+    sku: variantAsin,
+    price_high: variantData.price,
+    price_sale: variantData.price,
+    product_variant: variantId,
+    crosscheck: crosscheckId,
+    urls: [{ url: variantData.url, type: 'pdp' }],
+  } as any;
+
+  if (existingPdp) {
+    return await strapi.documents('api::product-pdp.product-pdp').update({
+      documentId: existingPdp.documentId,
+      data: pdpData,
+    });
+  }
+
+  return await strapi.documents('api::product-pdp.product-pdp').create({
+    data: pdpData,
+  });
+};
+
+export const findOrCreateCrosscheck = async (
+  parsedAmzData: Product,
+  identifiers: string[],
+): Promise<Data.ContentType<'api::crosscheck.crosscheck'>> => {
+  const existingCrosscheck = await findCrosscheck(identifiers);
+  if (existingCrosscheck) {
+    return existingCrosscheck;
+  }
+  return await createCrosscheck(parsedAmzData, identifiers);
 };
