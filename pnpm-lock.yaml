@@ -62,9 +62,15 @@ importers:
       '@strapi/strapi':
         specifier: ^5.8.0
         version: 5.9.0(@babel/runtime@7.26.7)(@codemirror/autocomplete@6.18.4)(@codemirror/language@6.10.8)(@codemirror/lint@6.8.4)(@codemirror/search@6.5.8)(@codemirror/state@6.5.2)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.36.2)(@swc/helpers@0.5.15)(@types/hoist-non-react-statics@3.3.6)(@types/node@22.13.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(better-sqlite3@11.8.1)(codemirror@5.65.18)(koa@2.15.2)(mysql2@3.12.0)(react-dom@18.3.1(react@18.3.1))(react-router-dom@6.29.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(redux@4.2.1)(sass-embedded@1.83.4)(sass@1.68.0)(styled-components@6.1.14(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(sugarss@4.0.1(postcss@8.5.1))(terser@5.37.0)(type-fest@4.33.0)
+      '@strapi/typescript-utils':
+        specifier: ^5.9.0
+        version: 5.9.0
       better-sqlite3:
         specifier: ^11.8.0
         version: 11.8.1
+      isbn3:
+        specifier: ^1.2.7
+        version: 1.2.7
       mysql2:
         specifier: ^3.12.0
         version: 3.12.0
@@ -77,6 +83,9 @@ importers:
       react-router-dom:
         specifier: ^6.28.2
         version: 6.29.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      slugify:
+        specifier: ^1.6.6
+        version: 1.6.6
       strapi-plugin-country-select:
         specifier: ^2.0.0
         version: 2.1.0(76cbea153e89049524feceb5d6f186ed)
@@ -89,6 +98,9 @@ importers:
       tree-menus:
         specifier: ^1.0.4
         version: 1.0.4(76cbea153e89049524feceb5d6f186ed)
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       '@types/node':
         specifier: ^22.10.7
@@ -9160,6 +9172,11 @@ packages:
     resolution: {integrity: sha512-YKBKVkKhty7s8rxddb40oOkuP0NbaeXrQvLin6QMHL7Ypiy2RW9LwOVrVgZRyOrhQlayMd9t+D8yDy8MKFTSDQ==}
     engines: {node: '>= 18.0.0'}
 
+  isbn3@1.2.7:
+    resolution: {integrity: sha512-nr5K3ojSDQ7K8cjYPmftSrygm5x8av26V83B7nnjZe25rOvnv6gVs1eZbZQCtVDof06H86BbqSTt+xjV2PS5Hw==}
+    engines: {node: '>= 6.4.0'}
+    hasBin: true
+
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
@@ -12033,6 +12050,10 @@ packages:
   slice-ansi@4.0.0:
     resolution: {integrity: sha512-qMCMfhY040cVHT43K9BFygqYbUPFZKHOg7K73mtTWJRb8pyP3fzf4Ixd5SzdEJQ6MRUg/WBnOLxghZtKKurENQ==}
     engines: {node: '>=10'}
+
+  slugify@1.6.6:
+    resolution: {integrity: sha512-h+z7HKHYXj6wJU+AnS/+IH8Uh9fdcX1Lrhg1/VMdf9PwoBQXFcXiAdsy2tSK0P6gKwJLXp02r90ahUCqHk9rrw==}
+    engines: {node: '>=8.0.0'}
 
   snake-case@2.1.0:
     resolution: {integrity: sha512-FMR5YoPFwOLuh4rRz92dywJjyKYZNLpMn1R5ujVpIYkbA9p01fq8RMg0FkO4M+Yobt4MjHeLTJVm5xFFBHSV2Q==}
@@ -15376,18 +15397,6 @@ snapshots:
   '@formatjs/intl-localematcher@0.5.8':
     dependencies:
       tslib: 2.8.1
-
-  '@formatjs/intl@2.10.0(typescript@5.3.2)':
-    dependencies:
-      '@formatjs/ecma402-abstract': 1.18.2
-      '@formatjs/fast-memoize': 2.2.0
-      '@formatjs/icu-messageformat-parser': 2.7.6
-      '@formatjs/intl-displaynames': 6.6.6
-      '@formatjs/intl-listformat': 7.5.5
-      intl-messageformat: 10.5.11
-      tslib: 2.8.1
-    optionalDependencies:
-      typescript: 5.3.2
 
   '@formatjs/intl@2.10.0(typescript@5.7.3)':
     dependencies:
@@ -23768,6 +23777,8 @@ snapshots:
 
   isbinaryfile@5.0.4: {}
 
+  isbn3@1.2.7: {}
+
   isexe@2.0.0: {}
 
   isobject@3.0.1: {}
@@ -26013,7 +26024,7 @@ snapshots:
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
       '@formatjs/icu-messageformat-parser': 2.7.6
-      '@formatjs/intl': 2.10.0(typescript@5.3.2)
+      '@formatjs/intl': 2.10.0(typescript@5.7.3)
       '@formatjs/intl-displaynames': 6.6.6
       '@formatjs/intl-listformat': 7.5.5
       '@types/hoist-non-react-statics': 3.3.6
@@ -27069,6 +27080,8 @@ snapshots:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
+
+  slugify@1.6.6: {}
 
   snake-case@2.1.0:
     dependencies:

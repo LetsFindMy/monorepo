@@ -16,13 +16,24 @@ export default {
   async brightDataAmazon(ctx) {
     const { data } = ctx.request.body;
 
-    try {
-      processBrightDataAmazon(data, 'st-2ac8');
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    const foundOrCreatedProducts = await processBrightDataAmazon(data);
+
+    //   if (foundOrCreatedProducts.length > 0) {
+    //     console.log("Found or created products:")
+    //     foundOrCreatedProducts.forEach((product, index) => {
+    //       console.log(`Product ${index + 1}:`)
+    //       console.log(JSON.stringify(product, null, 2))
+    //     })
+    //   } else {
+    //     console.log("No matching products found or created")
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error.message)
+    // }
+
     // Process the data here
     // For now, we'll just return the data
-    return { receivedData: data };
+    return { receivedData: data, foundOrCreatedProducts };
   },
 };

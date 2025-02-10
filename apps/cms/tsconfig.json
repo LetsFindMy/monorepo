@@ -1,4 +1,5 @@
 {
+  "extends": "@strapi/typescript-utils/tsconfigs/server",
   "compilerOptions": {
     "module": "CommonJS",
     "moduleResolution": "Node",
@@ -16,6 +17,8 @@
     "rootDir": "."
   },
   "include": [
+    "@strapi/strapi",
+    "./types/gdnerated/**/*.ts",
     // Include root files
     "./",
     // Include all ts files
