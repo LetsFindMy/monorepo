@@ -16,7 +16,7 @@ const buildPdpData = (parsedAmzData: Product, brandId: string) => ({
 });
 
 /**
- *  Identifiers
+ * Identifiers
  */
 export const extractIdentifier = (
   product_details: any[],
@@ -27,6 +27,11 @@ export const extractIdentifier = (
 export const validateISBN = (isbn: string | null): string | null =>
   isbn && ISBN.parse(isbn) ? isbn : null;
 
+/**
+ * Updated productIdentifiers:
+ * If parentAsin is provided and different from asin, use parentAsin (plus ISBNs) only.
+ * Otherwise, use asin (plus ISBNs).
+ */
 export const productIdentifiers = (
   asin: string,
   parentAsin: string | undefined,
@@ -34,18 +39,15 @@ export const productIdentifiers = (
 ): string[] => {
   const isbn10 = validateISBN(extractIdentifier(product_details, 'ISBN-10'));
   const isbn13 = validateISBN(extractIdentifier(product_details, 'ISBN-13'));
-  const identifiers = [parentAsin, asin, isbn10, isbn13].filter(
-    (id): id is string => id !== null && id !== undefined,
-  );
-
-  if (isbn10 && asin !== isbn10) {
-    console.warn('ASIN and ISBN-10 are both present but do not match', {
-      asin,
-      isbn10,
-    });
+  if (parentAsin && parentAsin !== asin) {
+    return [parentAsin, isbn10, isbn13].filter(
+      (id): id is string => id !== null && id !== undefined,
+    );
+  } else {
+    return [asin, isbn10, isbn13].filter(
+      (id): id is string => id !== null && id !== undefined,
+    );
   }
-
-  return identifiers;
 };
 
 const createIdentifierFilter = (identifiers: string[]) => ({
@@ -123,10 +125,9 @@ const createNewProduct2 = async (
   let slug = slugify(parsedAmzData.title, {
     lower: true,
     trim: true,
-    strict: true, // Only alphanumeric characters and dashes will remain
-    replacement: '-', // Spaces are replaced with dashes
+    strict: true,
+    replacement: '-',
   });
-  // If the slug exceeds maxLength, trim it without cutting words in half.
   if (slug.length > maxLength) {
     const lastDashIndex = slug.lastIndexOf('-', maxLength);
     slug =
@@ -165,13 +166,9 @@ export const createNewProduct = async (
   console.log(
     `No existing product found. Creating new product and crosscheck.`,
   );
-
   const newProduct = await createNewProduct2(parsedAmzData);
   const newCrosscheck = await createCrosscheck(parsedAmzData, identifiers);
-
-  // Crosscheck
   await linkProductCrosscheck(newProduct.documentId, newCrosscheck.documentId);
-
   console.log(`Created new product and crosscheck for ${parsedAmzData.title}`);
   return { newProduct, newCrosscheck };
 };
@@ -184,12 +181,9 @@ export const createNewProduct = async (
  */
 export const parseAsin = (input: string): string | undefined => {
   if (!input) return undefined;
-
   const trimmed = input.trim();
-
   // If the input is a valid ASIN (10 alphanumeric characters), return it
   if (/^[A-Z0-9]{10}$/i.test(trimmed)) return trimmed;
-
   try {
     const url = new URL(trimmed);
     // Match ASIN after either /dp/ or /gp/product/ followed by either ? or / or end of string
@@ -198,7 +192,6 @@ export const parseAsin = (input: string): string | undefined => {
     );
     return match?.[1];
   } catch {
-    // If the input isn't a valid URL, try matching it directly
     const match = trimmed.match(
       /\/(?:dp|gp\/product)\/([A-Z0-9]{10})(?:[/?]|$)/i,
     );
@@ -213,18 +206,15 @@ export const findOrCreateProductVariant = async (
   isFormat = false,
 ): Promise<Data.ContentType<'api::product-variant.product-variant'>> => {
   let variantAsin: string | undefined;
-
   if ('asin' in variantData && variantData.asin) {
     variantAsin = variantData.asin;
   } else if ('url' in variantData && variantData.url) {
     variantAsin = parseAsin(variantData.url);
   }
-
   if (!variantAsin) {
     console.warn('Unable to extract ASIN for variant', variantData);
     throw new Error('Unable to extract ASIN for variant');
   }
-
   const existingVariant = await strapi
     .documents('api::product-variant.product-variant')
     .findFirst({
@@ -233,11 +223,9 @@ export const findOrCreateProductVariant = async (
         crosscheck: { documentId: crosscheckId },
       },
     });
-
   if (existingVariant) {
     return existingVariant;
   }
-
   return await strapi.documents('api::product-variant.product-variant').create({
     data: {
       type: variantData.name,
@@ -253,7 +241,6 @@ export const findOrCreateProductVariant = async (
             | 'kindle')
         : undefined,
       asin: variantAsin,
-      // Add other relevant fields from variantData
     },
   });
 };
@@ -267,19 +254,16 @@ export const createOrUpdatePdpForVariant = async (
 ): Promise<Data.ContentType<'api::product-pdp.product-pdp'>> => {
   let variantAsin: string | undefined;
   let variantUrl: string | undefined;
-
   if ('asin' in variantData && variantData.asin) {
     variantAsin = variantData.asin;
   } else if ('url' in variantData && variantData.url) {
     variantAsin = parseAsin(variantData.url);
     variantUrl = variantData.url;
   }
-
   if (!variantAsin) {
     console.warn('Unable to extract ASIN for variant', variantData);
     throw new Error('Unable to extract ASIN for variant');
   }
-
   const existingPdp = await strapi
     .documents('api::product-pdp.product-pdp')
     .findFirst({
@@ -288,7 +272,6 @@ export const createOrUpdatePdpForVariant = async (
         sku: variantAsin,
       },
     });
-
   const pdpData = {
     ...buildPdpData(parsedAmzData, brandId),
     name: variantData.name,
@@ -299,14 +282,12 @@ export const createOrUpdatePdpForVariant = async (
     crosscheck: crosscheckId,
     urls: [{ url: variantUrl || parsedAmzData.url, type: 'pdp' }],
   } as any;
-
   if (existingPdp) {
     return await strapi.documents('api::product-pdp.product-pdp').update({
       documentId: existingPdp.documentId,
       data: pdpData,
     });
   }
-
   return await strapi.documents('api::product-pdp.product-pdp').create({
     data: pdpData,
   });
