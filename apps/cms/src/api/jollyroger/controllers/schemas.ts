@@ -6,6 +6,23 @@ const nullableBoolean = z.boolean().nullish();
 const nullableUrl = z.string().url().nullish();
 const nullableStringArray = z.array(z.string()).nullish();
 
+export const VariantSchema = z.object({
+  name: nullableString,
+  asin: nullableString,
+  price: nullableNumber,
+  currency: nullableString,
+  unit_price: nullableNumber,
+});
+
+export const FormatSchema = z.object({
+  name: nullableString,
+  price: nullableNumber,
+  url: nullableUrl,
+});
+
+export type Variant = z.infer<typeof VariantSchema>;
+export type Format = z.infer<typeof FormatSchema>;
+
 export const ProductSchema = z
   .object({
     title: nullableString,
@@ -39,15 +56,8 @@ export const ProductSchema = z
     final_price_high: nullableNumber,
     final_price: nullableNumber,
     delivery: nullableStringArray,
-    format: z
-      .array(
-        z.object({
-          name: nullableString,
-          price: nullableNumber,
-          url: nullableUrl,
-        }),
-      )
-      .nullish(),
+    variations: z.array(VariantSchema).nullish(),
+    format: z.array(FormatSchema).nullish(),
     buybox_prices: z
       .object({
         final_price: nullableNumber,

@@ -1,6 +1,6 @@
 import type { Data } from '@strapi/strapi';
 import ISBN from 'isbn3';
-import type { Product } from './schemas';
+import type { Product, Variant, Format } from './schemas';
 import slugify from 'slugify';
 
 const buildPdpData = (parsedAmzData: Product, brandId: string) => ({
@@ -208,11 +208,18 @@ export const parseAsin = (input: string): string | undefined => {
 
 export const findOrCreateProductVariant = async (
   productId: string,
-  variantData: any,
+  variantData: Variant | Format,
   crosscheckId: string,
   isFormat = false,
 ): Promise<Data.ContentType<'api::product-variant.product-variant'>> => {
-  const variantAsin = variantData.asin || parseAsin(variantData.url);
+  let variantAsin: string | undefined;
+
+  if ('asin' in variantData && variantData.asin) {
+    variantAsin = variantData.asin;
+  } else if ('url' in variantData && variantData.url) {
+    variantAsin = parseAsin(variantData.url);
+  }
+
   if (!variantAsin) {
     console.warn('Unable to extract ASIN for variant', variantData);
     throw new Error('Unable to extract ASIN for variant');
@@ -236,7 +243,15 @@ export const findOrCreateProductVariant = async (
       type: variantData.name,
       product: productId,
       crosscheck: crosscheckId,
-      media_type: isFormat ? variantData.name.toLowerCase() : undefined,
+      media_type: isFormat
+        ? (variantData.name?.toLowerCase() as
+            | 'hardcover'
+            | 'softcover'
+            | 'otherBook'
+            | 'digitalBookOther'
+            | 'audible'
+            | 'kindle')
+        : undefined,
       asin: variantAsin,
       // Add other relevant fields from variantData
     },
@@ -247,10 +262,19 @@ export const createOrUpdatePdpForVariant = async (
   variantId: string,
   crosscheckId: string,
   parsedAmzData: Product,
-  variantData: any,
+  variantData: Variant | Format,
   brandId: string,
 ): Promise<Data.ContentType<'api::product-pdp.product-pdp'>> => {
-  const variantAsin = variantData.asin || parseAsin(variantData.url);
+  let variantAsin: string | undefined;
+  let variantUrl: string | undefined;
+
+  if ('asin' in variantData && variantData.asin) {
+    variantAsin = variantData.asin;
+  } else if ('url' in variantData && variantData.url) {
+    variantAsin = parseAsin(variantData.url);
+    variantUrl = variantData.url;
+  }
+
   if (!variantAsin) {
     console.warn('Unable to extract ASIN for variant', variantData);
     throw new Error('Unable to extract ASIN for variant');
@@ -273,7 +297,7 @@ export const createOrUpdatePdpForVariant = async (
     price_sale: variantData.price,
     product_variant: variantId,
     crosscheck: crosscheckId,
-    urls: [{ url: variantData.url, type: 'pdp' }],
+    urls: [{ url: variantUrl || parsedAmzData.url, type: 'pdp' }],
   } as any;
 
   if (existingPdp) {
