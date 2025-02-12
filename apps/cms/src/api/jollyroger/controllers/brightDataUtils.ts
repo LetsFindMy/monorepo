@@ -293,6 +293,45 @@ export const createOrUpdatePdpForVariant = async (
   });
 };
 
+export const createOrUpdatePdpForProduct = async (
+  productId: string,
+  crosscheckId: string,
+  parsedAmzData: Product,
+  brandId: string,
+): Promise<Data.ContentType<'api::product-pdp.product-pdp'>> => {
+  const asin = parsedAmzData.asin;
+  if (!asin) {
+    throw new Error('No ASIN found for product');
+  }
+  // Look for an existing PDP for this product using the sku (asin)
+  const existingPdp = await strapi
+    .documents('api::product-pdp.product-pdp')
+    .findFirst({
+      filters: {
+        product: { documentId: productId },
+        sku: asin,
+      },
+    });
+  const pdpData = {
+    ...buildPdpData(parsedAmzData, brandId),
+    name: parsedAmzData.title,
+    sku: asin,
+    price_high: parsedAmzData.initial_price,
+    price_sale: parsedAmzData.final_price,
+    crosscheck: crosscheckId,
+    product: productId,
+  } as any;
+  if (existingPdp) {
+    return await strapi.documents('api::product-pdp.product-pdp').update({
+      documentId: existingPdp.documentId,
+      data: pdpData,
+    });
+  }
+  return await strapi.documents('api::product-pdp.product-pdp').create({
+    data: pdpData,
+  });
+};
+
 export const findOrCreateCrosscheck = async (
   parsedAmzData: Product,
   identifiers: string[],

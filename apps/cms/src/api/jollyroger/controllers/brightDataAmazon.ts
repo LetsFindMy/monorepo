@@ -43,6 +43,7 @@ import {
   findOrCreateProductVariant,
   findOrCreateCrosscheck,
   createOrUpdatePdpForVariant,
+  createOrUpdatePdpForProduct,
   parseAsin,
 } from './brightDataUtils';
 import { type Product, ProductSchema } from './schemas';
@@ -52,7 +53,6 @@ const processBrightDataAmazon = async (
   amzData: unknown,
 ): Promise<Product[]> => {
   try {
-    // Parse and validate the incoming Amazon data
     const parsedAmzData = ProductSchema.parse(amzData);
     if (!parsedAmzData) {
       console.warn('No valid product data found');
@@ -68,16 +68,16 @@ const processBrightDataAmazon = async (
       format,
     } = parsedAmzData;
 
-    // Ensure we have a valid ASIN for the main product
     if (!asin) {
       console.warn('No ASIN found for product', { productName });
       return [];
     }
 
-    // Determine if the product is standalone.
+    // Determine if the product is standalone:
+    // standalone if parent_asin is missing/empty or equals asin.
     const isStandaloneProduct = !parent_asin || parent_asin === asin;
 
-    // For product creation, use productIdentifiers which now prioritizes parent_asin when applicable.
+    // Use productIdentifiers to generate identifiers for the product.
     const identifiers = productIdentifiers(asin, parent_asin, product_details);
     if (identifiers.length === 0) {
       console.warn('No valid identifiers found for product', { productName });
@@ -87,15 +87,13 @@ const processBrightDataAmazon = async (
     let product: Data.ContentType<'api::product.product'>;
     let productCrosscheck: Data.ContentType<'api::crosscheck.crosscheck'>;
 
-    // Look for an existing product using the identifiers
     const existingProduct = await findProduct(identifiers);
     const brand = await findBrand(sellerId);
 
     console.log('================================================');
     if (existingProduct) {
-      console.log('Existing product found. Processing variants...');
+      console.log('Existing product found. Processing variants or PDP...');
       product = existingProduct;
-      // Ensure the product has its associated crosscheck
       productCrosscheck = await findOrCreateCrosscheck(
         parsedAmzData,
         identifiers,
@@ -105,39 +103,34 @@ const processBrightDataAmazon = async (
         productCrosscheck.documentId,
       );
     } else {
-      // Create a new product and its crosscheck if it doesn't already exist
       const result = await createNewProduct(parsedAmzData, identifiers, brand);
       product = result.newProduct;
       productCrosscheck = result.newCrosscheck;
     }
 
-    // Determine the set of variants/formats to process
+    // Determine which PDP/variants to process.
+    // If variations (or formats) are provided, process each variant.
     const variantsToProcess =
       variations && Array.isArray(variations)
         ? variations
         : format && Array.isArray(format)
           ? format
           : [];
-    const isFormat = !!format && Array.isArray(format);
 
     console.log(`Processing ${variantsToProcess.length} variants/formats`);
 
     if (variantsToProcess.length > 0) {
-      // Retrieve any existing product variants (with their crosschecks) for this product
       const existingVariants = await strapi
         .documents('api::product-variant.product-variant')
         .findMany({
           filters: { product: { documentId: product.documentId } },
           populate: ['crosscheck'],
         });
-
-      // Map the existing variants by their crosscheck ASIN for quick lookup
       const existingVariantMap = new Map(
         existingVariants.map((v) => [v.crosscheck?.asin, v]),
       );
 
       for (const variantData of variantsToProcess) {
-        // Extract the variant ASIN either directly or by parsing the URL
         const variantAsin =
           ('asin' in variantData && variantData.asin) ||
           ('url' in variantData ? parseAsin(variantData.url) : undefined);
@@ -145,7 +138,7 @@ const processBrightDataAmazon = async (
           console.warn('Unable to extract ASIN for variant', variantData);
           continue;
         }
-        // For variants, force dedicated identifiers by not passing a parent_asin.
+        // For variants, force dedicated identifiers (do not pass parent_asin).
         const variantIdentifiers = productIdentifiers(
           variantAsin,
           undefined,
@@ -174,7 +167,7 @@ const processBrightDataAmazon = async (
               product.documentId,
               variantData,
               variantCrosscheck.documentId,
-              isFormat,
+              !!(format && Array.isArray(format)),
             );
             if (brand) {
               await createOrUpdatePdpForVariant(
@@ -192,31 +185,14 @@ const processBrightDataAmazon = async (
           }
         }
       }
-    } else if (brand && isStandaloneProduct) {
-      try {
-        const mainProductVariant = await findOrCreateProductVariant(
-          product.documentId,
-          { name: productName, asin: asin },
-          productCrosscheck.documentId,
-          false,
-        );
-        await createOrUpdatePdpForVariant(
-          mainProductVariant.documentId,
-          productCrosscheck.documentId,
-          parsedAmzData,
-          {
-            name: productName,
-            asin: asin,
-            price: parsedAmzData.initial_price,
-            url: parsedAmzData.url,
-          },
-          brand.documentId,
-        );
-      } catch (error) {
-        console.error(
-          `Error creating main product PDP: ${error instanceof Error ? error.message : String(error)}`,
-        );
-      }
+    } else if (brand) {
+      // For products with no variations (standalone products), create only a PDP (no variant record).
+      await createOrUpdatePdpForProduct(
+        product.documentId,
+        productCrosscheck.documentId,
+        parsedAmzData,
+        brand.documentId,
+      );
     }
 
     return [parsedAmzData];
