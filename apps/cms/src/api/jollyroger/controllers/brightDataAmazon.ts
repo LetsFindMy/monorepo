@@ -44,12 +44,63 @@ import {
   findOrCreateProductVariant,
   findOrCreateCrosscheck,
   createOrUpdatePdpForVariant,
+  checkIfVariantExists,
   createOrUpdatePdpForProduct,
   parseAsin,
-  findCrosscheck,
 } from './brightDataUtils';
 import { type Product, ProductSchema } from './schemas';
+
 import type { Data } from '@strapi/strapi';
+
+/**
+ * A set of functions called "actions" for `jollyroger`
+ */
+export default {
+  async brightDataAmazon(
+    ctx: { request: { body: { data: any } } },
+    _next: any,
+  ) {
+    const { data } = ctx.request.body;
+    let foundOrCreatedProducts: any[];
+
+    const safeProcess = async (item: unknown) => {
+      const logs: string[] = [];
+      logs.push('=------------------------------------=');
+
+      // Remove unwanted properties
+      if (item && typeof item === 'object') {
+        delete (item as { other_sellers_prices?: unknown })
+          .other_sellers_prices;
+      }
+
+      try {
+        const result = await processBrightDataAmazon(item);
+        logs.push('Processed result:', JSON.stringify(result));
+        console.log(logs.join('\n\n\n'));
+        return result;
+      } catch (error) {
+        logs.push('Error processing item:', JSON.stringify(item));
+        // Exclude the `stack` property from error details
+        const { stack, ...errorDetails } = error as Record<string, unknown>;
+        logs.push('Error details:', JSON.stringify(errorDetails, null, 2));
+        console.log(logs.join('\n\n\n'));
+        return undefined;
+      }
+    };
+
+    if (Array.isArray(data)) {
+      foundOrCreatedProducts = await Promise.all(
+        data.map((item) => safeProcess(item)),
+      );
+    } else if (data && typeof data === 'object') {
+      foundOrCreatedProducts = await safeProcess(data);
+    } else {
+      return;
+    }
+
+    return { receivedData: data, foundOrCreatedProducts };
+  },
+};
 
 const processBrightDataAmazon = async (
   amzData: unknown,
@@ -75,74 +126,25 @@ const processBrightDataAmazon = async (
       return [];
     }
 
-    // Check if an ASIN exists in the crosscheck model
-    const existingCrosscheck = await findCrosscheck([asin]);
-    const hasVariations =
-      variations && Array.isArray(variations) && variations.length > 0;
-    const hasFormat = format && Array.isArray(format) && format.length > 0;
-
-    if (existingCrosscheck && !hasVariations && !hasFormat) {
-      console.log(
-        `Early return: crosscheck already exists for product ${productName} with asin ${asin} and no variations/format.`,
-      );
-      return [];
-    }
-
     const brand = await findBrand(sellerId);
 
-    // Check if we are in the "formats" scenario (books with formats)
+    // Check if we're in the media formats scenario.
     const hasFormats =
       format && Array.isArray(format) && (format as any[]).length > 0;
-
     if (hasFormats) {
-      // ----- FORMATS SCENARIO (Books) -----
-      // Create or retrieve the product WITHOUT linking a crosscheck.
-      // (The product record will exist as a pure product.)
-      const identifiers = productIdentifiers(
-        asin,
-        parent_asin,
-        product_details,
-      );
-      let product: Data.ContentType<'api::product.product'>;
-      const existingProduct = await findProduct(identifiers);
-      if (existingProduct) {
-        product = existingProduct;
-      } else {
-        // Use createNewProduct2 directly so no crosscheck is created/linked for the product.
-        product = await createNewProduct2(parsedAmzData);
-      }
-
-      // Process the top‑level product as a product‑variant.
-      // Use dedicated identifiers (without parent_asin) so that a crosscheck is created for the variant.
+      // For media formats, treat the top-level product as a variant.
       const topVariantIdentifiers = productIdentifiers(asin, undefined, []);
       const topVariantCrosscheck = await findOrCreateCrosscheck(
         parsedAmzData,
         topVariantIdentifiers,
       );
-      const topProductVariant = await findOrCreateProductVariant(
-        product.documentId,
-        { name: productName, asin },
+      const topVariantExists = await checkIfVariantExists(
         topVariantCrosscheck.documentId,
-        false,
       );
-      if (brand) {
-        await createOrUpdatePdpForVariant(
-          topProductVariant.documentId,
-          topVariantCrosscheck.documentId,
-          parsedAmzData,
-          {
-            name: productName,
-            asin,
-            price: parsedAmzData.initial_price,
-            url: parsedAmzData.url,
-          },
-          brand.documentId,
-        );
-      }
 
-      // Process each format as a product-variant.
+      // Check if any format variant is new.
+      let newVariantNeeded = false;
       for (const formatData of format as any[]) {
-        // Extract variant ASIN (using URL if necessary)
         const variantAsin =
           ('asin' in formatData && formatData.asin) ||
           ('url' in formatData ? parseAsin(formatData.url) : undefined);
@@ -159,6 +161,70 @@ const processBrightDataAmazon = async (
           parsedAmzData,
           variantIdentifiers,
         );
+        const exists = await checkIfVariantExists(variantCrosscheck.documentId);
+        if (!exists) {
+          newVariantNeeded = true;
+          break;
+        }
+      }
+
+      // If both top-level and all format variants already exist, skip creating new records.
+      if (topVariantExists && !newVariantNeeded) {
+        console.log('All product variants already exist; skipping creation.');
+        return [parsedAmzData];
+      }
+
+      // Retrieve an existing product using identifiers or create a new one.
+      const identifiers = productIdentifiers(
+        asin,
+        parent_asin,
+        product_details,
+      );
+      let product = await findProduct(identifiers);
+      if (!product) {
+        product = await createNewProduct2(parsedAmzData);
+      }
+
+      // Process top-level variant.
+      const topProductVariant = await findOrCreateProductVariant(
+        product.documentId,
+        { name: productName, asin },
+        topVariantCrosscheck.documentId,
+        false,
+      );
+      if (brand) {
+        await createOrUpdatePdpForVariant(
+          topProductVariant.documentId,
+          topVariantCrosscheck.documentId,
+          parsedAmzData,
+          { name: productName, asin },
+          brand.documentId,
+        );
+      }
+
+      // Process each format variant.
+      for (const formatData of format as any[]) {
+        const variantAsin =
+          ('asin' in formatData && formatData.asin) ||
+          ('url' in formatData ? parseAsin(formatData.url) : undefined);
+        if (!variantAsin) {
+          console.warn('Unable to extract ASIN for format variant', formatData);
+          continue;
+        }
+        const variantIdentifiers = productIdentifiers(
+          variantAsin,
+          undefined,
+          [],
+        );
+        const variantCrosscheck = await findOrCreateCrosscheck(
+          parsedAmzData,
+          variantIdentifiers,
+        );
+        const exists = await checkIfVariantExists(variantCrosscheck.documentId);
+        if (exists) {
+          // Skip duplicate variant.
+          continue;
+        }
         const formatVariant = await findOrCreateProductVariant(
           product.documentId,
           formatData,
@@ -176,7 +242,7 @@ const processBrightDataAmazon = async (
         }
       }
     } else {
-      // Use productIdentifiers to generate identifiers for the product.
+      // Non-formats scenario.
       const identifiers = productIdentifiers(
         asin,
         parent_asin,
@@ -210,7 +276,7 @@ const processBrightDataAmazon = async (
         productCrosscheck = result.newCrosscheck;
       }
 
-      // Process variants if provided (e.g. media products with variations)
+      // Process provided variants.
       const variantsToProcess =
         variations && Array.isArray(variations) ? variations : [];
       if (variantsToProcess.length > 0) {
@@ -280,7 +346,6 @@ const processBrightDataAmazon = async (
           }
         }
       } else if (brand) {
-        // For products with no variations, create only a PDP (linked directly to the product)
         await createOrUpdatePdpForProduct(
           product.documentId,
           productCrosscheck.documentId,

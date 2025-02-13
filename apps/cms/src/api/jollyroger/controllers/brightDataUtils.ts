@@ -373,3 +373,17 @@ export const findOrCreateCrosscheck = async (
   }
   return await createCrosscheck(parsedAmzData, identifiers);
 };
+
+/**
+ * Checks whether a product-variant already exists for a given crosscheck record.
+ */
+export const checkIfVariantExists = async (
+  crosscheckDocumentId: string,
+): Promise<boolean> => {
+  const existingVariant = await strapi
+    .documents('api::product-variant.product-variant')
+    .findFirst({
+      filters: { crosscheck: { documentId: crosscheckDocumentId } },
+    });
+  return !!existingVariant;
+};
