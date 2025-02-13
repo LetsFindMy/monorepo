@@ -2,7 +2,7 @@
   "name": "cms",
   "private": true,
   "scripts": {
-    "build": "strapi build",
+    "build": "pnpm types && strapi build",
     "build:turbo": "npx turbo build",
     "clean": "rm -rf .cache build",
     "deploy": "strapi deploy",
@@ -11,7 +11,7 @@
     "doppler": "doppler secrets download --no-file --format env > .env",
     "start": "strapi start",
     "strapi": "strapi",
-    "types": "npx strapi ts:generate-types --debug "
+    "types": "npx strapi ts:generate-types"
   },
   "dependencies": {
     "@strapi/plugin-color-picker": "^5.8.0",
