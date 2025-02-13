@@ -33,6 +33,7 @@
  * entities as necessary while maintaining proper relationships between
  * products, variants, PDPs, and crosschecks.
  */
+
 import {
   findBrand,
   findProduct,
@@ -45,6 +46,7 @@ import {
   createOrUpdatePdpForVariant,
   createOrUpdatePdpForProduct,
   parseAsin,
+  findCrosscheck,
 } from './brightDataUtils';
 import { type Product, ProductSchema } from './schemas';
 import type { Data } from '@strapi/strapi';
@@ -70,6 +72,19 @@ const processBrightDataAmazon = async (
 
     if (!asin) {
       console.warn('No ASIN found for product', { productName });
+      return [];
+    }
+
+    // Check if an ASIN exists in the crosscheck model
+    const existingCrosscheck = await findCrosscheck([asin]);
+    const hasVariations =
+      variations && Array.isArray(variations) && variations.length > 0;
+    const hasFormat = format && Array.isArray(format) && format.length > 0;
+
+    if (existingCrosscheck && !hasVariations && !hasFormat) {
+      console.log(
+        `Early return: crosscheck already exists for product ${productName} with asin ${asin} and no variations/format.`,
+      );
       return [];
     }
 
