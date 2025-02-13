@@ -30,7 +30,8 @@
         "otherBook",
         "digitalBookOther",
         "audible",
-        "kindle"
+        "kindle",
+        "spiralBound"
       ]
     },
     "isbn_10": {

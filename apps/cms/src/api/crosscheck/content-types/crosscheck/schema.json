@@ -129,6 +129,12 @@
       "relation": "oneToMany",
       "target": "api::product-variant.product-variant",
       "mappedBy": "crosscheck"
+    },
+    "isbn_10": {
+      "type": "biginteger"
+    },
+    "isbn_13": {
+      "type": "biginteger"
     }
   }
 }
