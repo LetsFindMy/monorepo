@@ -13,27 +13,29 @@ export default {
   //   }
   // }
 
-  async brightDataAmazon(ctx) {
+  async brightDataAmazon(ctx: { request: { body: { data: any } } }) {
     const { data } = ctx.request.body;
+    let foundOrCreatedProducts: any[];
 
-    // try {
-    const foundOrCreatedProducts = await processBrightDataAmazon(data);
+    const safeProcess = async (item: unknown) => {
+      try {
+        return await processBrightDataAmazon(item);
+      } catch (error) {
+        console.error('\n\n', 'Error processing item:', item, error, '\n\n');
+        return undefined;
+      }
+    };
 
-    //   if (foundOrCreatedProducts.length > 0) {
-    //     console.log("Found or created products:")
-    //     foundOrCreatedProducts.forEach((product, index) => {
-    //       console.log(`Product ${index + 1}:`)
-    //       console.log(JSON.stringify(product, null, 2))
-    //     })
-    //   } else {
-    //     console.log("No matching products found or created")
-    //   }
-    // } catch (error) {
-    //   console.error("Error:", error.message)
-    // }
+    if (Array.isArray(data)) {
+      foundOrCreatedProducts = await Promise.all(
+        data.map((item) => safeProcess(item)),
+      );
+    } else if (data && typeof data === 'object') {
+      foundOrCreatedProducts = await safeProcess(data);
+    } else {
+      return;
+    }
 
-    // Process the data here
-    // For now, we'll just return the data
     return { receivedData: data, foundOrCreatedProducts };
   },
 };
