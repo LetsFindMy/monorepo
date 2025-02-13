@@ -5,15 +5,7 @@
 const { processBrightDataAmazon } = require('./brightDataAmazon');
 
 export default {
-  // exampleAction: async (ctx, next) => {
-  //   try {
-  //     ctx.body = 'ok';
-  //   } catch (err) {
-  //     ctx.body = err;
-  //   }
-  // }
-
-  async brightDataAmazon(ctx: { request: { body: { data: any } } }) {
+  async brightDataAmazon(ctx: { request: { body: { data: any } } }, _next: any) {
     const { data } = ctx.request.body;
     let foundOrCreatedProducts: any[];
 
