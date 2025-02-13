@@ -2,6 +2,7 @@ import type { Data } from '@strapi/strapi';
 import ISBN from 'isbn3';
 import type { Product, Variant, Format } from './schemas';
 import slugify from 'slugify';
+import { v4 as uuidv4 } from 'uuid';
 
 const buildPdpData = (parsedAmzData: Product, brandId: string) => ({
   name: parsedAmzData.title,
@@ -157,7 +158,7 @@ export const createNewProduct2 = async (
   return await strapi.documents('api::product.product').create({
     data: {
       name: parsedAmzData.title,
-      slug,
+      slug: uuidv4(),
     },
   });
 };
