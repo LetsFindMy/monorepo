@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "new_products",
+  "info": {
+    "singularName": "new-product",
+    "pluralName": "new-products",
+    "displayName": "[New Product]",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "url": {
+      "type": "string",
+      "unique": true
+    },
+    "api_data": {
+      "type": "json",
+      "required": true
+    },
+    "amz_strategy": {
+      "type": "enumeration",
+      "enum": ["standard", "product_line", "media"]
+    },
+    "flow_status": {
+      "type": "enumeration",
+      "enum": ["fresh", "broken", "migrated"]
+    }
+  }
+}

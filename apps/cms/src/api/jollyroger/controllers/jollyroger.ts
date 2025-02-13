@@ -4,59 +4,72 @@
 
 const { processBrightDataAmazon } = require('./brightDataAmazon');
 
+const checkAndCreateProduct = async (url, apiData) => {
+  return strapi.db.transaction(async ({ trx }) => {
+    const newProductService = strapi.documents('api::new-product.new-product');
+
+    // Check if the URL exists
+    const existingProduct = await newProductService.findFirst({
+      filters: {
+        url: { $eq: url },
+      },
+    });
+
+    if (!existingProduct) {
+      // URL doesn't exist, create a new record
+      const newProduct = await newProductService.create({
+        data: {
+          url,
+          api_data: apiData,
+        },
+      });
+      return newProduct;
+    }
+
+    // URL already exists
+    return existingProduct;
+  });
+};
+
+const safeProcess = async (item: unknown) => {
+  if (item && typeof item === 'object') {
+    delete (item as { other_sellers_prices?: unknown }).other_sellers_prices;
+  }
+  try {
+    // const result = await processBrightDataAmazon(item);
+    if (!item || typeof item !== 'object' || !('url' in item)) {
+      throw new Error('Invalid item: missing url property');
+    }
+    let result: any = undefined;
+    // Handle cases where url is undefined/null or has no query strings
+    const cleanUrl = item.url ? (item.url as string).split('?')[0] : ''; // Remove query strings
+    if (!cleanUrl) {
+      return;
+    }
+    return await checkAndCreateProduct(cleanUrl, item);
+  } catch (error) {
+    console.debug('Error processing item:', JSON.stringify(item));
+    const { stack, ...errorDetails } = error as Record<string, unknown>;
+    return errorDetails;
+  }
+};
+
 export default {
   async brightDataAmazon(
     ctx: { request: { body: { data: any } } },
     _next: any,
   ) {
     const { data } = ctx.request.body;
-    let foundOrCreatedProducts: any[] = []; // Ensure initialization
-
-    const safeProcess = async (item: unknown) => {
-      const logs: string[] = [];
-      logs.push('=------------------------------------=');
-
-      if (item && typeof item === 'object') {
-        delete (item as { other_sellers_prices?: unknown })
-          .other_sellers_prices;
-        delete (item as { top_review?: unknown }).top_review;
-        delete (item as { description?: unknown }).description;
-      }
-
-      try {
-        const result = await processBrightDataAmazon(item);
-        // logs.push('Processed result:', JSON.stringify(result, null, 2));
-        console.log(logs.join('\n\n\n'));
-        return result;
-      } catch (error) {
-        logs.push('Error processing item:', JSON.stringify(item, null, 2));
-        const { stack, ...errorDetails } = error as Record<string, unknown>;
-        logs.push('Error details:', JSON.stringify(errorDetails, null, 2));
-        console.log(logs.join('\n\n\n'));
-        return undefined;
-      }
-    };
-
-    // if (Array.isArray(data)) {
-    //   foundOrCreatedProducts = await Promise.all(
-    //     data.map((item) => safeProcess(item)),
-    //   );
-    // } else if (data && typeof data === 'object') {
-    //   foundOrCreatedProducts = await safeProcess(data);
-    // } else {
-    //   return;
-    // }
+    let foundOrCreatedProducts: any[] = [];
 
     if (Array.isArray(data)) {
-      for (const item of data) {
-        const result = await safeProcess(item);
-        if (result) foundOrCreatedProducts.push(result); // Safely push result
-      }
+      foundOrCreatedProducts = await Promise.all(
+        data.map((item) => safeProcess(item)),
+      );
     } else if (data && typeof data === 'object') {
-      const result = await safeProcess(data);
-      if (result) foundOrCreatedProducts.push(result); // Safely push result
+      foundOrCreatedProducts = [await safeProcess(data)];
     } else {
-      return { message: 'Invalid data format' };
+      return;
     }
 
     return { receivedData: data, foundOrCreatedProducts };
