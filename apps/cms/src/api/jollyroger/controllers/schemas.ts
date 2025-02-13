@@ -1,3 +1,4 @@
+// apps/cms/src/api/jollyroger/controllers/schemas.ts
 import { z } from 'zod';
 
 const nullableString = z.string().nullish();
@@ -58,12 +59,19 @@ export const ProductSchema = z
     delivery: nullableStringArray,
     variations: z.array(VariantSchema).nullish(),
     format: z.array(FormatSchema).nullish(),
-    buybox_prices: z
-      .object({
-        final_price: nullableNumber,
-        unit_price: nullableNumber,
-      })
-      .nullish(),
+    buybox_prices: z.preprocess(
+      (value) => {
+        if (value && typeof value === 'object') {
+          const obj = value as Record<string, unknown>;
+          const finalPrice = obj.final_price;
+          if (typeof finalPrice === 'number') {
+            return { final_price: finalPrice };
+          }
+        }
+        return undefined;
+      },
+      z.object({ final_price: z.number() }).optional(),
+    ),
     input_asin: nullableString,
     origin_url: nullableUrl,
     is_available: nullableBoolean,
