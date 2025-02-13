@@ -115,7 +115,7 @@ export const findProduct = async (
   });
 };
 
-const createNewProduct2 = async (
+export const createNewProduct2 = async (
   parsedAmzData: Product,
 ): Promise<Data.ContentType<'api::product.product'>> => {
   if (!parsedAmzData.title) {
@@ -226,20 +226,31 @@ export const findOrCreateProductVariant = async (
   if (existingVariant) {
     return existingVariant;
   }
+  const allowedFormats = [
+    'hardcover',
+    'softcover',
+    'otherBook',
+    'digitalBookOther',
+    'audible',
+    'kindle',
+    'spiralBound',
+  ] as const;
+  type AllowedFormat = (typeof allowedFormats)[number];
+  const allowedFormatsSet = new Set<AllowedFormat>(allowedFormats);
+  const getMediaType = (
+    name?: string,
+    isFormat?: boolean,
+  ): AllowedFormat | undefined => {
+    if (!isFormat || !name) return undefined;
+    const format = name.toLowerCase() as AllowedFormat;
+    return allowedFormatsSet.has(format) ? format : 'otherBook';
+  };
   return await strapi.documents('api::product-variant.product-variant').create({
     data: {
       type: variantData.name,
       product: productId,
       crosscheck: crosscheckId,
-      media_type: isFormat
-        ? (variantData.name?.toLowerCase() as
-            | 'hardcover'
-            | 'softcover'
-            | 'otherBook'
-            | 'digitalBookOther'
-            | 'audible'
-            | 'kindle')
-        : undefined,
+      media_type: getMediaType(variantData.name, isFormat),
       asin: variantAsin,
     },
   });
