@@ -70,13 +70,32 @@ export const createCrosscheck = async (
   parsedAmzData: Product,
   identifiers: string[],
 ): Promise<Data.ContentType<'api::crosscheck.crosscheck'>> => {
+  // Use the first identifier as the base asin.
+  let asinValue = identifiers[0];
+  let isbn10Value = identifiers[1] ?? null;
+  let isbn13Value = identifiers[2] ?? null;
+
+  // If media formats exist, check if the asin is a valid ISBN.
+  if (
+    parsedAmzData.format &&
+    Array.isArray(parsedAmzData.format) &&
+    parsedAmzData.format.length > 0
+  ) {
+    const parsedIsbn = ISBN.parse(asinValue);
+    if (parsedIsbn && parsedIsbn.isIsbn10) {
+      // If the asin is a valid ISBN, override the ISBN fields.
+      isbn10Value = parsedIsbn.isbn10;
+      isbn13Value = parsedIsbn.isbn13;
+    }
+  }
+
   return await strapi.documents('api::crosscheck.crosscheck').create({
     data: {
       name: parsedAmzData.title,
-      asin: identifiers[0],
-      isbn_10: identifiers[1] ?? null,
-      isbn_13: identifiers[2] ?? null,
-      // Add other relevant fields
+      asin: asinValue,
+      isbn_10: isbn10Value,
+      isbn_13: isbn13Value,
+      // Add other relevant fields if needed.
     },
   });
 };
