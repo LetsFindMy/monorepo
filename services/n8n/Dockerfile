@@ -1,5 +1,5 @@
 # Use the official n8n image as the base
-FROM n8n/n8n:latest
+FROM n8nio/n8n:latest
 
 # Switch to the root user to install extra packages
 USER root
