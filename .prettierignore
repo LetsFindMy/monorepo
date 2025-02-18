@@ -26,6 +26,7 @@ schema.graphql
 schema.types.ts
 sync
 packages/prisma/prismaClient
+apps/cms/src/extensions/documentation/documentation
 
 # Seed files & scripts
 offstage/cms/seed-assets
