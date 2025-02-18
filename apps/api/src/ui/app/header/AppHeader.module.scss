@@ -1,0 +1,96 @@
+.header {
+  height: rem(56px);
+  margin-bottom: rem(120px);
+  background-color: var(--mantine-color-body);
+  border-bottom: rem(1px) solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.hoverCardTarget {
+  height: rem(56px);
+  padding: 0 var(--mantine-spacing-md);
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.dropdownContent {
+  display: flex;
+  flex-direction: column;
+  min-width: rem(200px);
+}
+
+.dropdownLink {
+  display: flex;
+  align-items: center;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs);
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: var(--mantine-font-size-sm);
+
+  &:hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+  }
+}
+
+.dropdownIcon {
+  margin-right: var(--mantine-spacing-xs);
+  display: flex;
+  align-items: center;
+}
+
+.mobileMenuItem {
+  padding: var(--mantine-spacing-xs) 0;
+}
+
+.mobileMenuItemLabel {
+  font-weight: 500;
+  padding: var(--mantine-spacing-xs) 0;
+}
+
+.mobileSubMenu {
+  padding-left: var(--mantine-spacing-md);
+}
+
+.mobileLink {
+  display: block;
+  padding: var(--mantine-spacing-xs) 0;
+  text-decoration: none;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: var(--mantine-font-size-sm);
+
+  &:hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-6)
+    );
+  }
+}
+
+.subLink {
+  width: 100%;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+
+  &:hover {
+    background-color: light-dark(
+      var(--mantine-color-gray-0),
+      var(--mantine-color-dark-7)
+    );
+  }
+}
+
+.dropdownFooter {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-7)
+  );
+  margin: calc(var(--mantine-spacing-md) * -1);
+  margin-top: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
+  padding-bottom: var(--mantine-spacing-xl);
+  border-top: 1px solid
+    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+}
